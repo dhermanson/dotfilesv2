@@ -1,0 +1,6 @@
+[submodule "stows/rbenv-ctags/.rbenv/plugins/rbenv-ctags"]
+	path = stows/rbenv-ctags/.rbenv/plugins/rbenv-ctags
+	url = git://github.com/tpope/rbenv-ctags.git
+[submodule "stows/fzf/.fzf"]
+	path = stows/fzf/.fzf
+	url = https://github.com/junegunn/fzf.git
