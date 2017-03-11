@@ -1,6 +1,24 @@
 [submodule "stows/rbenv-ctags/.rbenv/plugins/rbenv-ctags"]
-	path = stows/rbenv-ctags/.rbenv/plugins/rbenv-ctags
+	path = stows/rbenv-plugins/.rbenv/plugins/rbenv-ctags
 	url = git://github.com/tpope/rbenv-ctags.git
+[submodule "stows/rbenv-plugins/.rbenv/plugins/ruby-build"]
+	path = stows/rbenv-plugins/.rbenv/plugins/ruby-build
+	url = https://github.com/rbenv/ruby-build
 [submodule "stows/fzf/.fzf"]
 	path = stows/fzf/.fzf
 	url = https://github.com/junegunn/fzf.git
+[submodule "stows/rbenv-plugins/.rbenv/plugins/rbenv-default-gems"]
+	path = stows/rbenv-plugins/.rbenv/plugins/rbenv-default-gems
+	url = https://github.com/rbenv/rbenv-default-gems.git
+[submodule "stows/zsh/.oh-my-zsh"]
+	path = stows/zsh/.oh-my-zsh
+	url = git://github.com/robbyrussell/oh-my-zsh.git
+[submodule "fonts/powerline"]
+	path = fonts/powerline
+	url = https://github.com/powerline/fonts.git
+[submodule "stows/javascript/.nvm"]
+	path = stows/javascript/.nvm
+	url = https://github.com/creationix/nvm.git
+[submodule "stows/php/.language-ctags/php/phpstorm-stubs"]
+	path = stows/php/.language-ctags/php/phpstorm-stubs
+	url = https://github.com/JetBrains/phpstorm-stubs.git

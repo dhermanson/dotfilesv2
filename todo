@@ -1,1 +1,8 @@
 https://www.gregjs.com/vim/2016/do-yourself-a-favor-and-modularize-your-vimrc-init-vim/
+https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2#.kfc1n0maf
+https://elliotekj.com/2016/11/22/setup-ctrlp-to-use-ripgrep-in-vim/
+https://www.gregjs.com/vim/2016/neovim-deoplete-jspc-ultisnips-and-tern-a-config-for-kickass-autocompletion/
+
+
+create cron jobs to do things such as upgrade nvm periodically (via nvm-upgade script i wrote)
+put a php code sniffer xml file in my home directory that defined my rule

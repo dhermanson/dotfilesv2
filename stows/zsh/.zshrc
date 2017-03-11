@@ -109,6 +109,7 @@ source $ZSH/oh-my-zsh.sh
 alias tmux="tmux -2"
 
 # use rbenv for ruby
+export RBENV_VERSION="2.4.0"
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
@@ -148,9 +149,10 @@ export PATH=$PATH:~/bin
 #  export HOMEBREW_GITHUB_API_TOKEN=$(cat ./.homebrew_github_api_token)
 #fi
 #
-## node version manager settings
-#export NVM_DIR=~/.nvm
-#source $(brew --prefix nvm)/nvm.sh
+# node version manager settings
+export MY_NVM_VERSION="v7.7.2"
+export NVM_DIR=~/.nvm
+[ -s ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh # This loads nvm
 #
 ## setup homebrew golang
 #export GOPATH=$HOME/workspace/golang
@@ -160,10 +162,10 @@ export PATH=$PATH:~/bin
 #
 ## add local node_modules bin to path
 #export PATH=$PATH:./node_modules/.bin
-## add local composer bin to path
-#export PATH=$PATH:./vendor/bin
-## add global composer to path
-#export PATH=$PATH:~/.composer/vendor/bin
+# add local composer bin to path
+export PATH=$PATH:./vendor/bin
+# add global composer to path
+export PATH=$PATH:~/.composer/vendor/bin
 ## add cabal bin to path
 #export PATH=$PATH:~/.cabal/bin
 ## add stack binary path to bin
@@ -188,7 +190,14 @@ export PATH=$PATH:~/bin
 #  #--color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229
 #  #--color info:150,prompt:110,spinner:150,pointer:167,marker:174
 ##'
-#
+
+# --files: List files that would be searched but do not search
+# --no-ignore: Do not respect .gitignore, etc...
+# --hidden: Search hidden files and folders
+# --follow: Follow symlinks
+# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+
 #test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 #
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

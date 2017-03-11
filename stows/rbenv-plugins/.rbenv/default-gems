@@ -1,0 +1,4 @@
+bundler
+dotenv
+neovim
+pry

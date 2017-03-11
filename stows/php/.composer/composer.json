@@ -1,0 +1,14 @@
+{
+  "name": "derickhermanson/global-installs",
+  "authors": [
+    {
+      "name": "Derick Hermanson",
+      "email": "derick.hermanson@gmail.com"
+    }
+  ],
+  "require": {
+    "phpstan/phpstan": "^0.6",
+    "psy/psysh": "^0.8",
+    "laravel/installer": "^1.3"
+  }
+}
