@@ -477,240 +477,380 @@ source $HOME/.config/nvim/config/keys.vim
 ""nnoremap <leader>t :NERDTreeToggle<CR>
 "
 "
-"function! SetupLaravelProject()
-"  let g:projectionist_heuristics = {
-"        \   "artisan": {
-"        \     "app/*.php": {
-"        \       "alternate": "tests/{}Test.php"
-"        \     },
-"        \     "app/Models/*.php": {
-"        \       "type": "model",
-"        \       "template": ["<?php", "", "namespace App\Models;", "", "class {} {", "}"]
-"        \     },
-"        \     "app/Events/*.php": {
-"        \       "type": "event"
-"        \     },
-"        \     "app/Exceptions/*.php": {
-"        \       "type": "exception"
-"        \     },
-"        \     "app/Http/routes.php": {
-"        \       "type": "routes"
-"        \     },
-"        \     "app/Http/Kernel.php": {
-"        \       "type": "kernel"
-"        \     },
-"        \     "app/Http/Controllers/*.php": {
-"        \       "type": "controller"
-"        \     },
-"        \     "app/Http/Middleware/*.php": {
-"        \       "type": "middleware"
-"        \     },
-"        \     "app/Http/Requests/*Request.php": {
-"        \       "type": "request"
-"        \     },
-"        \     "app/Jobs/*.php": {
-"        \       "type": "job"
-"        \     },
-"        \     "app/Listeners/*.php": {
-"        \       "type": "listener"
-"        \     },
-"        \     "app/Policies/*.php": {
-"        \       "type": "policy"
-"        \     },
-"        \     "app/Providers/*.php": {
-"        \       "type": "provider"
-"        \     },
-"        \     "app/Repositories/*.php": {
-"        \       "type": "repository"
-"        \     },
-"        \     "app/Services/*.php": {
-"        \       "type": "service"
-"        \     },
-"        \     "config/*.php": {
-"        \       "type": "config"
-"        \     },
-"        \     "database/migrations/*.php": {
-"        \       "type": "migration"
-"        \     },
-"        \     "database/seeds/*Seeder.php": {
-"        \       "type": "seeder"
-"        \     },
-"        \     "resources/assets/docs/*.md": {
-"        \       "type": "doc"
-"        \     },
-"        \     "resources/views/*.blade.php": {
-"        \       "type": "view"
-"        \     },
-"        \     "spec/*Spec.php": {
-"        \       "type": "spec",
-"        \       "alternate": "app/{}.php",
-"        \       "dispatch": "vendor/bin/phpspec run {file}",
-"        \       "start": "vendor/bin/phpspec run {file}"
-"        \     },
-"        \     "tests/*Test.php": {
-"        \       "type": "test",
-"        \       "alternate": "app/{}.php",
-"        \       "dispatch": "vendor/bin/phpunit {file}",
-"        \       "start": "vendor/bin/phpunit {file}"
-"        \     },
-"        \     "phpspec.yml": {
-"        \       "type": "phpspec.yml",
-"        \       "template": [
-"        \         "suites:",
-"        \         "    main:",
-"        \         "        namespace: App",
-"        \         "        psr4_prefix: App",
-"        \         "        src_path: app",
-"        \         "        src_path: app"
-"        \       ]
-"        \     }
-"        \   }
-"        \ }
-"
-"  nnoremap <leader>emo :Emodel 
-"  nnoremap <leader>vmo :Vmodel 
-"  nnoremap <leader>smo :Smodel 
-"  nnoremap <leader>eev :Eevent 
-"  nnoremap <leader>vev :Vevent 
-"  nnoremap <leader>sev :Sevent 
-"  nnoremap <leader>eex :Eexception 
-"  nnoremap <leader>vex :Vexception 
-"  nnoremap <leader>sex :Sexception 
-"  nnoremap <leader>ero :Eroutes <CR>
-"  nnoremap <leader>vro :Vroutes <CR>
-"  nnoremap <leader>sro :Sroutes <CR>
-"  nnoremap <leader>ek :Ekernel <CR>
-"  nnoremap <leader>vk :Vkernel <CR>
-"  nnoremap <leader>sk :Skernel <CR>
-"  nnoremap <leader>eco :Econtroller 
-"  nnoremap <leader>vco :Vcontroller 
-"  nnoremap <leader>sco :Scontroller 
-"  nnoremap <leader>emid :Emiddleware 
-"  nnoremap <leader>vmid :Vmiddleware 
-"  nnoremap <leader>smid :Smiddleware 
-"  nnoremap <leader>ere :Erequest 
-"  nnoremap <leader>vre :Vrequest 
-"  nnoremap <leader>sre :Srequest 
-"  nnoremap <leader>ej :Ejob 
-"  nnoremap <leader>vj :Vjob 
-"  nnoremap <leader>sj :Sjob 
-"  nnoremap <leader>el :Elistener 
-"  nnoremap <leader>vl :Vlistener 
-"  nnoremap <leader>sl :Slistener 
-"  nnoremap <leader>epo :Epolicy 
-"  nnoremap <leader>vpo :Vpolicy 
-"  nnoremap <leader>spo :Spolicy 
-"  nnoremap <leader>epr :Eprovider 
-"  nnoremap <leader>vpr :Vprovider 
-"  nnoremap <leader>spr :Sprovider 
-"  nnoremap <leader>ecfg :Econfig 
-"  nnoremap <leader>vcfg :Vconfig 
-"  nnoremap <leader>scfg :Sconfig 
-"  nnoremap <leader>emig :Emigration 
-"  nnoremap <leader>vmig :Vmigration 
-"  nnoremap <leader>smig :Smigration 
-"  nnoremap <leader>ese :Eseeder 
-"  nnoremap <leader>vse :Vseeder 
-"  nnoremap <leader>sse :Sseeder 
-"  nnoremap <leader>esp :Espec 
-"  nnoremap <leader>vsp :Vspec 
-"  nnoremap <leader>ssp :Sspec 
-"  nnoremap <leader>ed :Edoc 
-"  nnoremap <leader>vd :Vdoc 
-"  nnoremap <leader>sd :Sdoc 
-"  nnoremap <leader>ev :Eview 
-"  nnoremap <leader>vv :Vview 
-"  nnoremap <leader>sv :Sview 
-"  nnoremap <leader>etr :Etransformer 
-"  nnoremap <leader>vtr :Vtransformer 
-"  nnoremap <leader>str :Stransformer 
-"  nnoremap <leader>ete :Etest 
-"  nnoremap <leader>vte :Vtest 
-"  nnoremap <leader>ste :Stest 
-"  nnoremap <leader>ea :A<CR>
-"  nnoremap <leader>sa :AS<CR>
-"  nnoremap <leader>va :AV<CR>
-"  nnoremap <leader>sp :Dispatch phpspec describe App/
-"  augroup my_laravel
-"    autocmd!
-"    autocmd FileType php nnoremap <buffer> <silent> <leader>rs :call RunArtisanTinkerInSplit("-v")<CR>
-"    autocmd FileType php nnoremap <buffer> <silent> <leader>rv :call RunArtisanTinkerInSplit("-h")<CR>
-"augroup END
-"
-"  function! RunArtisanCommand(cmd)
-"    let escaped_cmd = "php artisan " . shellescape(a:cmd)
-"
-"    let run_script = $HOME."/.vim/bin/run_then_close_tmux_window"
-"
-"    let script_command = run_script . " " . escaped_cmd
-"
-"    call dispatch#start("tmux neww '" . script_command . "'")
-"  endfunction
-"
-"  " make sure dependencies installed...can run in background
-"  call system("tmux splitw -b -p 5 'ruby " . $HOME . "/.vim/bin/laravel/open_mycli.rb'")
-"  call system("tmux last-pane")
-"
-"
-"  function! GetAvailableArtisanCommands()
-"    let results = system("php artisan --no-ansi list")
-"    let lines = split(results, "\n")
-"
-"    let commands = []
-"    let available_commands_hit = 0
-"
-"    for line in lines
-"      if !available_commands_hit
-"        if line == "Available commands:"
-"          let available_commands_hit = 1
-"          continue
-"        endif
-"      else
-"        let cmd = split(line)
-"        if (len(cmd) > 1)
-"          let c = cmd[0]
-"          "let trimmed = substitute(c, '^\s*', '', '') 
-"          let commands = commands + [c]
-"        endif
-"      endif
-"    endfor
-"
-"    return commands
-"
-"  endfunction
-"
-"  function! RunArtisan()
-"    let width = +system("tput cols")
-"    let preview = 'down:75%'
-"
-"    " TODO: fix this
-"    let width = 200
-"    if width > 160
-"      let preview = 'right:70%'
-"    endif
-"
-"    call fzf#run({
-"        \  'source': GetAvailableArtisanCommands(),
-"        \  'sink': function('RunArtisanCommand'),
-"        \  'options': '--ansi -i --preview-window=' . l:preview . ' --preview="php artisan {} --help" --bind alt-j:preview-down,alt-k:preview-up',
-"        \  })
-"  endfunction
-"
-"  nnoremap <silent> <leader>a :call RunArtisan()<CR>
-"  "nnoremap <silent> <leader>a :call fzf#run({
-"        "\  'source': GetAvailableArtisanCommands(),
-"        "\  'sink': function('RunArtisanCommand'),
-"        "\  'options': '--ansi -i --preview="php artisan {} --help" --bind alt-j:preview-down,alt-k:preview-up',
-"        "\  })<CR>
-"endfunction
-"
-"function! SetupProjectType()
-"  if filereadable("artisan")
-"    call SetupLaravelProject()
-"  endif
-"endfunction
-"
-"augroup my_vimenter
-"  autocmd!
-"  autocmd VimEnter * call SetupProjectType()
-"augroup END
+function! SetupLaravelProject()
+  let g:projectionist_heuristics = {
+        \   "artisan": {
+        \     "app/*.php": {
+        \       "alternate": "tests/{}Test.php"
+        \     },
+        \     "app/Models/*.php": {
+        \       "type": "model",
+        \       "template": ["<?php", "", "namespace App\Models;", "", "class {} {", "}"]
+        \     },
+        \     "app/Events/*.php": {
+        \       "type": "event"
+        \     },
+        \     "app/Exceptions/*.php": {
+        \       "type": "exception"
+        \     },
+        \     "app/Http/routes.php": {
+        \       "type": "routes"
+        \     },
+        \     "app/Http/Kernel.php": {
+        \       "type": "kernel"
+        \     },
+        \     "app/Http/Controllers/*.php": {
+        \       "type": "controller"
+        \     },
+        \     "app/Http/Middleware/*.php": {
+        \       "type": "middleware"
+        \     },
+        \     "app/Http/Requests/*Request.php": {
+        \       "type": "request"
+        \     },
+        \     "app/Jobs/*.php": {
+        \       "type": "job"
+        \     },
+        \     "app/Listeners/*.php": {
+        \       "type": "listener"
+        \     },
+        \     "app/Policies/*.php": {
+        \       "type": "policy"
+        \     },
+        \     "app/Providers/*.php": {
+        \       "type": "provider"
+        \     },
+        \     "app/Repositories/*.php": {
+        \       "type": "repository"
+        \     },
+        \     "app/Services/*.php": {
+        \       "type": "service"
+        \     },
+        \     "config/*.php": {
+        \       "type": "config"
+        \     },
+        \     "database/migrations/*.php": {
+        \       "type": "migration"
+        \     },
+        \     "database/seeds/*Seeder.php": {
+        \       "type": "seeder"
+        \     },
+        \     "resources/assets/docs/*.md": {
+        \       "type": "doc"
+        \     },
+        \     "resources/views/*.blade.php": {
+        \       "type": "view"
+        \     },
+        \     "spec/*Spec.php": {
+        \       "type": "spec",
+        \       "alternate": "app/{}.php",
+        \       "dispatch": "vendor/bin/phpspec run {file}",
+        \       "start": "vendor/bin/phpspec run {file}"
+        \     },
+        \     "tests/*Test.php": {
+        \       "type": "test",
+        \       "alternate": "app/{}.php",
+        \       "dispatch": "vendor/bin/phpunit {file}",
+        \       "start": "vendor/bin/phpunit {file}"
+        \     },
+        \     "phpspec.yml": {
+        \       "type": "phpspec.yml",
+        \       "template": [
+        \         "suites:",
+        \         "    main:",
+        \         "        namespace: App",
+        \         "        psr4_prefix: App",
+        \         "        src_path: app",
+        \         "        src_path: app"
+        \       ]
+        \     }
+        \   }
+        \ }
+
+  nnoremap <leader>emo :Emodel 
+  nnoremap <leader>vmo :Vmodel 
+  nnoremap <leader>smo :Smodel 
+  nnoremap <leader>eev :Eevent 
+  nnoremap <leader>vev :Vevent 
+  nnoremap <leader>sev :Sevent 
+  nnoremap <leader>eex :Eexception 
+  nnoremap <leader>vex :Vexception 
+  nnoremap <leader>sex :Sexception 
+  nnoremap <leader>ero :Eroutes <CR>
+  nnoremap <leader>vro :Vroutes <CR>
+  nnoremap <leader>sro :Sroutes <CR>
+  nnoremap <leader>ek :Ekernel <CR>
+  nnoremap <leader>vk :Vkernel <CR>
+  nnoremap <leader>sk :Skernel <CR>
+  nnoremap <leader>eco :Econtroller 
+  nnoremap <leader>vco :Vcontroller 
+  nnoremap <leader>sco :Scontroller 
+  nnoremap <leader>emid :Emiddleware 
+  nnoremap <leader>vmid :Vmiddleware 
+  nnoremap <leader>smid :Smiddleware 
+  nnoremap <leader>ere :Erequest 
+  nnoremap <leader>vre :Vrequest 
+  nnoremap <leader>sre :Srequest 
+  nnoremap <leader>ej :Ejob 
+  nnoremap <leader>vj :Vjob 
+  nnoremap <leader>sj :Sjob 
+  nnoremap <leader>el :Elistener 
+  nnoremap <leader>vl :Vlistener 
+  nnoremap <leader>sl :Slistener 
+  nnoremap <leader>epo :Epolicy 
+  nnoremap <leader>vpo :Vpolicy 
+  nnoremap <leader>spo :Spolicy 
+  nnoremap <leader>epr :Eprovider 
+  nnoremap <leader>vpr :Vprovider 
+  nnoremap <leader>spr :Sprovider 
+  nnoremap <leader>ecfg :Econfig 
+  nnoremap <leader>vcfg :Vconfig 
+  nnoremap <leader>scfg :Sconfig 
+  nnoremap <leader>emig :Emigration 
+  nnoremap <leader>vmig :Vmigration 
+  nnoremap <leader>smig :Smigration 
+  nnoremap <leader>ese :Eseeder 
+  nnoremap <leader>vse :Vseeder 
+  nnoremap <leader>sse :Sseeder 
+  nnoremap <leader>esp :Espec 
+  nnoremap <leader>vsp :Vspec 
+  nnoremap <leader>ssp :Sspec 
+  nnoremap <leader>ed :Edoc 
+  nnoremap <leader>vd :Vdoc 
+  nnoremap <leader>sd :Sdoc 
+  nnoremap <leader>ev :Eview 
+  nnoremap <leader>vv :Vview 
+  nnoremap <leader>sv :Sview 
+  nnoremap <leader>etr :Etransformer 
+  nnoremap <leader>vtr :Vtransformer 
+  nnoremap <leader>str :Stransformer 
+  nnoremap <leader>ete :Etest 
+  nnoremap <leader>vte :Vtest 
+  nnoremap <leader>ste :Stest 
+  nnoremap <leader>ea :A<CR>
+  nnoremap <leader>sa :AS<CR>
+  nnoremap <leader>va :AV<CR>
+  nnoremap <leader>sp :Dispatch phpspec describe App/
+  augroup my_laravel
+    autocmd!
+    autocmd FileType php nnoremap <buffer> <silent> <leader>rs :call RunArtisanTinkerInSplit("-v")<CR>
+    autocmd FileType php nnoremap <buffer> <silent> <leader>rv :call RunArtisanTinkerInSplit("-h")<CR>
+  augroup END
+
+  function! DropProjectDatabase()
+    ruby <<EOD
+    fork do
+    require 'dotenv'
+
+      if File.exists? '.env'
+        Dotenv.load '.env'
+
+        db = ENV['DB_DATABASE']
+        user = ENV['DB_USERNAME']
+        pass = ENV['DB_PASSWORD']
+
+        unless user.nil? and pass.nil?
+          if db.nil?
+            puts "No database configured"
+          else
+            cmd = %Q( tmux splitw 'mysqladmin -u #{user} --password=#{pass} drop #{db} ')
+            system cmd
+          end
+
+        end
+      end
+    end
+EOD
+  endfunction
+  ruby << EOD
+  require 'dotenv'
+
+  def project_database_exists
+    if File.exists? '.env'
+      Dotenv.load '.env'
+
+      db = ENV['DB_DATABASE']
+      user = ENV['DB_USERNAME']
+      pass = ENV['DB_PASSWORD']
+
+      if db.nil? or user.nil? or pass.nil?
+        false
+      else
+        system %Q( mysql -u #{user} --password=#{pass} -e 'use  #{db}')
+      end
+
+    else
+      false
+    end
+  end
+
+  def create_database
+    if File.exists? '.env'
+      Dotenv.load '.env'
+
+      db = ENV['DB_DATABASE']
+      user = ENV['DB_USERNAME']
+      pass = ENV['DB_PASSWORD']
+
+      unless user.nil? and pass.nil?
+       if db.nil?
+         puts "No database configured"
+       else
+        create = %Q( mysqladmin -u #{user} --password=#{pass} create #{db})
+        grant = %Q( mysql -u #{user} --password=#{pass} -e "grant all on #{db}.* to #{user}@localhost" )
+        system create
+        system grant
+       end
+
+      end
+    end
+  end
+EOD
+
+  function! CreateProjectDatabase()
+    ruby <<EOD
+  fork do
+    unless project_database_exists
+      create_database
+    end
+    #require 'dotenv'
+
+    #if File.exists? '.env'
+    #  Dotenv.load '.env'
+
+    #  db = ENV['DB_DATABASE']
+    #  user = ENV['DB_USERNAME']
+    #  pass = ENV['DB_PASSWORD']
+
+    #  unless user.nil? and pass.nil?
+    #   if db.nil?
+    #     puts "No database configured"
+    #   else
+    #    create = %Q( tmux splitw 'mysqladmin -u #{user} --password=#{pass} create #{db} ')
+    #    grant = %Q( tmux splitw 'mysql -u #{user} --password=#{pass} -e "grant all on #{db}.* to #{user}@localhost"' )
+    #    system create
+    #    sleep 1
+    #    system grant
+    #   end
+
+    #  end
+    #end
+  end
+EOD
+  endfunction
+
+function! RunMycli(split)
+  ruby <<EOD
+split = VIM::evaluate('a:split')
+fork do
+  require 'dotenv'
+
+  create_database
+
+  if File.exists? '.env'
+    Dotenv.load '.env'
+
+    host = ENV['DB_HOST']
+    port = ENV['DB_PORT']
+    db = ENV['DB_DATABASE']
+    user = ENV['DB_USERNAME']
+    pass = ENV['DB_PASSWORD']
+
+    unless host.nil? and
+           port.nil? and
+           user.nil? and
+           pass.nil?
+     if db.nil?
+      system "tmux splitw #{split} 'mycli -h #{host} -P #{port} -u #{user} -p #{pass}'"
+     else
+      system "tmux splitw #{split} 'mycli -h #{host} -P #{port} -D #{db} -u #{user} -p #{pass}'"
+     end
+
+    end
+  else
+    system "tmux splitw 'mycli --login-path=local'"
+  end
+end
+EOD
+endfunction
+
+  nnoremap <leader>dbj :call RunMycli('-v')<CR>
+  nnoremap <leader>dbl :call RunMycli('-h')<CR>
+
+  function! RunArtisanCommand(cmd)
+    let escaped_cmd = "php artisan " . shellescape(a:cmd)
+
+    let run_script = $HOME."/.vim/bin/run_then_close_tmux_window"
+
+    let script_command = run_script . " " . escaped_cmd
+
+    call dispatch#start("tmux neww '" . script_command . "'")
+  endfunction
+
+  " make sure dependencies installed...can run in background
+  call system("tmux splitw -b -p 5 'ruby " . $HOME . "/.vim/bin/laravel/open_mycli.rb'")
+  call system("tmux last-pane")
+
+
+  function! GetAvailableArtisanCommands()
+    let results = system("php artisan --no-ansi list")
+    let lines = split(results, "\n")
+
+    let commands = []
+    let available_commands_hit = 0
+
+    for line in lines
+      if !available_commands_hit
+        if line == "Available commands:"
+          let available_commands_hit = 1
+          continue
+        endif
+      else
+        let cmd = split(line)
+        if (len(cmd) > 1)
+          let c = cmd[0]
+          "let trimmed = substitute(c, '^\s*', '', '') 
+          let commands = commands + [c]
+        endif
+      endif
+    endfor
+
+    return commands
+
+  endfunction
+
+  function! RunArtisan()
+    let width = +system("tput cols")
+    let preview = 'down:75%'
+
+    " TODO: fix this
+    let width = 200
+    if width > 160
+      let preview = 'right:70%'
+    endif
+
+    call fzf#run({
+        \  'source': GetAvailableArtisanCommands(),
+        \  'sink': function('RunArtisanCommand'),
+        \  'options': '--ansi -i --preview-window=' . l:preview . ' --preview="php artisan {} --help" --bind alt-j:preview-down,alt-k:preview-up',
+        \  })
+  endfunction
+
+  nnoremap <silent> <leader>a :call RunArtisan()<CR>
+  "nnoremap <silent> <leader>a :call fzf#run({
+        "\  'source': GetAvailableArtisanCommands(),
+        "\  'sink': function('RunArtisanCommand'),
+        "\  'options': '--ansi -i --preview="php artisan {} --help" --bind alt-j:preview-down,alt-k:preview-up',
+        "\  })<CR>
+endfunction
+
+function! SetupProjectType()
+  if filereadable("artisan")
+    call SetupLaravelProject()
+  endif
+endfunction
+
+augroup my_vimenter
+  autocmd!
+  autocmd VimEnter * call SetupProjectType()
+augroup END
