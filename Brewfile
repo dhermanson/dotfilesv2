@@ -13,6 +13,7 @@ brew 'emacs', args: ['with-cocoa']
 brew 'fontconfig'
 brew 'htop'
 brew 'imagemagick'
+brew 'leiningen'
 brew 'mpd'
 brew 'mplayer'
 brew 'mycli'

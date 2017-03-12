@@ -1,2 +1,2 @@
 cd $HOME/dotfiles
-brew bundle
+brew bundle --verbose
