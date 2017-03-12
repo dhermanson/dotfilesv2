@@ -112,7 +112,7 @@ nnoremap <Leader>k :Tags<CR>
 nnoremap <Leader>l :MyBufferTags<CR>
 
 " tmux interaction
-inoremap <silent> <M-t> <C-o>:call SendToTmuxPane()<CR>
-vnoremap <M-t> :\<C-u>execute "'<,'>Twrite " . g:my_tmux_repl_pane <CR>
-nnoremap <silent> <M-t> :call SendToTmuxPane()<CR>
+inoremap <silent> <M-s> <C-o>:call SendToTmuxPane()<CR>
+vnoremap <M-s> :\<C-u>execute "'<,'>Twrite " . g:my_tmux_repl_pane <CR>
+nnoremap <silent> <M-s> :call SendToTmuxPane()<CR>
 nnoremap <silent> <M-x> :call KillTmuxRepl()<CR>

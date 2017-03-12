@@ -165,25 +165,30 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 
 " deoplete
-  let g:deoplete#enable_at_startup = 1
-  "let g:deoplete#omni_patterns = {}
-  "let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-  "let g:deoplete#auto_completion_start_length = 2
-  let g:deoplete#sources = {}
-  let g:deoplete#sources['php'] = ['omni', 'tag', 'file', 'ultisnips', 'buffer', 'member']
-  let g:deoplete#sources['vim'] = ['omni', 'tag', 'file', 'ultisnips', 'buffer', 'member']
-  let g:deoplete#sources['javascript'] = ['file', 'ultisnips', 'ternjs']
-  let g:deoplete#omni#functions = {}
-  let g:deoplete#omni#functions['javascript'] = [
-    \ 'tern#Complete'
-  \]
-  let g:tern#command = ['tern']
-  let g:tern#arguments = ['--persistent']
-  let g:deoplete#enable_ignore_case = 1
-  let g:deoplete#enable_smart_case = 1
-  "let g:deoplete#keyword_patterns = {}
-  "let g:deoplete#keyword_patterns['php'] = 'function\w*'
-  "let g:deoplete#sources._ = []
-  "let g:deoplete#file#enable_buffer_path = 1
-  
-  "call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
+let g:deoplete#enable_at_startup = 1
+"let g:deoplete#omni_patterns = {}
+"let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+"let g:deoplete#auto_completion_start_length = 2
+let g:deoplete#sources = {}
+let g:deoplete#sources['php'] = ['omni', 'tag', 'file', 'ultisnips', 'buffer', 'member']
+let g:deoplete#sources['vim'] = ['omni', 'tag', 'file', 'ultisnips', 'buffer', 'member']
+let g:deoplete#sources['javascript'] = ['file', 'ultisnips', 'ternjs']
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions['javascript'] = [
+  \ 'tern#Complete'
+\]
+let g:tern#command = ['tern']
+let g:tern#arguments = ['--persistent']
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_smart_case = 1
+"let g:deoplete#keyword_patterns = {}
+"let g:deoplete#keyword_patterns['php'] = 'function\w*'
+"let g:deoplete#sources._ = []
+"let g:deoplete#file#enable_buffer_path = 1
+
+"call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
+
+" delimitmate settings
+let g:delimitMate_expand_cr=1
+let g:delimitMate_expand_space=1
+let g:delimitMate_jump_expansion=1

@@ -22,9 +22,6 @@ source $HOME/.config/nvim/config/keys.vim
 "nnoremap <Leader>up :UnitePrevious<CR>
 "
 "
-"" delimitmate settings
-"let g:delimitMate_expand_cr=1
-"let g:delimitMate_expand_space=1
 "
 "" vim-ruby settings
 "let g:rubycomplete_buffer_loading=1
@@ -780,15 +777,16 @@ endfunction
   function! RunArtisanCommand(cmd)
     let escaped_cmd = "php artisan " . shellescape(a:cmd)
 
-    let run_script = $HOME."/.vim/bin/run_then_close_tmux_window"
+    let run_script = $HOME."/.config/nvim/bin/run_then_close_tmux_window"
 
     let script_command = run_script . " " . escaped_cmd
 
-    call dispatch#start("tmux neww '" . script_command . "'")
+    " call dispatch#start("tmux neww '" . script_command . "'")
+    call system("tmux neww '" . script_command . "'")
   endfunction
 
   " make sure dependencies installed...can run in background
-  call system("tmux splitw -b -p 5 'ruby " . $HOME . "/.vim/bin/laravel/open_mycli.rb'")
+  call system("tmux splitw -b -p 5 'ruby " . $HOME . "/.config/nvim/bin/laravel/open_mycli.rb'")
   call system("tmux last-pane")
 
 
