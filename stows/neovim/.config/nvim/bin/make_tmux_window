@@ -1,0 +1,28 @@
+#! /usr/bin/env ruby
+
+# get paths to applications
+node = `which node`
+# tmux = `which tmux`
+
+# create command
+cmd = <<-HEREDOC
+
+tell application "System Events"
+  set frontmostApplicationName to name of 1st process whose frontmost is true
+end tell
+
+tell application "iTerm2"
+  create window with default profile command "tmux new-session -s blah #{node} ~/node_repl.js"
+end tell
+
+tell application frontmostApplicationName
+  activate
+end tell
+
+HEREDOC
+
+#cmd = %q( tmux list-panes -a -F '#{pane_id}: #{session_name}:#{window_index}' )
+#puts `#{cmd}`
+
+# exec command
+exec "osascript -e '#{cmd}'"

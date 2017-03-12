@@ -1,0 +1,50 @@
+#! /usr/bin/env ruby
+
+def clear_screen
+  clear_code = %x{clear}
+  print clear_code
+end
+
+def get_user_input command
+  clear_screen
+
+  # create doc
+  make_doc_pane command
+
+  # print command
+  print "#{command} " 
+  args = $stdin.gets
+
+  remove_doc_pane
+
+  clear_screen
+
+  "#{command} #{args}"
+end
+
+
+def make_doc_pane command
+  system("tmux splitw -p 90 '#{command} --help && read'")
+  system("tmux last-pane")
+end
+
+def remove_doc_pane
+  system("tmux last-pane")
+  system("tmux kill-pane")
+end
+
+# get args
+command = ARGV.join(" ")
+
+command_with_args = get_user_input(command)
+
+# run command until it completes successfully
+until system(command_with_args)
+  $stdin.gets
+  command_with_args = get_user_input command
+end
+
+puts "\n\nAll done. Bye Bye!"
+$stdin.gets
+system('tmux kill-window')
+
