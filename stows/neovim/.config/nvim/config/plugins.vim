@@ -1,7 +1,6 @@
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.local/share/nvim/plugged')
 
-
 " Colors / Interface
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
@@ -62,6 +61,9 @@ Plug 'tpope/rbenv-ctags', { 'for': 'ruby' }
 " javascript
 Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
 Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript' }
+
+" python
+Plug 'zchee/deoplete-jedi'
 
 " Initialize plugin system
 call plug#end()
@@ -132,6 +134,7 @@ let g:ackprg = 'rg --vimgrep --no-heading -uu -i'
 " neomake
 let g:neomake_open_list=1
 let g:neomake_verbose=0
+" let g:neomake_error_sign = {'text': '✗', 'texthl': 'NeomakeErrorSign'}
 
 augroup my_neomake
   au!
@@ -186,6 +189,7 @@ let g:deoplete#sources = {}
 let g:deoplete#sources['php'] = ['omni', 'tag', 'file', 'ultisnips', 'buffer', 'member']
 let g:deoplete#sources['vim'] = ['omni', 'tag', 'file', 'ultisnips', 'buffer', 'member']
 let g:deoplete#sources['javascript'] = ['file', 'ultisnips', 'ternjs']
+"let g:deoplete#sources['python'] = ['file', 'ultisnips', 'jedi']
 let g:deoplete#omni#functions = {}
 let g:deoplete#omni#functions['javascript'] = [
   \ 'tern#Complete'
@@ -200,7 +204,12 @@ let g:deoplete#enable_smart_case = 1
 "let g:deoplete#file#enable_buffer_path = 1
 
 "call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
+let g:deoplete#sources#jedi#show_docstring=1
+let g:deoplete#sources#jedi#extra_path = [
+      \    systemlist($HOME . "/.config/nvim/bin/get_python3_site_modules_path")[0]
+      \  ]
 
+"------------------DELIMITMATE---------------------------------------------------
 " delimitmate settings
 let g:delimitMate_expand_cr=1
 let g:delimitMate_expand_space=1
