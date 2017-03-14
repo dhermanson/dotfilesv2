@@ -97,7 +97,7 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase = 1
 
 " ack
-let g:ackprg = 'rg --vimgrep --no-heading'
+let g:ackprg = 'rg --vimgrep --no-heading -uu -i'
 
 " syntastic
 "" syntastic settings
@@ -156,7 +156,7 @@ let g:neomake_php_phpstan_maker = {
       \ 'postprocess': function('ProcessEntry')
       \}
 
-"fzf
+"--------------------FZF---------------------------------------------------------
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -164,7 +164,20 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
-" deoplete
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+
+"---------------------DEOPLETE---------------------------------------------------
 let g:deoplete#enable_at_startup = 1
 "let g:deoplete#omni_patterns = {}
 "let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'

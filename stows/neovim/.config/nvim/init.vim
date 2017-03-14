@@ -8,33 +8,6 @@ source $HOME/.config/nvim/config/keys.vim
 
 
 
-"" tags
-""nnoremap <Leader>lt :tag<space>
-""nnoremap <Leader>t :tselect 
-"set tags+=tags.vendor
-"
-"
-"nnoremap <Leader>ug :Unite -buffer-name=grep-results grep<CR>
-"nnoremap <Leader>ub :Unite -buffer-name=buffers buffer <CR>
-"
-"nnoremap <Leader>ur :UniteResume<CR>
-"nnoremap <Leader>un :UniteNext<CR>
-"nnoremap <Leader>up :UnitePrevious<CR>
-"
-"
-"
-"" vim-ruby settings
-"let g:rubycomplete_buffer_loading=1
-"let g:rubycomplete_classes_in_global=1
-"let g:rubycomplete_rails=1
-"let g:rubycomplete_load_gemfile=1
-"
-"
-"" indent-guides settings
-"let g:indent_guides_enable_on_vim_startup = 0
-"let g:indent_guides_start_level = 2
-"let g:indent_guides_guide_size = 2
-"
 "" tern_for_vim settings
 "set updatetime=1000
 "let g:tern_show_argument_hints = 'on_hold'
@@ -564,70 +537,70 @@ function! SetupLaravelProject()
         \   }
         \ }
 
-  nnoremap <leader>emo :Emodel 
-  nnoremap <leader>vmo :Vmodel 
-  nnoremap <leader>smo :Smodel 
-  nnoremap <leader>eev :Eevent 
-  nnoremap <leader>vev :Vevent 
-  nnoremap <leader>sev :Sevent 
-  nnoremap <leader>eex :Eexception 
-  nnoremap <leader>vex :Vexception 
-  nnoremap <leader>sex :Sexception 
-  nnoremap <leader>ero :Eroutes <CR>
-  nnoremap <leader>vro :Vroutes <CR>
-  nnoremap <leader>sro :Sroutes <CR>
-  nnoremap <leader>ek :Ekernel <CR>
-  nnoremap <leader>vk :Vkernel <CR>
-  nnoremap <leader>sk :Skernel <CR>
-  nnoremap <leader>eco :Econtroller 
-  nnoremap <leader>vco :Vcontroller 
-  nnoremap <leader>sco :Scontroller 
-  nnoremap <leader>emid :Emiddleware 
-  nnoremap <leader>vmid :Vmiddleware 
-  nnoremap <leader>smid :Smiddleware 
-  nnoremap <leader>ere :Erequest 
-  nnoremap <leader>vre :Vrequest 
-  nnoremap <leader>sre :Srequest 
-  nnoremap <leader>ej :Ejob 
-  nnoremap <leader>vj :Vjob 
-  nnoremap <leader>sj :Sjob 
-  nnoremap <leader>el :Elistener 
-  nnoremap <leader>vl :Vlistener 
-  nnoremap <leader>sl :Slistener 
-  nnoremap <leader>epo :Epolicy 
-  nnoremap <leader>vpo :Vpolicy 
-  nnoremap <leader>spo :Spolicy 
-  nnoremap <leader>epr :Eprovider 
-  nnoremap <leader>vpr :Vprovider 
-  nnoremap <leader>spr :Sprovider 
-  nnoremap <leader>ecfg :Econfig 
-  nnoremap <leader>vcfg :Vconfig 
-  nnoremap <leader>scfg :Sconfig 
-  nnoremap <leader>emig :Emigration 
-  nnoremap <leader>vmig :Vmigration 
-  nnoremap <leader>smig :Smigration 
-  nnoremap <leader>ese :Eseeder 
-  nnoremap <leader>vse :Vseeder 
-  nnoremap <leader>sse :Sseeder 
-  nnoremap <leader>esp :Espec 
-  nnoremap <leader>vsp :Vspec 
-  nnoremap <leader>ssp :Sspec 
-  nnoremap <leader>ed :Edoc 
-  nnoremap <leader>vd :Vdoc 
-  nnoremap <leader>sd :Sdoc 
-  nnoremap <leader>ev :Eview 
-  nnoremap <leader>vv :Vview 
-  nnoremap <leader>sv :Sview 
-  nnoremap <leader>etr :Etransformer 
-  nnoremap <leader>vtr :Vtransformer 
-  nnoremap <leader>str :Stransformer 
-  nnoremap <leader>ete :Etest 
-  nnoremap <leader>vte :Vtest 
-  nnoremap <leader>ste :Stest 
-  nnoremap <leader>ea :A<CR>
-  nnoremap <leader>sa :AS<CR>
-  nnoremap <leader>va :AV<CR>
-  nnoremap <leader>sp :Dispatch phpspec describe App/
+  nnoremap <leader>pemo :Emodel 
+  nnoremap <leader>pvmo :Vmodel 
+  nnoremap <leader>psmo :Smodel 
+  nnoremap <leader>peev :Eevent 
+  nnoremap <leader>pvev :Vevent 
+  nnoremap <leader>psev :Sevent 
+  nnoremap <leader>peex :Eexception 
+  nnoremap <leader>pvex :Vexception 
+  nnoremap <leader>psex :Sexception 
+  nnoremap <leader>pero :Eroutes <CR>
+  nnoremap <leader>pvro :Vroutes <CR>
+  nnoremap <leader>psro :Sroutes <CR>
+  nnoremap <leader>pek :Ekernel <CR>
+  nnoremap <leader>pvk :Vkernel <CR>
+  nnoremap <leader>psk :Skernel <CR>
+  nnoremap <leader>peco :Econtroller 
+  nnoremap <leader>pvco :Vcontroller 
+  nnoremap <leader>psco :Scontroller 
+  nnoremap <leader>pemid :Emiddleware 
+  nnoremap <leader>pvmid :Vmiddleware 
+  nnoremap <leader>psmid :Smiddleware 
+  nnoremap <leader>pere :Erequest 
+  nnoremap <leader>pvre :Vrequest 
+  nnoremap <leader>psre :Srequest 
+  nnoremap <leader>pej :Ejob 
+  nnoremap <leader>pvj :Vjob 
+  nnoremap <leader>psj :Sjob 
+  nnoremap <leader>pel :Elistener 
+  nnoremap <leader>pvl :Vlistener 
+  nnoremap <leader>psl :Slistener 
+  nnoremap <leader>pepo :Epolicy 
+  nnoremap <leader>pvpo :Vpolicy 
+  nnoremap <leader>pspo :Spolicy 
+  nnoremap <leader>pepr :Eprovider 
+  nnoremap <leader>pvpr :Vprovider 
+  nnoremap <leader>pspr :Sprovider 
+  nnoremap <leader>pecfg :Econfig 
+  nnoremap <leader>pvcfg :Vconfig 
+  nnoremap <leader>pscfg :Sconfig 
+  nnoremap <leader>pemig :Emigration 
+  nnoremap <leader>pvmig :Vmigration 
+  nnoremap <leader>psmig :Smigration 
+  nnoremap <leader>pese :Eseeder 
+  nnoremap <leader>pvse :Vseeder 
+  nnoremap <leader>psse :Sseeder 
+  nnoremap <leader>pesp :Espec 
+  nnoremap <leader>pvsp :Vspec 
+  nnoremap <leader>pssp :Sspec 
+  nnoremap <leader>ped :Edoc 
+  nnoremap <leader>pvd :Vdoc 
+  nnoremap <leader>psd :Sdoc 
+  nnoremap <leader>pev :Eview 
+  nnoremap <leader>pvv :Vview 
+  nnoremap <leader>psv :Sview 
+  nnoremap <leader>petr :Etransformer 
+  nnoremap <leader>pvtr :Vtransformer 
+  nnoremap <leader>pstr :Stransformer 
+  nnoremap <leader>pete :Etest 
+  nnoremap <leader>pvte :Vtest 
+  nnoremap <leader>pste :Stest 
+  nnoremap <leader>pea :A<CR>
+  nnoremap <leader>psa :AS<CR>
+  nnoremap <leader>pva :AV<CR>
+  nnoremap <leader>psp :Dispatch phpspec describe App/
   augroup my_laravel
     autocmd!
     autocmd FileType php nnoremap <buffer> <silent> <leader>rs :call RunArtisanTinkerInSplit("-v")<CR>
@@ -694,7 +667,7 @@ EOD
          puts "No database configured"
        else
         create = %Q( mysqladmin -u #{user} --password=#{pass} create #{db})
-        grant = %Q( mysql -u #{user} --password=#{pass} -e "grant all on #{db}.* to #{user}@localhost" )
+        grant = %Q( mysql -u #{user} --password=#{pass} -e "grant all on #{db}.* to '#{user}'@'%'" )
         system create
         system grant
        end
@@ -747,8 +720,8 @@ fork do
   if File.exists? '.env'
     Dotenv.load '.env'
 
-    host = ENV['DB_HOST']
-    port = ENV['DB_PORT']
+    host = ENV['DB_HOST'] || '127.0.0.1'
+    port = ENV['DB_PORT'] || '3306'
     db = ENV['DB_DATABASE']
     user = ENV['DB_USERNAME']
     pass = ENV['DB_PASSWORD']
@@ -771,8 +744,8 @@ end
 EOD
 endfunction
 
-  nnoremap <leader>dbj :call RunMycli('-v')<CR>
-  nnoremap <leader>dbl :call RunMycli('-h')<CR>
+  nnoremap <leader>pdbj :call RunMycli('-v')<CR>
+  nnoremap <leader>pdbl :call RunMycli('-h')<CR>
 
   function! RunArtisanCommand(cmd)
     let escaped_cmd = "php artisan " . shellescape(a:cmd)
@@ -834,7 +807,7 @@ endfunction
         \  })
   endfunction
 
-  nnoremap <silent> <leader>a :call RunArtisan()<CR>
+  nnoremap <silent> <leader>pa :call RunArtisan()<CR>
   "nnoremap <silent> <leader>a :call fzf#run({
         "\  'source': GetAvailableArtisanCommands(),
         "\  'sink': function('RunArtisanCommand'),

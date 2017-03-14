@@ -73,7 +73,7 @@ nnoremap <Leader>ns :new<CR>
 nnoremap <Leader>nv :vnew<CR>
 
 " ack
-nnoremap <Leader>8 :Ack 
+nnoremap <Leader>a :Ack 
 
 " easymotion
 map <silent> / <Plug>(easymotion-sn)
