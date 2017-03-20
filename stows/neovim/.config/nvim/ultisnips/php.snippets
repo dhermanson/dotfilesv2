@@ -1,0 +1,224 @@
+snippet comment "Comment Block"
+/*
+|--------------------------------------------------------------------------
+| $0
+|--------------------------------------------------------------------------
+*/
+endsnippet
+
+snippet f "function"
+function ${1:name}($0) {
+}
+endsnippet
+
+snippet php "<?php"
+<?php
+
+$0
+endsnippet
+snippet psy "PsySh"
+eval(\Psy\sh());
+endsnippet
+
+snippet fk "Foreign Key"
+$table->foreign('$1_id')->references('id')->on('$1s');$0
+endsnippet
+
+snippet fkc "Foreign Key (cascade)"
+$table->foreign('$1_id')->references('id')->on('$1s')->onDelete('cascade');$0
+endsnippet
+
+snippet mf "model factory"
+$factory->define($0, function(Faker\Generator $faker) {
+	return [
+	];
+});
+endsnippet
+
+################################################################################
+#                      Laravel Relationships
+################################################################################
+
+snippet hm "HasMany"
+/**
+ * Get the $1 for this $2.
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\HasMany
+ */
+public function ${1:relation_name}() {
+	return $this->hasMany('$3');
+}
+endsnippet
+
+snippet mm "MorphMany"
+/**
+ * Get the $1 for this $2.
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+ */
+public function ${1:relation_name}() {
+	return $this->morphMany('$3');
+}
+endsnippet
+
+snippet mtm "MorphToMany"
+/**
+ * Get all of the $1 for the $3
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+ */
+public function ${1:relation_name}() {
+	return $this->morphToMany('$4', '$2');
+}
+endsnippet
+
+snippet mo "MorphOne"
+/**
+ * Get the $1 for this $3
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+ */
+public function ${1:relation_name}() {
+	return $this->morphOne('$4', '$2');
+}
+endsnippet
+
+snippet hmt "HasManyThrough"
+/**
+ * Get the $1 for this $2.
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+ */
+public function ${1:relation_name}() {
+	return $this->hasManyThrough('$3', '$4');
+}
+endsnippet
+
+snippet bt "BelongsTo"
+/**
+ * Get the $1 for this $2.
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+ */
+public function ${1:relation_name}() {
+	return $this->belongsTo('$3');
+}
+endsnippet
+
+snippet btm "BelongsToMany"
+/**
+ * Get the $1 for this $2.
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+ */
+public function ${1:relation_name}() {
+	return $this->belongsToMany('$3');
+}
+endsnippet
+
+################################################################################
+#                      Laravel Models
+################################################################################
+
+snippet table "Table"
+/**
+ * The table for this type.
+ *
+ * @var string
+ */
+protected $table = '$1';$0
+endsnippet
+
+snippet fil "Fillable"
+/**
+ * The attributes that are mass assignable.
+ *
+ * @var array
+ */
+protected $fillable = [
+	'$0'
+];
+endsnippet
+
+snippet hid "Hidden"
+/**
+ * The attributes that should be hidden for arrays.
+ *
+ * @var array
+ */
+protected $hidden = [
+	$0
+];
+endsnippet
+
+snippet dates "Dates"
+/**
+ * The date columns for this type.
+ *
+ * @var string[]
+ */
+protected $dates = [
+	$0
+];
+endsnippet
+
+snippet casts "Casts"
+/**
+ * The casts for this type.
+ *
+ * @var string[]
+ */
+protected $casts = [
+	$0
+];
+endsnippet
+
+snippet usd "use SoftDeletes"
+use SoftDeletes$0;
+endsnippet
+
+###########################################################################
+# Fractal Transformers
+###########################################################################
+
+snippet fractalt "Fractal: Transformer"
+<?php
+
+namespace App\Http\Transformers;
+
+use League\Fractal\TransformerAbstract;
+
+class ${1:Something}Transformer extends TransformerAbstract {
+
+	/**
+	 * Turn this item object into a generic array
+	 *
+	 * @return array
+	 */
+	public function transform($0) {
+		return [];
+	}
+
+}
+endsnippet
+
+snippet fractalai "Fractal: Available Includes"
+/**
+ * List of resources possible to include
+ *
+ * @var array
+ */
+protected $availableIncludes = [
+  $0
+];
+endsnippet
+
+snippet fractali "Fractal: Include"
+/**
+ * Include $1
+ *
+ * @return \League\Fractal\ItemResource
+ */
+public function include${1:Resource}($0) {
+}
+endsnippet

@@ -1,5 +1,7 @@
 #! /usr/bin/env ruby
 
+require 'readline'
+
 def clear_screen
   clear_code = %x{clear}
   print clear_code
@@ -12,8 +14,9 @@ def get_user_input command
   make_doc_pane command
 
   # print command
-  print "#{command} " 
-  args = $stdin.gets
+  # print "#{command} " 
+  # args = $stdin.gets
+  args = Readline.readline("#{command} ", true)
 
   remove_doc_pane
 

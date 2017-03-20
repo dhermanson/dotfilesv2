@@ -23,10 +23,12 @@ Plug 'Raimondi/delimitMate'
 " Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
+Plug 'tobyS/vmustache'
 Plug 'tommcdo/vim-fubitive'
+Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
@@ -99,7 +101,9 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase = 1
 
 " ack
-let g:ackprg = 'rg --vimgrep --no-heading -uu -i'
+" let g:ackprg = 'rg --vimgrep --no-heading -uu -i --ignore-file tags --ignore-file tags.vendor'
+let g:ackprg = 'rg --vimgrep --no-heading '
+" let g:ackprg = "ag --vimgrep"
 
 " syntastic
 "" syntastic settings
@@ -132,7 +136,7 @@ let g:ackprg = 'rg --vimgrep --no-heading -uu -i'
 "    \ "passive_filetypes": ["html", "blade"] }
 
 " neomake
-let g:neomake_open_list=1
+let g:neomake_open_list=2
 let g:neomake_verbose=0
 " let g:neomake_error_sign = {'text': '✗', 'texthl': 'NeomakeErrorSign'}
 
@@ -214,3 +218,9 @@ let g:deoplete#sources#jedi#extra_path = [
 let g:delimitMate_expand_cr=1
 let g:delimitMate_expand_space=1
 let g:delimitMate_jump_expansion=1
+
+"------------------PDV - PHP Documenter------------------------------------------
+let g:pdv_template_dir = $HOME ."/.local/share/nvim/plugged/pdv/templates_snip"
+
+"------------------Ultisnips-----------------------------------------------------
+let g:UltiSnipsSnippetsDir = $HOME . "/.config/nvim/ultisnips"

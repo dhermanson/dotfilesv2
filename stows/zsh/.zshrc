@@ -99,11 +99,15 @@ source $ZSH/oh-my-zsh.sh
 #BASE16_SHELL="$HOME/.config/base16-shell/base16-solarized.dark.sh"
 #[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
+# MPD daemon start (if no other user instance exists)
+[ ! -s ~/.config/mpd/pid ] && mpd ~/.config/mpd/mpd.conf 2> /dev/null
+
 
 ##############i started x'ing stuff here########################################
 #
-## gruvbox
-#source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
+# gruvbox
+# source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
+source "$HOME/.local/share/nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
 # tmux
 alias tmux="tmux -2"

@@ -55,6 +55,9 @@ let g:lightline = {
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
+" change separator and subseparator
+let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.subseparator = { 'left': '|', 'right': '|' }
 
 function! LightlineModified()
   if &filetype == "help"

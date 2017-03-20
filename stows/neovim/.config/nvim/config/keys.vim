@@ -22,6 +22,10 @@ endif
 let mapleader=" "
 let maplocalleader = ","
 
+" updating vimrc file
+nnoremap <Leader>.ev :e $MYVIMRC<CR>
+nnoremap <Leader>.sv :source $MYVIMRC<CR>
+
 " escape on jk
 inoremap jk <Esc>
 
@@ -93,10 +97,9 @@ nnoremap <Leader>gc :Commits<CR>
 " ultisnips
 let g:UltiSnipsExpandTrigger="<tab>"
 "let g:UltiSnipsListSnippets="<c-l>"
-"let g:UltiSnipsJumpForwardTrigger="<m-n>"
-"let g:UltiSnipsJumpBackwardTrigger="<m-p>"
-let g:UltiSnipsJumpForwardTrigger="<m-j>"
-let g:UltiSnipsJumpBackwardTrigger="<m-k>"
+let g:UltiSnipsJumpForwardTrigger="<m-n>"
+let g:UltiSnipsJumpBackwardTrigger="<m-p>"
+nnoremap <Leader>.es :UltiSnipsEdit<CR>
 
 " dispatch
 nnoremap <Leader>dp :Dispatch 
@@ -116,3 +119,7 @@ inoremap <silent> <M-s> <C-o>:call SendToTmuxPane()<CR>
 vnoremap <M-s> :\<C-u>execute "'<,'>Twrite " . g:my_tmux_repl_pane <CR>
 nnoremap <silent> <M-s> :call SendToTmuxPane()<CR>
 nnoremap <silent> <M-x> :call KillTmuxRepl()<CR>
+
+" tagbar settings
+nnoremap <Leader>0 :TagbarToggle<CR>
+nnoremap <Leader>9 :TagbarTogglePause<CR>

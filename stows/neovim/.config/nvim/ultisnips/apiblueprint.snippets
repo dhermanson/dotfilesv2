@@ -1,0 +1,152 @@
+snippet res "Response"
++ Response ${1:200} (${2:application/json})
+
+$0
+endsnippet
+snippet body "body"
+    + Body
+
+		        $0
+endsnippet
+
+snippet bodyi "body json item"
+    + Body
+
+		        {
+						  "data": {
+							  $0
+							}
+						}
+endsnippet
+
+snippet bodyc "body json collection"
+    + Body
+
+            {
+							"data": [
+							  {
+									$0
+								}
+							]
+						}
+endsnippet
+
+snippet schema "Schema"
+		+ Schema
+
+						{
+							"$schema": "http://json-schema.org/draft-04/schema#",
+							"title": "$1",
+							"description": "$2",
+							"type": "${3:object}",
+							"properties": {
+								$0
+							}${4:,
+							"required": [
+								"data"
+							]}
+						}
+endsnippet
+
+snippet dataarray "wrapper for list of objects" b
+"data": {
+	"type": "array",
+	"description": "Array of ${1:objects}",
+	"items": {
+		"type": "object",
+		"description": "$2",
+		"properties": {
+			$0
+		}${3:,
+		"required": [
+
+		]}
+	}
+}
+endsnippet
+
+snippet dataobj "wrapper for single object" w
+"data": {
+	"type": "object",
+	"description": "$1",
+	"properties": {
+		$0
+	}
+}
+endsnippet
+
+snippet id "id" w
+"id": {
+	"type": "string",
+	"description": "The id of the ${1:entity}"
+}$0
+endsnippet
+
+snippet enum "Enum" w
+"$1": {
+	"description": "$2",
+	"enum": [$3]
+}$0
+endsnippet
+
+snippet obj "object" w
+"$1": {
+	"type": "object",
+	"description": "$2",
+	"properties": {
+		$4
+	}${3:,
+	"required": [
+
+	]}
+}$0
+endsnippet
+
+snippet arr "array" w
+"$1": {
+	"type": "array",
+	"description": "$2",
+	"items": {
+		"type": "${3:string}"
+	}
+}$0
+endsnippet
+
+snippet bool "boolean" w
+"$1": {
+	"type": "boolean",
+	"description": "$2"
+}$0
+endsnippet
+
+snippet int "integer" w
+"$1": {
+	"type": "integer",
+	"description": "$2"
+}$0
+endsnippet
+
+snippet num "number" w
+"$1": {
+	"type": "number",
+	"description": "$2"
+}$0
+endsnippet
+
+snippet str "string" w
+"$1": {
+	"type": "string",
+	"description": "$2"
+}$0
+endsnippet
+
+snippet prop "Property"
+"${1:name}": {
+	"description": "$2",
+	"type": "$3"
+}$0
+endsnippet
+
+snippet param "parameter"
++ ${1:name}: \`$2\` (${3:string}${4:, optional}) - ${5:description}
+endsnippet

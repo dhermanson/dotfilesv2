@@ -1,0 +1,30 @@
+snippet uuid "UUID wrapped in quotes" w
+`!p import uuid
+if not snip.c:
+		snip.rv = uuid.uuid4().hex`
+endsnippet
+
+snippet c "id" w
+`!p import uuid
+if not snip.c:
+		snip.rv = uuid.uuid4().hex[:5]`
+endsnippet
+
+snippet uuids "UUID"
+`!p import uuid
+if not snip.c:
+		snip.rv = '"' + str(uuid.uuid4().hex) + '"'`
+endsnippet
+
+snippet iso "ISO8601 UTC now" w
+`!p import datetime
+if not snip.c:
+		snip.rv = str(datetime.datetime.utcnow().isoformat()[:-3]) + 'Z'`
+endsnippet
+
+snippet isos "ISO8601 UTC now wrapped in quotes"
+`!p import datetime
+if not snip.c:
+		snip.rv = '"' + str(datetime.datetime.utcnow().isoformat()[:-3]) + 'Z"'`
+endsnippet
+

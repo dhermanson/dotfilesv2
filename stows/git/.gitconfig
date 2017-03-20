@@ -1,3 +1,5 @@
 [user]
 	name = Derick Hermanson
 	email = derick.hermanson@gmail.com
+[core]
+	excludesfile = ~/.gitignore_global

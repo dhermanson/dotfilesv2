@@ -1,0 +1,9 @@
+#! /bin/bash
+
+output=$1
+host=$2
+db=$3
+user=$4
+password=$5
+
+docker run -it --rm -v $output:/data mnuessler/schemaspy -hq -t mysql -host $host -db $db -u $user -p $password -norows -o /data

@@ -44,8 +44,6 @@ source $HOME/.config/nvim/config/keys.vim
 "
 "
 "nnoremap <Leader>.p :set paste!<CR>
-"nnoremap <Leader>.ev :e $MYVIMRC<CR>
-"nnoremap <Leader>.sv :source $MYVIMRC<CR>
 "nnoremap <Leader>.egt :e ~/todo.txt<CR>
 "nnoremap <Leader>.ept :e .derick/todo.txt<CR>
 "nnoremap <Leader>.epn :e .derick/notes.md<CR>
@@ -67,88 +65,85 @@ source $HOME/.config/nvim/config/keys.vim
 "
 "
 "
-"" tagbar settings
-"nnoremap <Leader>0 :TagbarToggle<CR>
-"nnoremap <Leader>9 :TagbarTogglePause<CR>
-"let g:tagbar_type_ruby = {
-"    \ 'kinds' : [
-"        \ 'm:modules',
-"        \ 'c:classes',
-"        \ 'd:describes',
-"        \ 'C:contexts',
-"        \ 'f:methods',
-"        \ 'F:singleton methods'
-"    \ ]
-"\ }
-"
-"let g:tagbar_type_elixir = {
-"    \ 'ctagstype' : 'elixir',
-"    \ 'kinds' : [
-"        \ 'f:functions',
-"        \ 'functions:functions',
-"        \ 'c:callbacks',
-"        \ 'd:delegates',
-"        \ 'e:exceptions',
-"        \ 'i:implementations',
-"        \ 'a:macros',
-"        \ 'o:operators',
-"        \ 'm:modules',
-"        \ 'p:protocols',
-"        \ 'r:records'
-"    \ ]
-"\ }
-"
-"let g:tagbar_type_typescript = {
-"  \ 'ctagstype': 'typescript',
-"  \ 'kinds': [
-"    \ 'c:classes',
-"    \ 'n:modules',
-"    \ 'f:functions',
-"    \ 'v:variables',
-"    \ 'v:varlambdas',
-"    \ 'm:members',
-"    \ 'i:interfaces',
-"    \ 'e:enums',
-"  \ ]
-"\ }
-"
-"let g:tagbar_type_snippets = {
-"    \ 'ctagstype' : 'snippets',
-"    \ 'kinds' : [
-"        \ 's:snippets',
-"    \ ]
-"\ }
-"
-"let g:tagbar_type_php  = {
-"    \ 'ctagstype' : 'php',
-"    \ 'kinds'     : [
-"        \ 'y:interfaces',
-"        \ 'z:classes',
-"        \ 'w:constants',
-"        \ 'm:methods',
-"        \ 'x:functions',
-"        \ 't:traits',
-"        \ 'p:properties',
-"        \ 'r:static_properties',
-"        \ 's:static_methods',
-"    \ ]
-"  \ }
-"
-"let g:tagbar_type_markdown = {
-"    \ 'ctagstype' : 'markdown',
-"    \ 'kinds' : [
-"        \ 'h:Heading_L1',
-"        \ 'i:Heading_L2',
-"        \ 'k:Heading_L3'
-"    \ ]
-"\ }
+" tagbar settings
+let g:tagbar_type_ruby = {
+    \ 'kinds' : [
+        \ 'm:modules',
+        \ 'c:classes',
+        \ 'd:describes',
+        \ 'C:contexts',
+        \ 'f:methods',
+        \ 'F:singleton methods'
+    \ ]
+\ }
+
+let g:tagbar_type_elixir = {
+    \ 'ctagstype' : 'elixir',
+    \ 'kinds' : [
+        \ 'f:functions',
+        \ 'functions:functions',
+        \ 'c:callbacks',
+        \ 'd:delegates',
+        \ 'e:exceptions',
+        \ 'i:implementations',
+        \ 'a:macros',
+        \ 'o:operators',
+        \ 'm:modules',
+        \ 'p:protocols',
+        \ 'r:records'
+    \ ]
+\ }
+
+let g:tagbar_type_typescript = {
+  \ 'ctagstype': 'typescript',
+  \ 'kinds': [
+    \ 'c:classes',
+    \ 'n:modules',
+    \ 'f:functions',
+    \ 'v:variables',
+    \ 'v:varlambdas',
+    \ 'm:members',
+    \ 'i:interfaces',
+    \ 'e:enums',
+  \ ]
+\ }
+
+let g:tagbar_type_snippets = {
+    \ 'ctagstype' : 'snippets',
+    \ 'kinds' : [
+        \ 's:snippets',
+    \ ]
+\ }
+
+let g:tagbar_type_php  = {
+    \ 'ctagstype' : 'php',
+    \ 'kinds'     : [
+        \ 'y:interfaces',
+        \ 'z:classes',
+        \ 'w:constants',
+        \ 'm:methods',
+        \ 'x:functions',
+        \ 't:traits',
+        \ 'p:properties',
+        \ 'r:static_properties',
+        \ 's:static_methods',
+    \ ]
+  \ }
+
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+        \ 'h:Heading_L1',
+        \ 'i:Heading_L2',
+        \ 'k:Heading_L3'
+    \ ]
+\ }
 "
 """ youcompleteme
 ""let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 ""let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 "
 "" ultisnips
-"nnoremap <Leader>.es :UltiSnipsEdit<CR>
 "nnoremap <Leader>.eas :e ~/.vim/Ultisnips/all.snippets<CR>
 "
 ""inoremap <c-l> <esc>:Unite ultisnips -start-insert<CR>
@@ -180,8 +175,6 @@ source $HOME/.config/nvim/config/keys.vim
 "
 "
 "
-"" php documentor snippets location
-"let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
 "
 ""------------php cs-fixer----------------------------------------
 "let g:php_cs_fixer_level = "symfony"              " which level ?
@@ -448,10 +441,12 @@ source $HOME/.config/nvim/config/keys.vim
 "
 "
 function! SetupLaravelProject()
+  nnoremap <leader>pmtp :Dispatch $HOME/.config/nvim/bin/create-php-ctags.sh<CR>
+  nnoremap <leader>pmtv :Dispatch $HOME/.config/nvim/bin/create-php-vendor-tags.sh<CR>
   let g:projectionist_heuristics = {
         \   "artisan": {
         \     "app/*.php": {
-        \       "alternate": "tests/{}Test.php"
+        \       "alternate": "spec/{}Spec.php"
         \     },
         \     "app/Models/*.php": {
         \       "type": "model",
@@ -537,80 +532,113 @@ function! SetupLaravelProject()
         \   }
         \ }
 
-  nnoremap <leader>pemo :Emodel 
-  nnoremap <leader>pvmo :Vmodel 
-  nnoremap <leader>psmo :Smodel 
-  nnoremap <leader>peev :Eevent 
-  nnoremap <leader>pvev :Vevent 
-  nnoremap <leader>psev :Sevent 
-  nnoremap <leader>peex :Eexception 
-  nnoremap <leader>pvex :Vexception 
-  nnoremap <leader>psex :Sexception 
-  nnoremap <leader>pero :Eroutes <CR>
-  nnoremap <leader>pvro :Vroutes <CR>
-  nnoremap <leader>psro :Sroutes <CR>
-  nnoremap <leader>pek :Ekernel <CR>
-  nnoremap <leader>pvk :Vkernel <CR>
-  nnoremap <leader>psk :Skernel <CR>
-  nnoremap <leader>peco :Econtroller 
-  nnoremap <leader>pvco :Vcontroller 
-  nnoremap <leader>psco :Scontroller 
-  nnoremap <leader>pemid :Emiddleware 
-  nnoremap <leader>pvmid :Vmiddleware 
-  nnoremap <leader>psmid :Smiddleware 
-  nnoremap <leader>pere :Erequest 
-  nnoremap <leader>pvre :Vrequest 
-  nnoremap <leader>psre :Srequest 
-  nnoremap <leader>pej :Ejob 
-  nnoremap <leader>pvj :Vjob 
-  nnoremap <leader>psj :Sjob 
-  nnoremap <leader>pel :Elistener 
-  nnoremap <leader>pvl :Vlistener 
-  nnoremap <leader>psl :Slistener 
-  nnoremap <leader>pepo :Epolicy 
-  nnoremap <leader>pvpo :Vpolicy 
-  nnoremap <leader>pspo :Spolicy 
-  nnoremap <leader>pepr :Eprovider 
-  nnoremap <leader>pvpr :Vprovider 
-  nnoremap <leader>pspr :Sprovider 
-  nnoremap <leader>pecfg :Econfig 
-  nnoremap <leader>pvcfg :Vconfig 
-  nnoremap <leader>pscfg :Sconfig 
-  nnoremap <leader>pemig :Emigration 
-  nnoremap <leader>pvmig :Vmigration 
-  nnoremap <leader>psmig :Smigration 
-  nnoremap <leader>pese :Eseeder 
-  nnoremap <leader>pvse :Vseeder 
-  nnoremap <leader>psse :Sseeder 
-  nnoremap <leader>pesp :Espec 
-  nnoremap <leader>pvsp :Vspec 
-  nnoremap <leader>pssp :Sspec 
-  nnoremap <leader>ped :Edoc 
-  nnoremap <leader>pvd :Vdoc 
-  nnoremap <leader>psd :Sdoc 
-  nnoremap <leader>pev :Eview 
-  nnoremap <leader>pvv :Vview 
-  nnoremap <leader>psv :Sview 
-  nnoremap <leader>petr :Etransformer 
-  nnoremap <leader>pvtr :Vtransformer 
-  nnoremap <leader>pstr :Stransformer 
-  nnoremap <leader>pete :Etest 
-  nnoremap <leader>pvte :Vtest 
-  nnoremap <leader>pste :Stest 
-  nnoremap <leader>pea :A<CR>
-  nnoremap <leader>psa :AS<CR>
-  nnoremap <leader>pva :AV<CR>
-  nnoremap <leader>psp :Dispatch phpspec describe App/
+  nnoremap <localleader>emo :Emodel 
+  nnoremap <localleader>vmo :Vmodel 
+  nnoremap <localleader>smo :Smodel 
+  nnoremap <localleader>eev :Eevent 
+  nnoremap <localleader>vev :Vevent 
+  nnoremap <localleader>sev :Sevent 
+  nnoremap <localleader>eex :Eexception 
+  nnoremap <localleader>vex :Vexception 
+  nnoremap <localleader>sex :Sexception 
+  nnoremap <localleader>ero :Eroutes <CR>
+  nnoremap <localleader>vro :Vroutes <CR>
+  nnoremap <localleader>sro :Sroutes <CR>
+  nnoremap <localleader>ek :Ekernel <CR>
+  nnoremap <localleader>vk :Vkernel <CR>
+  nnoremap <localleader>sk :Skernel <CR>
+  nnoremap <localleader>eco :Econtroller 
+  nnoremap <localleader>vco :Vcontroller 
+  nnoremap <localleader>sco :Scontroller 
+  nnoremap <localleader>emid :Emiddleware 
+  nnoremap <localleader>vmid :Vmiddleware 
+  nnoremap <localleader>smid :Smiddleware 
+  nnoremap <localleader>ere :Erequest 
+  nnoremap <localleader>vre :Vrequest 
+  nnoremap <localleader>sre :Srequest 
+  nnoremap <localleader>ej :Ejob 
+  nnoremap <localleader>vj :Vjob 
+  nnoremap <localleader>sj :Sjob 
+  nnoremap <localleader>el :Elistener 
+  nnoremap <localleader>vl :Vlistener 
+  nnoremap <localleader>sl :Slistener 
+  nnoremap <localleader>epo :Epolicy 
+  nnoremap <localleader>vpo :Vpolicy 
+  nnoremap <localleader>spo :Spolicy 
+  nnoremap <localleader>epr :Eprovider 
+  nnoremap <localleader>vpr :Vprovider 
+  nnoremap <localleader>spr :Sprovider 
+  nnoremap <localleader>ecfg :Econfig 
+  nnoremap <localleader>vcfg :Vconfig 
+  nnoremap <localleader>scfg :Sconfig 
+  nnoremap <localleader>emig :Emigration 
+  nnoremap <localleader>vmig :Vmigration 
+  nnoremap <localleader>smig :Smigration 
+  nnoremap <localleader>ese :Eseeder 
+  nnoremap <localleader>vse :Vseeder 
+  nnoremap <localleader>sse :Sseeder 
+  nnoremap <localleader>esp :Espec 
+  nnoremap <localleader>vsp :Vspec 
+  nnoremap <localleader>ssp :Sspec 
+  nnoremap <localleader>ed :Edoc 
+  nnoremap <localleader>vd :Vdoc 
+  nnoremap <localleader>sd :Sdoc 
+  nnoremap <localleader>ev :Eview 
+  nnoremap <localleader>vv :Vview 
+  nnoremap <localleader>sv :Sview 
+  nnoremap <localleader>etr :Etransformer 
+  nnoremap <localleader>vtr :Vtransformer 
+  nnoremap <localleader>str :Stransformer 
+  nnoremap <localleader>ete :Etest 
+  nnoremap <localleader>vte :Vtest 
+  nnoremap <localleader>ste :Stest 
+  nnoremap <localleader>ea :A<CR>
+  nnoremap <localleader>sa :AS<CR>
+  nnoremap <localleader>va :AV<CR>
+  nnoremap <localleader>sp :Dispatch phpspec describe App/
   augroup my_laravel
     autocmd!
     autocmd FileType php nnoremap <buffer> <silent> <leader>rs :call RunArtisanTinkerInSplit("-v")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <leader>rv :call RunArtisanTinkerInSplit("-h")<CR>
   augroup END
 
+  function! RunSchemaspyOnProjectDatabase()
+    let l:project_dir = fnamemodify('.', ':p')
+    let l:ip = input("Enter your IP address: ")
+
+    ruby <<EOD
+    require 'fileutils'
+    require 'pathname'
+
+    ip = VIM::evaluate('l:ip')
+    project_dir = VIM::evaluate('l:project_dir')
+    directory = Pathname.new(project_dir) + '.derick/schema'
+    FileUtils.mkdir_p directory
+
+    fork do
+      require 'dotenv'
+
+      if File.exists? '.env'
+        Dotenv.load '.env'
+
+        db = ENV['DB_DATABASE']
+        user = ENV['DB_USERNAME']
+        pass = ENV['DB_PASSWORD']
+
+        unless db.nil? and user.nil? and pass.nil? and ip.nil? and directory.nil?
+          cmd = %Q( tmux splitw -p 10 'schemaspy #{directory} #{ip} #{db} #{user} #{pass} ' )
+          system cmd
+          system 'tmux last-pane'
+        end
+      end
+    end
+EOD
+  endfunction
+
   function! DropProjectDatabase()
     ruby <<EOD
     fork do
-    require 'dotenv'
+      require 'dotenv'
 
       if File.exists? '.env'
         Dotenv.load '.env'
@@ -744,6 +772,9 @@ end
 EOD
 endfunction
 
+  nnoremap <leader>pdbs :call RunSchemaspyOnProjectDatabase()<CR>
+  nnoremap <leader>pdbc :call CreateProjectDatabase()<CR>
+  nnoremap <leader>pdbd :call DropProjectDatabase()<CR>
   nnoremap <leader>pdbj :call RunMycli('-v')<CR>
   nnoremap <leader>pdbl :call RunMycli('-h')<CR>
 
@@ -759,8 +790,8 @@ endfunction
   endfunction
 
   " make sure dependencies installed...can run in background
-  call system("tmux splitw -b -p 5 'ruby " . $HOME . "/.config/nvim/bin/laravel/open_mycli.rb'")
-  call system("tmux last-pane")
+  " call system("tmux splitw -b -p 5 'ruby " . $HOME . "/.config/nvim/bin/laravel/open_mycli.rb'")
+  " call system("tmux last-pane")
 
 
   function! GetAvailableArtisanCommands()
@@ -825,3 +856,89 @@ augroup my_vimenter
   autocmd!
   autocmd VimEnter * call SetupProjectType()
 augroup END
+"------------PHP STUFF MOVE IT!--------------------------------------------------
+
+function! IPhpInsertUse()
+    call PhpInsertUse()
+    call feedkeys('a',  'n')
+endfunction
+
+function! IPhpExpandClass()
+    call PhpExpandClass()
+    call feedkeys('a', 'n')
+endfunction
+
+function! RunPhpSpecOnBuffer(buffer_name)
+  " TODO: don't hardcode console:runner.1
+  "       maybe use a global config or something
+  "exe "Tmux send-keys -t console:runner.1 'clear; phpspec run " . fnameescape(a:buffer_name) . "' Enter"
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:phpspec_exe = fnamemodify('vendor/bin/phpspec run', ':p')
+  let l:file = expand('%:p')
+  let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:phpspec_exe . ' ' . l:file
+  "exe "Start phpspec run " . fnameescape(a:buffer_name) . " && read"
+  "exe "Tmux neww -t runner"
+  "exe "Tmux send-keys -t runner '" . l:cmd . "' Enter"
+  "exe "Tmux neww -t runner '" . l:cmd . "'"
+  exe "Tmux splitw '" . l:cmd . " ; read'"
+endfunction
+
+function! RunArtisanTinkerInProjectRootDirectory()
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:cmd = 'cd ' . l:project_dir . ' && php artisan tinker'
+  exe "Tmux neww -t runner -n artisan '" . l:cmd . "'"
+  let g:my_tmux_repl_pane = "runner:artisan.0"
+endfunction
+
+function! RunArtisanTinkerInProjectRootDirectoryInTmuxSplit()
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:cmd = 'cd ' . l:project_dir . ' && php artisan tinker'
+  exe "Tmux splitw '" . l:cmd . "'"
+  exe "Tmux last-pane"
+endfunction
+
+function! RunBehatOnFile()
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:behat_exe = fnamemodify('vendor/bin/behat', ':p')
+  let l:file = expand('%:p')
+  let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:behat_exe . ' --append-snippets ' . l:file
+  exe "Tmux neww -t runner"
+  exe "Tmux send-keys -t runner '" . l:cmd . "' Enter"
+endfunction
+
+function! RunArtisanTinkerInSplit(split)
+  call KillTmuxRepl()
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:cmd = 'cd ' . l:project_dir . ' && php artisan tinker'
+  let l:pane = CreateTmuxSplitAndRunCommand(l:cmd, a:split)
+  let g:my_tmux_repl_pane = l:pane
+
+  "call RunCommandInTmuxPane(l:pane, l:cmd)
+endfunction
+
+function! CreatePhpSplitAndStartRepl(buffersplit, tmuxsplit)
+  execute "normal! :" . a:buffersplit . "\<CR>"
+  :setfiletype php
+  :call RunArtisanTinkerInSplit(a:tmuxsplit)
+  execute "normal! i<?php\<CR>\<CR>"
+  :startinsert
+endfunction
+
+function! RemoveUnusedPhpUseStatementsForCurrentFile()
+  " check if buffer has been modified
+  if (&mod)
+    "let l:choice = confirm("Save buffer first?", "&Yes\n&No")
+    "if l:choice == 1
+      execute "w"
+    "endif
+  endif
+
+  let l:filename = bufname("%")
+  let l:cmd = "php-cs-fixer fix " . l:filename . " --fixers=unused_use"
+  call system(l:cmd)
+  exe "edit!"
+endfunction
+
+
+"command DropProjectDatabase :call DropProjectDatabase()
+

@@ -1,4 +1,6 @@
 bundler
 dotenv
+mailcatcher
 neovim
 pry
+pry-doc
