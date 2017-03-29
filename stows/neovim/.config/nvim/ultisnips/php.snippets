@@ -1,13 +1,33 @@
-snippet comment "Comment Block"
+snippet commentblock "Comment Block"
 /*
 |--------------------------------------------------------------------------
-| $0
+| $1
 |--------------------------------------------------------------------------
-*/
+*/$0
 endsnippet
 
+###########################################################################
+# PHP Class Instance Variables
+###########################################################################
+snippet prov "Protected: variable"
+protected $$1;$0
+endsnippet
+
+###########################################################################
+# PHP Functions
+###########################################################################
 snippet f "function"
 function ${1:name}($0) {
+}
+endsnippet
+
+snippet pubf "public function"
+public function ${1:name}($0) {
+}
+endsnippet
+
+snippet prof "protected function"
+protected function ${1:name}($0) {
 }
 endsnippet
 
@@ -18,14 +38,6 @@ $0
 endsnippet
 snippet psy "PsySh"
 eval(\Psy\sh());
-endsnippet
-
-snippet fk "Foreign Key"
-$table->foreign('$1_id')->references('id')->on('$1s');$0
-endsnippet
-
-snippet fkc "Foreign Key (cascade)"
-$table->foreign('$1_id')->references('id')->on('$1s')->onDelete('cascade');$0
 endsnippet
 
 snippet mf "model factory"
@@ -181,7 +193,7 @@ endsnippet
 # Fractal Transformers
 ###########################################################################
 
-snippet fractalt "Fractal: Transformer"
+snippet frt "Fractal: Transformer"
 <?php
 
 namespace App\Http\Transformers;
@@ -202,7 +214,7 @@ class ${1:Something}Transformer extends TransformerAbstract {
 }
 endsnippet
 
-snippet fractalai "Fractal: Available Includes"
+snippet frai "Fractal: Available Includes"
 /**
  * List of resources possible to include
  *
@@ -213,12 +225,60 @@ protected $availableIncludes = [
 ];
 endsnippet
 
-snippet fractali "Fractal: Include"
+snippet fri "Fractal: Include"
 /**
  * Include $1
  *
  * @return \League\Fractal\ItemResource
  */
 public function include${1:Resource}($0) {
+}
+endsnippet
+
+###########################################################################
+# Blueprint Methods
+###########################################################################
+snippet bps "Blueprint: string"
+$table->string('$1');$0
+endsnippet
+
+snippet bpui "Blueprint: unsigned integer"
+$table->unsignedInteger('$1');$0
+endsnippet
+
+snippet bpd "Blueprint: date"
+$table->date('$1');$0
+endsnippet
+
+snippet bpfk "Blueprint: Foreign Key"
+$table->foreign('$1_id')->references('id')->on('$1s');$0
+endsnippet
+
+snippet bpfkc "Blueprint: Foreign Key (cascade)"
+$table->foreign('$1_id')->references('id')->on('$1s')->onDelete('cascade');$0
+endsnippet
+
+snippet bpb "Blueprint: boolean"
+$table->boolean('$1');$0
+endsnippet
+
+snippet bpdc "Blueprint: drop column"
+$table->dropColumn('$1');$0
+endsnippet
+
+###########################################################################
+# PHPUnit
+###########################################################################
+snippet unittc "PHPUnit: Test Case"
+<?php
+
+use Illuminate\Foundation\Testing\TestCase;
+
+
+endsnippet
+
+snippet setup "PHPUnit: setUp"
+public function setUp() {
+	$0
 }
 endsnippet

@@ -596,6 +596,18 @@ function! SetupLaravelProject()
   nnoremap <localleader>sa :AS<CR>
   nnoremap <localleader>va :AV<CR>
   nnoremap <localleader>sp :Dispatch phpspec describe App/
+
+  nnoremap <leader>pfdoc :exe ":FZF resources/assets/docs"<CR>
+  nnoremap <leader>pfcf :exe ":FZF config"<CR>
+  nnoremap <leader>pfcom :exe ":FZF app/Console"<CR>
+  nnoremap <leader>pfjo :exe ":FZF app/Jobs"<CR>
+  nnoremap <leader>pfjs :exe ":FZF resources/assets/js"<CR>
+  nnoremap <leader>pfles :exe ":FZF resources/assets/less"<CR>
+  nnoremap <leader>pfmid :exe ":FZF app/Http/Middleware"<CR>
+  nnoremap <leader>pfmig :exe ":FZF database/migrations"<CR>
+  nnoremap <leader>pfpro :exe ":FZF app/Providers"<CR>
+  nnoremap <leader>pfv :exe ":FZF resources/views"<CR>
+
   augroup my_laravel
     autocmd!
     autocmd FileType php nnoremap <buffer> <silent> <leader>rs :call RunArtisanTinkerInSplit("-v")<CR>
@@ -626,13 +638,17 @@ function! SetupLaravelProject()
         pass = ENV['DB_PASSWORD']
 
         unless db.nil? and user.nil? and pass.nil? and ip.nil? and directory.nil?
-          cmd = %Q( tmux splitw -p 10 'schemaspy #{directory} #{ip} #{db} #{user} #{pass} ' )
+          cmd = %Q( tmux splitw -p 10 'schemaspy #{directory} #{ip} #{db} #{user} #{pass} && open #{directory}/relationships.html' )
           system cmd
           system 'tmux last-pane'
         end
       end
     end
 EOD
+  endfunction
+
+  function! OpenSchemaspyFileInBrowser()
+    call system('open .derick/schema/relationships.html')
   endfunction
 
   function! DropProjectDatabase()
@@ -772,11 +788,13 @@ end
 EOD
 endfunction
 
-  nnoremap <leader>pdbs :call RunSchemaspyOnProjectDatabase()<CR>
+
+  nnoremap <leader>pdbsc :call RunSchemaspyOnProjectDatabase()<CR>
+  nnoremap <leader>pdbso :call OpenSchemaspyFileInBrowser()<CR>
   nnoremap <leader>pdbc :call CreateProjectDatabase()<CR>
   nnoremap <leader>pdbd :call DropProjectDatabase()<CR>
-  nnoremap <leader>pdbj :call RunMycli('-v')<CR>
-  nnoremap <leader>pdbl :call RunMycli('-h')<CR>
+  nnoremap <leader>pdbrj :call RunMycli('-v')<CR>
+  nnoremap <leader>pdbrl :call RunMycli('-h')<CR>
 
   function! RunArtisanCommand(cmd)
     let escaped_cmd = "php artisan " . shellescape(a:cmd)
@@ -877,6 +895,21 @@ function! RunPhpSpecOnBuffer(buffer_name)
   let l:file = expand('%:p')
   let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:phpspec_exe . ' ' . l:file
   "exe "Start phpspec run " . fnameescape(a:buffer_name) . " && read"
+  "exe "Tmux neww -t runner"
+  "exe "Tmux send-keys -t runner '" . l:cmd . "' Enter"
+  "exe "Tmux neww -t runner '" . l:cmd . "'"
+  exe "Tmux splitw '" . l:cmd . " ; read'"
+endfunction
+
+function! RunPhpUnitOnBuffer(buffer_name)
+  " TODO: don't hardcode console:runner.1
+  "       maybe use a global config or something
+  "exe "Tmux send-keys -t console:runner.1 'clear; phpspec run " . fnameescape(a:buffer_name) . "' Enter"
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:phpunit_exe = fnamemodify('vendor/bin/phpunit ', ':p')
+  let l:file = expand('%:p')
+  let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:phpunit_exe . ' ' . l:file
+  "exe "Start phpunit run " . fnameescape(a:buffer_name) . " && read"
   "exe "Tmux neww -t runner"
   "exe "Tmux send-keys -t runner '" . l:cmd . "' Enter"
   "exe "Tmux neww -t runner '" . l:cmd . "'"

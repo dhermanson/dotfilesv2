@@ -48,6 +48,67 @@ snippet schema "Schema"
 						}
 endsnippet
 
+snippet schemameta "Meta"
+"meta": {
+  "type": "object",
+  "description": "Meta information",
+  "properties": {
+		$0
+  },
+  "required": [
+		$1
+  ]
+}
+endsnippet
+
+snippet schemametapagination "Meta-Pagination"
+"pagination": {
+  "type": "object",
+  "description": "The pagination information for this call",
+  "properties": {
+    "total": {
+      "type": "integer",
+      "description": "The total number of items in the system."
+    },
+    "count": {
+      "type": "integer",
+      "description": "The number of items on this page."
+    },
+    "per_page": {
+      "type": "integer",
+      "description": "The number of items per page."
+    },
+    "total_pages": {
+      "type": "integer",
+      "description": "The total number of pages in the system for this item based on the 'per_page' size."
+    },
+    "links": {
+      "type": "object",
+      "description": "The links to previous and next page",
+      "properties": {
+        "previous": {
+          "type": "string",
+          "description": "The URL to the previous page."
+        },
+        "next": {
+          "type": "string",
+          "description": "The URL to the next page."
+        }
+      },
+      "required": []
+    }
+  },
+  "required": [
+    "total",
+    "count",
+    "per_page",
+    "current_page",
+    "total_pages",
+    "links"
+  ]
+}
+endsnippet
+
 snippet dataarray "wrapper for list of objects" b
 "data": {
 	"type": "array",

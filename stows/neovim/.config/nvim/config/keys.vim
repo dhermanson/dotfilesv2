@@ -22,6 +22,9 @@ endif
 let mapleader=" "
 let maplocalleader = ","
 
+" map empty project mapping to noop...cuz sometimes i forget what i'm doing
+nnoremap <Leader>p <Nop>
+
 " updating vimrc file
 nnoremap <Leader>.ev :e $MYVIMRC<CR>
 nnoremap <Leader>.sv :source $MYVIMRC<CR>
@@ -122,4 +125,6 @@ nnoremap <silent> <M-x> :call KillTmuxRepl()<CR>
 
 " tagbar settings
 nnoremap <Leader>0 :TagbarToggle<CR>
+nnoremap <M-b> :TagbarToggle<CR>
+inoremap <M-b> <esc>:TagbarToggle<CR>
 nnoremap <Leader>9 :TagbarTogglePause<CR>

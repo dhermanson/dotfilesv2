@@ -1,3 +1,6 @@
+################################################################################
+#  Brew Taps
+################################################################################
 tap 'homebrew/dupes'
 tap 'homebrew/fuse'
 tap 'homebrew/homebrew-php'
@@ -5,6 +8,9 @@ tap 'homebrew/homebrew-services'
 tap 'homebrew/versions'
 tap 'neovim/neovim'
 
+################################################################################
+#  Brew Casks
+################################################################################
 cask 'docker'
 cask 'dropbox'
 cask 'firefox'
@@ -14,6 +20,9 @@ cask 'osxfuse'
 cask 'postman'
 cask 'sequel-pro'
 
+################################################################################
+#  Brew Packages
+################################################################################
 brew 'ack'
 brew 'ag'
 brew 'composer'
@@ -22,6 +31,7 @@ brew 'ctags'
 brew 'emacs', args: ['with-cocoa']
 brew 'fontconfig'
 brew 'htop'
+brew 'https://raw.github.com/apiaryio/drafter/master/tools/homebrew/drafter.rb', args: ['HEAD']
 brew 'imagemagick'
 brew 'leiningen'
 brew 'mpc'
@@ -31,13 +41,6 @@ brew 'mycli'
 brew 'mysql'
 brew 'ncmpcpp'
 brew 'neovim'
-brew 'php71'
-brew 'php71-imagick'
-brew 'php71-mcrypt'
-brew 'php71-pdo-dblib'
-brew 'php71-pdo-pgsql'
-brew 'php71-redis'
-brew 'php71-xdebug'
 brew 'php70'
 brew 'php70-imagick'
 brew 'php70-mcrypt'
@@ -45,6 +48,13 @@ brew 'php70-pdo-dblib'
 brew 'php70-pdo-pgsql'
 brew 'php70-redis'
 brew 'php70-xdebug'
+brew 'php71'
+brew 'php71-imagick'
+brew 'php71-mcrypt'
+brew 'php71-pdo-dblib'
+brew 'php71-pdo-pgsql'
+brew 'php71-redis'
+brew 'php71-xdebug'
 brew 'plantuml'
 brew 'postgresql'
 brew 'pwgen'
@@ -63,5 +73,3 @@ brew 'tmux'
 brew 'wget'
 brew 'yarn'
 brew 'zsh'
-
-

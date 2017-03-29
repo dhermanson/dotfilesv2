@@ -7,12 +7,6 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 nnoremap <buffer> <localleader>rus :call RemoveUnusedPhpUseStatementsForCurrentFile()<CR>
-nnoremap <buffer> <localleader>fmig :exe ":FZF database/migrations"<CR>
-nnoremap <buffer> <localleader>fmid :exe ":FZF app/Http/Middleware"<CR>
-nnoremap <buffer> <localleader>fv :exe ":FZF resources/views"<CR>
-nnoremap <buffer> <localleader>fj :exe ":FZF resources/assets/js"<CR>
-nnoremap <buffer> <localleader>fl :exe ":FZF resources/assets/less"<CR>
-nnoremap <buffer> <localleader>fcf :exe ":FZF config"<CR>
 
 " quickly create new php buffers
 nnoremap <buffer> <localleader>nv :exe ":vnew \| setfiletype php"<CR>
@@ -49,7 +43,8 @@ nnoremap <buffer> <localleader>rps :Tmux splitw 'phpspec run ; read'<CR>
 " run phpunit tests for file or for project
 "autocmd FileType php nnoremap <localleader>rt :VimuxRunCommand('clear; phpunit ' . bufname('%')) <CR>
 "autocmd FileType php nnoremap <localleader>rpt :VimuxRunCommand('clear; phpunit') <CR>
-nnoremap <buffer> <localleader>rt :Start phpunit % && read<CR>
+" nnoremap <buffer> <localleader>rt :Start phpunit % && read<CR>
+nnoremap <buffer> <localleader>rt :call RunPhpUnitOnBuffer(bufname('%')) <CR>
 nnoremap <buffer> <localleader>rpt :Start phpunit && read<CR>
 
 " laravel

@@ -146,13 +146,21 @@ augroup my_neomake
 augroup END
 
 let g:neomake_ruby_enabled_makers = ['mri']
-let g:neomake_javascript_enabled_makers = ['eslint', 'jshint']
+" let g:neomake_javascript_enabled_makers = ['eslint', 'jshint']
+let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_php_enabled_makers = ["php", "phpstan"] " php, phpstan, phpcs, phpmd, phplint
 function! ProcessEntry(entry)
   let a:entry.type = 'E'
 endfunction
+
+if filereadable("phpstan.neon")
+  let g:my_phpstan_args = ['analyse', '--configuration=phpstan.neon', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php']
+else
+  let g:my_phpstan_args = ['analyse', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php']
+endif
+
 let g:neomake_php_phpstan_maker = {
-      \ 'args': ['analyse', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php'],
+      \ 'args': g:my_phpstan_args,
       \ 'errorformat':
       \   '%-G\ -%.%#,'.
       \   '%-G\ \[%.%#,'.
@@ -224,3 +232,9 @@ let g:pdv_template_dir = $HOME ."/.local/share/nvim/plugged/pdv/templates_snip"
 
 "------------------Ultisnips-----------------------------------------------------
 let g:UltiSnipsSnippetsDir = $HOME . "/.config/nvim/ultisnips"
+
+"------------------Tagbar--------------------------------------------------------
+let g:tagbar_width = 50
+let g:tagbar_autopreview = 1
+let g:tagbar_expand = 1
+let g:tagbar_autoclose = 1

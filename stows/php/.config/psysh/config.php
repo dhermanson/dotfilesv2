@@ -1,5 +1,5 @@
 <?php
 
 return array(
-  'requireSemicolons' => true
+  'requireSemicolons' => true,
 );

@@ -5,6 +5,8 @@ source ~/.nvm/nvm.sh
 nvm install $(echo $MY_NVM_VERSION)
 
 yarn global add aglio
+yarn global add bower
+yarn global add ember-cli
 yarn global add eslint
 yarn global add gulp-cli
 yarn global add harp
