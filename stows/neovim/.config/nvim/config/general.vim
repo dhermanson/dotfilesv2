@@ -25,6 +25,7 @@ set cursorline
 set nosplitbelow
 set splitright
 set completeopt=longest,menuone,preview
+set ignorecase
 
 " use ripgrep as grep implementation
 if executable('rg')

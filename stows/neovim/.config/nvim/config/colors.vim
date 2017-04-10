@@ -39,6 +39,18 @@ highlight Comment cterm=italic
 
 "colorscheme jellybeans<Paste>
 
+" airline
+let g:airline_theme = 'gruvbox'
+let g:airline_powerline_fonts = 1
+if !has('gui_running')		
+  let g:airline_left_sep=''		
+  let g:airline_right_sep=''		
+endif
+if !exists('g:airline_symbols')		
+  let g:airline_symbols = {}		
+endif		
+" let g:airline_symbols.space = "\ua0"
+
 " lightline
 let g:lightline = {
       \ 'colorscheme': 'gruvbox',

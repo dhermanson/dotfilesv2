@@ -3,8 +3,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " Colors / Interface
 Plug 'morhetz/gruvbox'
-Plug 'itchyny/lightline.vim'
-Plug 'shinchu/lightline-gruvbox.vim'
+" Plug 'itchyny/lightline.vim'
+" Plug 'shinchu/lightline-gruvbox.vim'
 
 " Essentials
 Plug 'benmills/vimux'
@@ -13,6 +13,7 @@ Plug 'editorconfig/editorconfig-vim'
 " Plugin outside ~/.local/share/nvim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'justinmk/vim-sneak'
 Plug 'Konfekt/FastFold'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'majutsushi/tagbar'
@@ -20,7 +21,7 @@ Plug 'mileszs/ack.vim'
 " Plug 'vim-syntastic/syntastic'
 Plug 'neomake/neomake'
 Plug 'Raimondi/delimitMate'
-" Plug 'Shougo/denite.nvim'
+Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
 Plug 'tobyS/vmustache'
@@ -39,6 +40,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Languages
 Plug 'sheerun/vim-polyglot'
@@ -153,14 +156,15 @@ function! ProcessEntry(entry)
   let a:entry.type = 'E'
 endfunction
 
-if filereadable("phpstan.neon")
-  let g:my_phpstan_args = ['analyse', '--configuration=phpstan.neon', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php']
-else
-  let g:my_phpstan_args = ['analyse', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php']
-endif
+" if filereadable("phpstan.neon")
+"   let g:my_phpstan_args = ['analyse', '--configuration=phpstan.neon', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php']
+" else
+"   let g:my_phpstan_args = ['analyse', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php']
+" endif
 
 let g:neomake_php_phpstan_maker = {
-      \ 'args': g:my_phpstan_args,
+      \ 'exe': 'php',
+      \ 'args': ['-dxdebug.remote_enable=0', '-dxdebug.remote_autostart=0', '~/.composer/vendor/bin/phpstan', 'analyse', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php'],
       \ 'errorformat':
       \   '%-G\ -%.%#,'.
       \   '%-G\ \[%.%#,'.
@@ -235,6 +239,10 @@ let g:UltiSnipsSnippetsDir = $HOME . "/.config/nvim/ultisnips"
 
 "------------------Tagbar--------------------------------------------------------
 let g:tagbar_width = 50
-let g:tagbar_autopreview = 1
+let g:tagbar_autopreview = 0
 let g:tagbar_expand = 1
 let g:tagbar_autoclose = 1
+
+"------------------Sneak---------------------------------------------------------
+" let g:sneak#label = 0
+let g:sneak#use_ic_scs = 1 " ignore case

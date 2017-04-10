@@ -86,7 +86,8 @@ nnoremap <Leader>a :Ack
 map <silent> / <Plug>(easymotion-sn)
 omap <silent> / <Plug>(easymotion-tn)
 map <Leader>; <Plug>(easymotion-bd-f)
-map s <Plug>(easymotion-bd-f)
+" map s <Plug>(easymotion-bd-f)
+" map s <Plug>(easymotion-sl-wl)
 
 " fugitive
 nnoremap <Leader>gs :Gstatus<CR>

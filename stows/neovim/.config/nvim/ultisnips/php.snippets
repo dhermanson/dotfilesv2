@@ -189,6 +189,12 @@ snippet usd "use SoftDeletes"
 use SoftDeletes$0;
 endsnippet
 
+snippet sc "query scope"
+public function scope$1($query) {
+  return $query->$0;
+}
+endsnippet
+
 ###########################################################################
 # Fractal Transformers
 ###########################################################################
@@ -264,6 +270,14 @@ endsnippet
 
 snippet bpdc "Blueprint: drop column"
 $table->dropColumn('$1');$0
+endsnippet
+
+snippet bpsd "Blueprint: soft delete"
+$table->softDeletes();
+endsnippet
+
+snippet bpts "Blueprint: timestamps"
+$table->timestamps();
 endsnippet
 
 ###########################################################################

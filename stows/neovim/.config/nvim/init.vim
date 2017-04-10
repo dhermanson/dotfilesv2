@@ -376,10 +376,10 @@ let g:tagbar_type_markdown = {
 "  "autocmd FileType typescript nnoremap <buffer> <localleader>r :call RunTypescriptFile()<CR>
 "augroup END
 "
-"augroup my_ruby
-"  autocmd!
-"  autocmd FileType ruby nnoremap <buffer> <leader>rs :call RunCommandInSplit("pry", "-v")<CR>
-"  autocmd FileType ruby nnoremap <buffer> <leader>rv :call RunCommandInSplit("pry", "-h")<CR>
+augroup my_ruby
+ autocmd!
+ autocmd FileType ruby nnoremap <buffer> <leader>rs :call RunCommandInSplit("pry", "-v")<CR>
+ autocmd FileType ruby nnoremap <buffer> <leader>rv :call RunCommandInSplit("pry", "-h")<CR>
 "  " rails
 "  autocmd FileType ruby nnoremap <buffer> <localleader>rr :Rake 
 "  autocmd FileType ruby nnoremap <buffer> <localleader>rev :Eview<CR>
@@ -404,7 +404,7 @@ let g:tagbar_type_markdown = {
 "  autocmd FileType ruby nnoremap <buffer> <localleader>rvc<Space> :Vcontroller 
 "
 "  autocmd FileType ruby nnoremap <buffer> <localleader>mtp :Dispatch create-ruby-ctags.sh<CR>
-"augroup END
+augroup END
 "
 "augroup my_elixir
 "  autocmd!
@@ -441,8 +441,6 @@ let g:tagbar_type_markdown = {
 "
 "
 function! SetupLaravelProject()
-  nnoremap <leader>pmtp :Dispatch $HOME/.config/nvim/bin/create-php-ctags.sh<CR>
-  nnoremap <leader>pmtv :Dispatch $HOME/.config/nvim/bin/create-php-vendor-tags.sh<CR>
   let g:projectionist_heuristics = {
         \   "artisan": {
         \     "app/*.php": {
@@ -788,7 +786,28 @@ end
 EOD
 endfunction
 
+  function! RunNpmDocs()
+    call system('npm run docs')
+  endfunction
 
+  function! RunNpmWatchDocs()
+    ruby <<EOD
+    system 'tmux neww "npm run watch-docs"'
+    system 'tmux last-window'
+
+    fork do
+      sleep 1
+      system 'open http://localhost:3000'
+    end
+EOD
+  endfunction
+
+  nnoremap <leader>pmtp :Dispatch $HOME/.config/nvim/bin/create-php-ctags.sh<CR>
+  nnoremap <leader>pmtv :Dispatch $HOME/.config/nvim/bin/create-php-vendor-tags.sh<CR>
+  nnoremap <leader>pmd :call RunNpmDocs()<CR>
+  nnoremap <leader>pdoc :call system('open public/docs/index.html')<CR>
+  nnoremap <leader>pwd :call RunNpmWatchDocs()<CR>
+  nnoremap <leader>pldoc :call system('open https://laravel.com/docs')<CR>
   nnoremap <leader>pdbsc :call RunSchemaspyOnProjectDatabase()<CR>
   nnoremap <leader>pdbso :call OpenSchemaspyFileInBrowser()<CR>
   nnoremap <leader>pdbc :call CreateProjectDatabase()<CR>
@@ -797,7 +816,7 @@ endfunction
   nnoremap <leader>pdbrl :call RunMycli('-h')<CR>
 
   function! RunArtisanCommand(cmd)
-    let escaped_cmd = "php artisan " . shellescape(a:cmd)
+    let escaped_cmd = "php -dxdebug.remote_enable=0 -dxdebug.remote_autostart=0 artisan " . shellescape(a:cmd)
 
     let run_script = $HOME."/.config/nvim/bin/run_then_close_tmux_window"
 
@@ -813,7 +832,7 @@ endfunction
 
 
   function! GetAvailableArtisanCommands()
-    let results = system("php artisan --no-ansi list")
+    let results = system("php -dxdebug.remote_enable=0 -dxdebug.remote_autostart=0 artisan --no-ansi list")
     let lines = split(results, "\n")
 
     let commands = []
@@ -852,7 +871,7 @@ endfunction
     call fzf#run({
         \  'source': GetAvailableArtisanCommands(),
         \  'sink': function('RunArtisanCommand'),
-        \  'options': '--ansi -i --preview-window=' . l:preview . ' --preview="php artisan {} --help" --bind alt-j:preview-down,alt-k:preview-up',
+        \  'options': '--ansi -i --preview-window=' . l:preview . ' --preview="php -dxdebug.remote_enable=0 -dxdebug.remote_autostart=0 artisan {} --help" --bind alt-j:preview-down,alt-k:preview-up',
         \  })
   endfunction
 
@@ -974,4 +993,3 @@ endfunction
 
 
 "command DropProjectDatabase :call DropProjectDatabase()
-
