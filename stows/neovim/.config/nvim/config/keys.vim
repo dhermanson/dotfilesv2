@@ -31,6 +31,42 @@ nnoremap <Leader>.sv :source $MYVIMRC<CR>
 
 " escape on jk
 inoremap jk <Esc>
+onoremap jk <Esc>
+cnoremap jk <C-c>
+
+nnoremap <M-d> <Esc>
+vnoremap <M-d> <Esc>
+onoremap <M-d> <Esc>
+inoremap <M-d> <Esc>
+cnoremap <M-d> <C-c>
+
+nnoremap <M-e> <Esc>
+vnoremap <M-e> <Esc>
+onoremap <M-e> <Esc>
+inoremap <M-e> <Esc>
+cnoremap <M-e> <C-c>
+snoremap <M-e> <Esc>
+
+nnoremap <M-f> <Esc>
+vnoremap <M-f> <Esc>
+onoremap <M-f> <Esc>
+inoremap <M-f> <Esc>
+cnoremap <M-f> <C-c>
+snoremap <M-f> <Esc>
+
+nnoremap <C-c> <Esc>
+vnoremap <C-c> <Esc>
+onoremap <C-c> <Esc>
+inoremap <C-c> <Esc>
+cnoremap <C-c> <C-c>
+snoremap <C-c> <Esc>
+
+nnoremap <C-l> <Esc>
+vnoremap <C-l> <Esc>
+onoremap <C-l> <Esc>
+inoremap <C-l> <Esc>
+cnoremap <C-l> <C-c>
+snoremap <C-l> <Esc>
 
 " use number to navigate around
 nnoremap <Leader>1 :edit .<CR>

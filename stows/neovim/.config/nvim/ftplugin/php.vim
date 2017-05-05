@@ -21,8 +21,8 @@ nnoremap <buffer> <localleader><leader><localleader> :Dispatch php artisan
 "autocmd BufRead,BufNewFile,BufEnter *Spec.php UltiSnipsAddFiletypes php-phpspec
 setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
 setlocal tags+=~/.language-ctags/php/tags
-setlocal tags+=tags
-setlocal tags+=tags.vendor
+setlocal tags+=.ctags-php
+setlocal tags+=.ctags-php-vendor
 nnoremap <buffer> <localleader>mtp :Dispatch $HOME/.config/nvim/bin/create-php-ctags.sh<CR>
 nnoremap <buffer> <localleader>mtv :Dispatch $HOME/.config/nvim/bin/create-php-vendor-tags.sh<CR>
 

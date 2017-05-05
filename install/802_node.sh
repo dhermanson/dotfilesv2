@@ -12,3 +12,4 @@ yarn global add gulp-cli
 yarn global add harp
 yarn global add jshint
 yarn global add tern
+yarn global add jsctags

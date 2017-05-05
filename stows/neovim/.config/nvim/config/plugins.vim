@@ -69,6 +69,7 @@ Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript' }
 
 " python
 Plug 'zchee/deoplete-jedi'
+Plug 'python-mode/python-mode'
 
 " Initialize plugin system
 call plug#end()
@@ -139,7 +140,8 @@ let g:ackprg = 'rg --vimgrep --no-heading '
 "    \ "passive_filetypes": ["html", "blade"] }
 
 " neomake
-let g:neomake_open_list=2
+" let g:neomake_open_list=2
+let g:neomake_open_list=0
 let g:neomake_verbose=0
 " let g:neomake_error_sign = {'text': '✗', 'texthl': 'NeomakeErrorSign'}
 

@@ -1,9 +1,86 @@
-snippet commentblock "Comment Block"
+snippet cb "Comment Block"
 /*
 |--------------------------------------------------------------------------
 | $1
 |--------------------------------------------------------------------------
 */$0
+endsnippet
+
+snippet t "$this"
+$this$0
+endsnippet
+
+# skip f for function
+snippet "\s([a-zA-Z0-9_]{2,})" "member expansion" r
+`!p
+if not snip.c:
+    snip.rv = ' $' + match.group(1)`
+endsnippet
+
+snippet "\s([a-zA-Z][a-zA-Z0-9]*)\." "member expansion" r
+`!p
+if not snip.c:
+    snip.rv = ' $' + match.group(1) + '->'`
+endsnippet
+
+# snippet "\$([a-zA-Z][a-zA-Z0-9]*)\." "member expansion" rA
+# `!p
+# if not snip.c:
+#     snip.rv = '$' + match.group(1) + '->'`
+# endsnippet
+
+snippet "^(\s*)\." "member expansion" r
+`!p
+if not snip.c:
+    snip.rv = match.group(1) + '->'`$0
+endsnippet
+
+snippet "\)\." "member expansion" r
+`!p
+if not snip.c:
+    snip.rv = ')->'`$0
+endsnippet
+
+snippet ", ([a-zA-Z_]{2,})" "member expansion" r
+`!p
+if not snip.c:
+    snip.rv = ', $' + match.group(1)`$0
+endsnippet
+
+snippet "\(([a-zA-Z_]{2,})" "member expansion" r
+`!p
+if not snip.c:
+    snip.rv = '($' + match.group(1)`$0
+endsnippet
+
+# snippet "(->[a-zA-Z0-9]+)\(([a-zA-Z])" "member expansion" rA
+# `!p
+# if not snip.c:
+#     snip.rv = match.group(1) + '($' + match.group(2)`$0
+# endsnippet
+
+snippet "->([a-zA-Z][a-zA-Z0-9]*)" "->" r
+`!p
+if not snip.c:
+    snip.rv = '->' + match.group(1)`($1)$0
+endsnippet
+
+snippet "\b(\$?[a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z0-9_]+)" "complete" r
+`!p
+if not snip.c:
+    snip.rv = match.group(1) + '->' + match.group(2)`$0
+endsnippet
+
+snippet "(\$|->)([a-zA-Z][_a-zA-Z0-9]*)\." "->" r
+`!p
+if not snip.c:
+    snip.rv = match.group(1) + match.group(2) + '->'`
+endsnippet
+
+snippet fe "foreach"
+foreach ($${2:$1s} as $${1:thing}) {
+  $0
+}
 endsnippet
 
 ###########################################################################
@@ -16,8 +93,8 @@ endsnippet
 ###########################################################################
 # PHP Functions
 ###########################################################################
-snippet f "function"
-function ${1:name}($0) {
+snippet "\bf\b" "function" r
+function($0) {
 }
 endsnippet
 
@@ -95,6 +172,17 @@ public function ${1:relation_name}() {
 }
 endsnippet
 
+snippet mt "MorphTo"
+/**
+ * Get the owning $1 model
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+ */
+public function ${1:contract}() {
+	return $this->morphTo();
+}
+endsnippet
+
 snippet hmt "HasManyThrough"
 /**
  * Get the $1 for this $2.
@@ -103,6 +191,17 @@ snippet hmt "HasManyThrough"
  */
 public function ${1:relation_name}() {
 	return $this->hasManyThrough('$3', '$4');
+}
+endsnippet
+
+snippet mbm "MorphedByMany"
+/**
+ * Get all of the $1 that are assigned this $2
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\MorphedByMany
+ */
+public function ${1:relation_name}() {
+	return $this->morphedByMany('$4', '$3');
 }
 endsnippet
 
@@ -141,6 +240,17 @@ snippet table "Table"
 protected $table = '$1';$0
 endsnippet
 
+snippet guarded "guarded"
+/**
+ * The attributes that are not mass assignable.
+ *
+ * @var array
+ */
+protected $guarded= [
+	'id',$0
+];
+endsnippet
+
 snippet fil "Fillable"
 /**
  * The attributes that are mass assignable.
@@ -174,6 +284,15 @@ protected $dates = [
 ];
 endsnippet
 
+snippet with "With"
+/**
+ * The relationships to eager load
+ *
+ * @var string[]
+ */
+protected $with = [$0];
+endsnippet
+
 snippet casts "Casts"
 /**
  * The casts for this type.
@@ -190,8 +309,8 @@ use SoftDeletes$0;
 endsnippet
 
 snippet sc "query scope"
-public function scope$1($query) {
-  return $query->$0;
+public function scope$1($query$0) {
+  return $query->;
 }
 endsnippet
 
@@ -244,8 +363,12 @@ endsnippet
 ###########################################################################
 # Blueprint Methods
 ###########################################################################
-snippet bps "Blueprint: string"
+snippet bps "blueprint: string"
 $table->string('$1');$0
+endsnippet
+
+snippet bpin "blueprint: index"
+$table->index('$1');$0
 endsnippet
 
 snippet bpui "Blueprint: unsigned integer"

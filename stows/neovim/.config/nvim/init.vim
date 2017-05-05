@@ -281,22 +281,22 @@ let g:tagbar_type_markdown = {
 "
 "
 "
-"function! RunNodeInSplit(split)
-"  call KillTmuxRepl()
-"  let l:project_dir = fnamemodify('.', ':p')
-"  let l:file = '~/node_repl.js'
-"  if findfile('.derick/node_repl.js', l:project_dir) == '.derick/node_repl.js'
-"    let l:file = '.derick/node_repl.js'
-"  endif
-"  let l:cmd = 'cd ' . l:project_dir . ' && node ' . l:file
-"  let l:pane = CreateTmuxSplitAndRunCommand(l:cmd, a:split)
-"  let g:my_tmux_repl_pane = l:pane
+function! RunNodeInSplit(split)
+ call KillTmuxRepl()
+ let l:project_dir = fnamemodify('.', ':p')
+ let l:file = '~/node_repl.js'
+ if findfile('.derick/node_repl.js', l:project_dir) == '.derick/node_repl.js'
+   let l:file = '.derick/node_repl.js'
+ endif
+ let l:cmd = 'cd ' . l:project_dir . ' && node ' . l:file
+ let l:pane = CreateTmuxSplitAndRunCommand(l:cmd, a:split)
+ let g:my_tmux_repl_pane = l:pane
+
+ "call RunCommandInTmuxPane(l:pane, l:cmd)
+endfunction
 "
-"  "call RunCommandInTmuxPane(l:pane, l:cmd)
-"endfunction
-"
-"nnoremap <silent> <leader>rs :call RunCommandInSplit("bash", "-v")<CR>
-"nnoremap <silent> <leader>rv :call RunCommandInSplit("bash", "-h")<CR>
+nnoremap <silent> <leader>rs :call RunCommandInSplit("bash", "-v")<CR>
+nnoremap <silent> <leader>rv :call RunCommandInSplit("bash", "-h")<CR>
 "
 ""-------------Auto-Commands--------------"
 "
@@ -348,18 +348,16 @@ let g:tagbar_type_markdown = {
 "  autocmd FileType java setlocal tags+=~/tags/java.tags
 "augroup END
 "
-"augroup my_javascript
-"  autocmd!
-"  autocmd FileType javascript nnoremap <buffer> <localleader>e :echo "You've opened a javascript file!"<CR>
-"  autocmd FileType javascript nnoremap <buffer> <localleader>e :echo "You've opened a javascript file!"<CR>
-"  autocmd FileType javascript nnoremap <buffer> <leader>rs :call RunNodeInSplit("-v")<CR>
-"  autocmd FileType javascript nnoremap <buffer> <leader>rv :call RunNodeInSplit("-h")<CR>
-"  autocmd FileType javascript nnoremap <buffer> <M-r> :w<CR> :VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
-"  autocmd FileType javascript inoremap <buffer> <M-r> <Esc>:w<CR>:call VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
-"  "autocmd FileType javascript nnoremap <buffer> <localleader>rr :call RunCommandInSplit("node " . bufname("%") . ' \| tap-spec && read', '-h')<CR>
-"  "autocmd FileType javascript nnoremap <buffer> <localleader>rr :call RunTapeOnFile('%')<CR>
-"  autocmd Filetype *.txt set spell
-"augroup END
+augroup my_javascript
+ autocmd!
+ autocmd FileType javascript nnoremap <buffer> <localleader>e :echo "You've opened a javascript file!"<CR>
+ autocmd FileType javascript nnoremap <buffer> <localleader>e :echo "You've opened a javascript file!"<CR>
+ autocmd FileType javascript nnoremap <buffer> <leader>rs :call RunNodeInSplit("-v")<CR>
+ autocmd FileType javascript nnoremap <buffer> <leader>rv :call RunNodeInSplit("-h")<CR>
+ autocmd FileType javascript nnoremap <buffer> <M-r> :w<CR> :VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
+ autocmd FileType javascript inoremap <buffer> <M-r> <Esc>:w<CR>:call VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
+ autocmd Filetype *.txt set spell
+augroup END
 "
 "
 "augroup typescript
@@ -441,6 +439,8 @@ augroup END
 "
 "
 function! SetupLaravelProject()
+
+  set tags+=.ctags-php
   let g:projectionist_heuristics = {
         \   "artisan": {
         \     "app/*.php": {
@@ -648,6 +648,42 @@ EOD
   function! OpenSchemaspyFileInBrowser()
     call system('open .derick/schema/relationships.html')
   endfunction
+  
+  function! DumpProjectDatabase()
+    let l:project_dir = fnamemodify('.', ':p')
+
+    ruby <<EOD
+    require 'dotenv'
+    require 'date'
+    require 'fileutils'
+    require 'pathname'
+
+    if File.exists? '.env'
+      Dotenv.load '.env'
+
+      db = ENV['DB_DATABASE']
+      user = ENV['DB_USERNAME']
+      pass = ENV['DB_PASSWORD']
+
+      unless user.nil? and pass.nil?
+        if db.nil?
+          puts "No database configured"
+        else
+          # FileUtils::mkdir_p "./derick/database"
+          project_dir = VIM::evaluate('l:project_dir')
+          directory = Pathname.new(project_dir) + '.derick/database'
+          FileUtils.mkdir_p directory
+          now_format = DateTime.now.strftime("%Y_%m_%d_%H_%M_%S")
+          dump_file = "#{directory}/dev_dump_#{db}_#{now_format}.sql"
+          cmd = %Q( tmux splitw -p 10 ' mysqldump --databases #{db} -u #{user} --password=#{pass} > #{dump_file} ' )
+          system cmd
+          system 'tmux last-pane'
+        end
+
+      end
+    end
+EOD
+  endfunction
 
   function! DropProjectDatabase()
     ruby <<EOD
@@ -708,7 +744,8 @@ EOD
        if db.nil?
          puts "No database configured"
        else
-        create = %Q( mysqladmin -u #{user} --password=#{pass} create #{db})
+         #create = %Q( mysqladmin -u #{user} --password=#{pass} create #{db})
+        create = %Q( mysql -u #{user} --password=#{pass} -e 'create database #{db} character set utf8mb4 collate utf8mb4_unicode_ci')
         grant = %Q( mysql -u #{user} --password=#{pass} -e "grant all on #{db}.* to '#{user}'@'%'" )
         system create
         system grant
@@ -804,7 +841,7 @@ EOD
 
   nnoremap <leader>pmtp :Dispatch $HOME/.config/nvim/bin/create-php-ctags.sh<CR>
   nnoremap <leader>pmtv :Dispatch $HOME/.config/nvim/bin/create-php-vendor-tags.sh<CR>
-  nnoremap <leader>pmd :call RunNpmDocs()<CR>
+  nnoremap <leader>pmdoc :call RunNpmDocs()<CR>
   nnoremap <leader>pdoc :call system('open public/docs/index.html')<CR>
   nnoremap <leader>pwd :call RunNpmWatchDocs()<CR>
   nnoremap <leader>pldoc :call system('open https://laravel.com/docs')<CR>
@@ -812,6 +849,7 @@ EOD
   nnoremap <leader>pdbso :call OpenSchemaspyFileInBrowser()<CR>
   nnoremap <leader>pdbc :call CreateProjectDatabase()<CR>
   nnoremap <leader>pdbd :call DropProjectDatabase()<CR>
+  nnoremap <leader>pdbp :call DumpProjectDatabase()<CR>
   nnoremap <leader>pdbrj :call RunMycli('-v')<CR>
   nnoremap <leader>pdbrl :call RunMycli('-h')<CR>
 

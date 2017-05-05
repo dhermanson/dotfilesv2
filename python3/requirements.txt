@@ -1,3 +1,4 @@
 neovim
 neovim-remote
 jedi
+Pygments
