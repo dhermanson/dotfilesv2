@@ -10,11 +10,23 @@ snippet t "$this"
 $this$0
 endsnippet
 
-# skip f for function
-snippet "\s([a-zA-Z0-9_]{2,})" "member expansion" r
+# # skip f for function
+# snippet "\s([a-zA-Z0-9_]{2,})" "member expansion" r
+# `!p
+# if not snip.c:
+#     snip.rv = ' $' + match.group(1)`
+# endsnippet
+
+snippet "\s;([a-zA-Z][a-zA-Z0-9]*)" "member expansion" r
 `!p
 if not snip.c:
     snip.rv = ' $' + match.group(1)`
+endsnippet
+
+snippet "\s;([a-zA-Z][a-zA-Z0-9]*)\." "member expansion" r
+`!p
+if not snip.c:
+    snip.rv = ' $' + match.group(1) + '->'`
 endsnippet
 
 snippet "\s([a-zA-Z][a-zA-Z0-9]*)\." "member expansion" r
@@ -69,6 +81,12 @@ snippet "\b(\$?[a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z0-9_]+)" "complete" r
 `!p
 if not snip.c:
     snip.rv = match.group(1) + '->' + match.group(2)`$0
+endsnippet
+
+snippet "\)\.([a-zA-Z0-9_]+)" "complete" r
+`!p
+if not snip.c:
+    snip.rv = ")" + '->' + match.group(1)`$0
 endsnippet
 
 snippet "(\$|->)([a-zA-Z][_a-zA-Z0-9]*)\." "->" r

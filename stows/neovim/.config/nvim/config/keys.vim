@@ -165,3 +165,6 @@ nnoremap <Leader>0 :TagbarToggle<CR>
 nnoremap <M-b> :TagbarToggle<CR>
 inoremap <M-b> <esc>:TagbarToggle<CR>
 nnoremap <Leader>9 :TagbarTogglePause<CR>
+
+" edit crontab
+nnoremap <Leader>.ec :call system('tmux splitw -p 25 "EDITOR=nvim crontab -e"')<CR>

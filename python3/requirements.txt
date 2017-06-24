@@ -1,4 +1,6 @@
+Pygments
+grip
+jedi
+jupyter
 neovim
 neovim-remote
-jedi
-Pygments

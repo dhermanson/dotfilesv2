@@ -11,16 +11,24 @@ tap 'neovim/neovim'
 ################################################################################
 #  Brew Casks
 ################################################################################
-cask 'docker'
-cask 'dropbox'
-cask 'firefox'
-cask 'haskell-platform'
-cask 'iterm2'
+# others are dependent on these
 cask 'java'
 cask 'osxfuse'
+cask 'xquartz'
+
+cask 'docker'
+cask 'dropbox'
+cask 'eclipse-ide'
+cask 'firefox'
+cask 'haskell-platform'
+cask 'inkscape'
+cask 'iterm2'
+cask 'mactex'
 cask 'postman'
 cask 'robomongo'
 cask 'sequel-pro'
+cask 'vagrant'
+cask 'virtualbox'
 
 ################################################################################
 #  Brew Packages
@@ -30,12 +38,19 @@ brew 'ag'
 brew 'composer'
 brew 'coreutils'
 brew 'ctags'
+brew 'editorconfig'
+brew 'elixir'
 brew 'emacs', args: ['with-cocoa']
 brew 'fontconfig'
+brew 'gcc', args: ['enable-cxx']
+brew 'global'
+brew 'gradle'
 brew 'htop'
 brew 'https://raw.github.com/apiaryio/drafter/master/tools/homebrew/drafter.rb', args: ['HEAD']
 brew 'imagemagick'
 brew 'leiningen'
+brew 'llvm', args: ['with-toolchain']
+brew 'maven'
 brew 'mpc'
 brew 'mpd'
 brew 'mplayer'
@@ -43,6 +58,7 @@ brew 'mycli'
 brew 'mysql'
 brew 'ncmpcpp'
 brew 'neovim'
+brew 'nginx'
 brew 'php56'
 brew 'php56-imagick'
 brew 'php56-mcrypt'

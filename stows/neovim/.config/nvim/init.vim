@@ -374,6 +374,11 @@ augroup END
 "  "autocmd FileType typescript nnoremap <buffer> <localleader>r :call RunTypescriptFile()<CR>
 "augroup END
 "
+augroup my_python
+ autocmd!
+ autocmd FileType python nnoremap <buffer> <leader>rs :call RunCommandInSplit("ipython", "-v")<CR>
+ autocmd FileType python nnoremap <buffer> <leader>rv :call RunCommandInSplit("ipython", "-h")<CR>
+augroup END
 augroup my_ruby
  autocmd!
  autocmd FileType ruby nnoremap <buffer> <leader>rs :call RunCommandInSplit("pry", "-v")<CR>
@@ -437,7 +442,197 @@ augroup END
 "" nerdtree
 ""nnoremap <leader>t :NERDTreeToggle<CR>
 "
-"
+
+function! RunSchemaspyOnProjectDatabase()
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:ip = input("Enter your IP address: ")
+
+  ruby <<EOD
+  require 'fileutils'
+  require 'pathname'
+
+  ip = VIM::evaluate('l:ip')
+  project_dir = VIM::evaluate('l:project_dir')
+  directory = Pathname.new(project_dir) + '.derick/schema'
+  FileUtils.mkdir_p directory
+
+  fork do
+    require 'dotenv'
+
+    if File.exists? '.env'
+      Dotenv.load '.env'
+
+      db = ENV['DB_DATABASE']
+      user = ENV['DB_USERNAME']
+      pass = ENV['DB_PASSWORD']
+
+      unless db.nil? and user.nil? and pass.nil? and ip.nil? and directory.nil?
+        cmd = %Q( tmux splitw -p 10 'schemaspy #{directory} #{ip} #{db} #{user} #{pass} && open #{directory}/relationships.html' )
+        system cmd
+        system 'tmux last-pane'
+      end
+    end
+  end
+EOD
+endfunction
+
+function! OpenSchemaspyFileInBrowser()
+  call system('open .derick/schema/relationships.html')
+endfunction
+  
+function! DumpProjectDatabase()
+  let l:project_dir = fnamemodify('.', ':p')
+
+  ruby <<EOD
+  require 'dotenv'
+  require 'date'
+  require 'fileutils'
+  require 'pathname'
+
+  if File.exists? '.env'
+    Dotenv.load '.env'
+
+    db = ENV['DB_DATABASE']
+    user = ENV['DB_USERNAME']
+    pass = ENV['DB_PASSWORD']
+
+    unless user.nil? and pass.nil?
+      if db.nil?
+        puts "No database configured"
+      else
+        # FileUtils::mkdir_p "./derick/database"
+        project_dir = VIM::evaluate('l:project_dir')
+        directory = Pathname.new(project_dir) + '.derick/database'
+        FileUtils.mkdir_p directory
+        now_format = DateTime.now.strftime("%Y_%m_%d_%H_%M_%S")
+        dump_file = "#{directory}/dev_dump_#{db}_#{now_format}.sql"
+        cmd = %Q( tmux splitw -p 10 ' mysqldump --databases #{db} -u #{user} --password=#{pass} > #{dump_file} ' )
+        system cmd
+        system 'tmux last-pane'
+      end
+
+    end
+  end
+EOD
+endfunction
+
+function! DropProjectDatabase()
+  ruby <<EOD
+  fork do
+    require 'dotenv'
+
+    if File.exists? '.env'
+      Dotenv.load '.env'
+
+      db = ENV['DB_DATABASE']
+      user = ENV['DB_USERNAME']
+      pass = ENV['DB_PASSWORD']
+
+      unless user.nil? and pass.nil?
+        if db.nil?
+          puts "No database configured"
+        else
+          cmd = %Q( tmux splitw 'mysqladmin -u #{user} --password=#{pass} drop #{db} ')
+          system cmd
+        end
+
+      end
+    end
+  end
+EOD
+endfunction
+
+ruby << EOD
+require 'dotenv'
+
+def project_database_exists
+  if File.exists? '.env'
+    Dotenv.load '.env'
+
+    db = ENV['DB_DATABASE']
+    user = ENV['DB_USERNAME']
+    pass = ENV['DB_PASSWORD']
+
+    if db.nil? or user.nil? or pass.nil?
+      false
+    else
+      system %Q( mysql -u #{user} --password=#{pass} -e 'use  #{db}')
+    end
+
+  else
+    false
+  end
+end
+
+def create_database
+  if File.exists? '.env'
+    Dotenv.load '.env'
+
+    db = ENV['DB_DATABASE']
+    user = ENV['DB_USERNAME']
+    pass = ENV['DB_PASSWORD']
+
+    unless user.nil? and pass.nil?
+     if db.nil?
+       puts "No database configured"
+     else
+       #create = %Q( mysqladmin -u #{user} --password=#{pass} create #{db})
+      create = %Q( mysql -u #{user} --password=#{pass} -e 'create database #{db} character set utf8mb4 collate utf8mb4_unicode_ci')
+      grant = %Q( mysql -u #{user} --password=#{pass} -e "grant all on #{db}.* to '#{user}'@'%'" )
+      system create
+      system grant
+     end
+
+    end
+  end
+end
+EOD
+
+function! CreateProjectDatabase()
+  ruby <<EOD
+  fork do
+    unless project_database_exists
+      create_database
+    end
+  end
+EOD
+  endfunction
+
+function! RunMycli(split)
+  ruby <<EOD
+  split = VIM::evaluate('a:split')
+  fork do
+    require 'dotenv'
+  
+    create_database
+  
+    if File.exists? '.env'
+      Dotenv.load '.env'
+  
+      host = ENV['DB_HOST'] || '127.0.0.1'
+      port = ENV['DB_PORT'] || '3306'
+      db = ENV['DB_DATABASE']
+      user = ENV['DB_USERNAME']
+      pass = ENV['DB_PASSWORD']
+  
+      unless host.nil? and
+             port.nil? and
+             user.nil? and
+             pass.nil?
+       if db.nil?
+        system "tmux splitw #{split} 'mycli -h #{host} -P #{port} -u #{user} -p #{pass}'"
+       else
+        system "tmux splitw #{split} 'mycli -h #{host} -P #{port} -D #{db} -u #{user} -p #{pass}'"
+       end
+  
+      end
+    else
+      system "tmux splitw 'mycli --login-path=local'"
+    end
+  end
+EOD
+endfunction
+
 function! SetupLaravelProject()
 
   set tags+=.ctags-php
@@ -610,218 +805,13 @@ function! SetupLaravelProject()
     autocmd!
     autocmd FileType php nnoremap <buffer> <silent> <leader>rs :call RunArtisanTinkerInSplit("-v")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <leader>rv :call RunArtisanTinkerInSplit("-h")<CR>
+    autocmd FileType php nnoremap <buffer> <silent> <leader>rrs :call RunArtisanTinkerInVagrantSplit("-v")<CR>
+    autocmd FileType php nnoremap <buffer> <silent> <leader>rrv :call RunArtisanTinkerInVagrantSplit("-h")<CR>
+    autocmd FileType php nnoremap <buffer> <silent> <localleader>rs :call RunPhpSpecOnBuffer(bufname('%')) <CR>
+    autocmd FileType php nnoremap <buffer> <silent> <M-d> :! open http://php.net/<cword><CR><Esc>
+    autocmd FileType php inoremap <buffer> <silent> <M-d> <Esc>:! open http://php.net/<cword><CR><Esc>e
   augroup END
 
-  function! RunSchemaspyOnProjectDatabase()
-    let l:project_dir = fnamemodify('.', ':p')
-    let l:ip = input("Enter your IP address: ")
-
-    ruby <<EOD
-    require 'fileutils'
-    require 'pathname'
-
-    ip = VIM::evaluate('l:ip')
-    project_dir = VIM::evaluate('l:project_dir')
-    directory = Pathname.new(project_dir) + '.derick/schema'
-    FileUtils.mkdir_p directory
-
-    fork do
-      require 'dotenv'
-
-      if File.exists? '.env'
-        Dotenv.load '.env'
-
-        db = ENV['DB_DATABASE']
-        user = ENV['DB_USERNAME']
-        pass = ENV['DB_PASSWORD']
-
-        unless db.nil? and user.nil? and pass.nil? and ip.nil? and directory.nil?
-          cmd = %Q( tmux splitw -p 10 'schemaspy #{directory} #{ip} #{db} #{user} #{pass} && open #{directory}/relationships.html' )
-          system cmd
-          system 'tmux last-pane'
-        end
-      end
-    end
-EOD
-  endfunction
-
-  function! OpenSchemaspyFileInBrowser()
-    call system('open .derick/schema/relationships.html')
-  endfunction
-  
-  function! DumpProjectDatabase()
-    let l:project_dir = fnamemodify('.', ':p')
-
-    ruby <<EOD
-    require 'dotenv'
-    require 'date'
-    require 'fileutils'
-    require 'pathname'
-
-    if File.exists? '.env'
-      Dotenv.load '.env'
-
-      db = ENV['DB_DATABASE']
-      user = ENV['DB_USERNAME']
-      pass = ENV['DB_PASSWORD']
-
-      unless user.nil? and pass.nil?
-        if db.nil?
-          puts "No database configured"
-        else
-          # FileUtils::mkdir_p "./derick/database"
-          project_dir = VIM::evaluate('l:project_dir')
-          directory = Pathname.new(project_dir) + '.derick/database'
-          FileUtils.mkdir_p directory
-          now_format = DateTime.now.strftime("%Y_%m_%d_%H_%M_%S")
-          dump_file = "#{directory}/dev_dump_#{db}_#{now_format}.sql"
-          cmd = %Q( tmux splitw -p 10 ' mysqldump --databases #{db} -u #{user} --password=#{pass} > #{dump_file} ' )
-          system cmd
-          system 'tmux last-pane'
-        end
-
-      end
-    end
-EOD
-  endfunction
-
-  function! DropProjectDatabase()
-    ruby <<EOD
-    fork do
-      require 'dotenv'
-
-      if File.exists? '.env'
-        Dotenv.load '.env'
-
-        db = ENV['DB_DATABASE']
-        user = ENV['DB_USERNAME']
-        pass = ENV['DB_PASSWORD']
-
-        unless user.nil? and pass.nil?
-          if db.nil?
-            puts "No database configured"
-          else
-            cmd = %Q( tmux splitw 'mysqladmin -u #{user} --password=#{pass} drop #{db} ')
-            system cmd
-          end
-
-        end
-      end
-    end
-EOD
-  endfunction
-  ruby << EOD
-  require 'dotenv'
-
-  def project_database_exists
-    if File.exists? '.env'
-      Dotenv.load '.env'
-
-      db = ENV['DB_DATABASE']
-      user = ENV['DB_USERNAME']
-      pass = ENV['DB_PASSWORD']
-
-      if db.nil? or user.nil? or pass.nil?
-        false
-      else
-        system %Q( mysql -u #{user} --password=#{pass} -e 'use  #{db}')
-      end
-
-    else
-      false
-    end
-  end
-
-  def create_database
-    if File.exists? '.env'
-      Dotenv.load '.env'
-
-      db = ENV['DB_DATABASE']
-      user = ENV['DB_USERNAME']
-      pass = ENV['DB_PASSWORD']
-
-      unless user.nil? and pass.nil?
-       if db.nil?
-         puts "No database configured"
-       else
-         #create = %Q( mysqladmin -u #{user} --password=#{pass} create #{db})
-        create = %Q( mysql -u #{user} --password=#{pass} -e 'create database #{db} character set utf8mb4 collate utf8mb4_unicode_ci')
-        grant = %Q( mysql -u #{user} --password=#{pass} -e "grant all on #{db}.* to '#{user}'@'%'" )
-        system create
-        system grant
-       end
-
-      end
-    end
-  end
-EOD
-
-  function! CreateProjectDatabase()
-    ruby <<EOD
-  fork do
-    unless project_database_exists
-      create_database
-    end
-    #require 'dotenv'
-
-    #if File.exists? '.env'
-    #  Dotenv.load '.env'
-
-    #  db = ENV['DB_DATABASE']
-    #  user = ENV['DB_USERNAME']
-    #  pass = ENV['DB_PASSWORD']
-
-    #  unless user.nil? and pass.nil?
-    #   if db.nil?
-    #     puts "No database configured"
-    #   else
-    #    create = %Q( tmux splitw 'mysqladmin -u #{user} --password=#{pass} create #{db} ')
-    #    grant = %Q( tmux splitw 'mysql -u #{user} --password=#{pass} -e "grant all on #{db}.* to #{user}@localhost"' )
-    #    system create
-    #    sleep 1
-    #    system grant
-    #   end
-
-    #  end
-    #end
-  end
-EOD
-  endfunction
-
-function! RunMycli(split)
-  ruby <<EOD
-split = VIM::evaluate('a:split')
-fork do
-  require 'dotenv'
-
-  create_database
-
-  if File.exists? '.env'
-    Dotenv.load '.env'
-
-    host = ENV['DB_HOST'] || '127.0.0.1'
-    port = ENV['DB_PORT'] || '3306'
-    db = ENV['DB_DATABASE']
-    user = ENV['DB_USERNAME']
-    pass = ENV['DB_PASSWORD']
-
-    unless host.nil? and
-           port.nil? and
-           user.nil? and
-           pass.nil?
-     if db.nil?
-      system "tmux splitw #{split} 'mycli -h #{host} -P #{port} -u #{user} -p #{pass}'"
-     else
-      system "tmux splitw #{split} 'mycli -h #{host} -P #{port} -D #{db} -u #{user} -p #{pass}'"
-     end
-
-    end
-  else
-    system "tmux splitw 'mycli --login-path=local'"
-  end
-end
-EOD
-endfunction
 
   function! RunNpmDocs()
     call system('npm run docs')
@@ -852,6 +842,8 @@ EOD
   nnoremap <leader>pdbp :call DumpProjectDatabase()<CR>
   nnoremap <leader>pdbrj :call RunMycli('-v')<CR>
   nnoremap <leader>pdbrl :call RunMycli('-h')<CR>
+  nnoremap <leader>pris :call OpenProjectRootInVagrantSplit("-v")<CR>
+  nnoremap <leader>priv :call OpenProjectRootInVagrantSplit("-h")<CR>
 
   function! RunArtisanCommand(cmd)
     let escaped_cmd = "php -dxdebug.remote_enable=0 -dxdebug.remote_autostart=0 artisan " . shellescape(a:cmd)
@@ -1002,6 +994,25 @@ function! RunArtisanTinkerInSplit(split)
   let l:cmd = 'cd ' . l:project_dir . ' && php artisan tinker'
   let l:pane = CreateTmuxSplitAndRunCommand(l:cmd, a:split)
   let g:my_tmux_repl_pane = l:pane
+
+  "call RunCommandInTmuxPane(l:pane, l:cmd)
+endfunction
+
+function! RunArtisanTinkerInVagrantSplit(split)
+  call KillTmuxRepl()
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:cmd = "ssh vagrant@127.0.0.1 -p 2222 -t 'cd project && php artisan tinker'"
+  let l:pane = CreateTmuxSplitAndRunCommand(l:cmd, a:split)
+  let g:my_tmux_repl_pane = l:pane
+
+  "call RunCommandInTmuxPane(l:pane, l:cmd)
+endfunction
+
+function! OpenProjectRootInVagrantSplit(split)
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:cmd = "ssh vagrant@127.0.0.1 -p 2222 -t 'cd project && bash'"
+  let l:pane = CreateTmuxSplitAndRunCommand(l:cmd, a:split)
+  call system("tmux last-pane")
 
   "call RunCommandInTmuxPane(l:pane, l:cmd)
 endfunction

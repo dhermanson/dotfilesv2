@@ -2,7 +2,9 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Colors / Interface
+Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
+Plug 'chriskempson/base16-vim'
 " Plug 'itchyny/lightline.vim'
 " Plug 'shinchu/lightline-gruvbox.vim'
 
@@ -140,7 +142,7 @@ let g:ackprg = 'rg --vimgrep --no-heading '
 "    \ "passive_filetypes": ["html", "blade"] }
 
 " neomake
-" let g:neomake_open_list=2
+"let g:neomake_open_list=2
 let g:neomake_open_list=0
 let g:neomake_verbose=0
 " let g:neomake_error_sign = {'text': '✗', 'texthl': 'NeomakeErrorSign'}
@@ -240,11 +242,14 @@ let g:pdv_template_dir = $HOME ."/.local/share/nvim/plugged/pdv/templates_snip"
 let g:UltiSnipsSnippetsDir = $HOME . "/.config/nvim/ultisnips"
 
 "------------------Tagbar--------------------------------------------------------
-let g:tagbar_width = 50
+let g:tagbar_width = 60
 let g:tagbar_autopreview = 0
 let g:tagbar_expand = 1
-let g:tagbar_autoclose = 1
+let g:tagbar_autoclose = 0
 
 "------------------Sneak---------------------------------------------------------
 " let g:sneak#label = 0
 let g:sneak#use_ic_scs = 1 " ignore case
+
+"------------------Editor Config-------------------------------------------------
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']

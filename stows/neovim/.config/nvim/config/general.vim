@@ -57,3 +57,6 @@ let g:netrw_liststyle=3
 if !has('nvim')
   set ttymouse=xterm2
 endif
+
+" TODO: put this somewhere else: https://superuser.com/questions/359580/error-adding-cronjobs-in-mac-os-x-lion
+autocmd filetype crontab setlocal nobackup nowritebackup

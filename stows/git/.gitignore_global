@@ -60,10 +60,6 @@ vendortags
 ## any .vimrc's #####
 .vimrc
 
-Rakefile
-Gemfile
-Gemfile.lock
-
 ## todos ###
 todo.txt
 
