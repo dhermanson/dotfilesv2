@@ -44,7 +44,9 @@ nnoremap <buffer> <localleader>rps :Tmux splitw 'phpspec run ; read'<CR>
 "autocmd FileType php nnoremap <localleader>rt :VimuxRunCommand('clear; phpunit ' . bufname('%')) <CR>
 "autocmd FileType php nnoremap <localleader>rpt :VimuxRunCommand('clear; phpunit') <CR>
 " nnoremap <buffer> <localleader>rt :Start phpunit % && read<CR>
-nnoremap <buffer> <localleader>rt :call RunPhpUnitOnBuffer(bufname('%')) <CR>
+" nnoremap <buffer> <localleader>rt :call RunPhpUnitOnBuffer(bufname('%')) <CR>
+nnoremap <buffer> <M-r><M-t><M-l> :call RunPhpUnitOnBuffer(bufname('%'), '-h') <CR>
+nnoremap <buffer> <M-r><M-t><M-j> :call RunPhpUnitOnBuffer(bufname('%'), '-v') <CR>
 nnoremap <buffer> <localleader>rpt :Start phpunit && read<CR>
 
 " laravel

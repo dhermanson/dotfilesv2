@@ -134,8 +134,6 @@ export RBENV_VERSION="2.4.0"
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-# add bin to path
-export PATH=$PATH:~/bin
 
 ## adjust path to prefer homebrew
 #export PATH=/usr/local/bin:$PATH
@@ -181,8 +179,8 @@ export NVM_DIR=~/.nvm
 #export PATH=$PATH:$GOPATH/bin
 #export PATH=$PATH:$GOROOT/bin
 #
-## add local node_modules bin to path
-#export PATH=$PATH:./node_modules/.bin
+# add local node_modules bin to path
+export PATH=$PATH:./node_modules/.bin
 # add local composer bin to path
 export PATH=$PATH:./vendor/bin
 # add global composer to path
@@ -232,6 +230,9 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 #
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# add bin to path
+export PATH=~/bin:$PATH
+
 ##############i stopped x'ing stuff here########################################
 
 
@@ -240,3 +241,4 @@ if [ -f '/Users/derickhermanson/Downloads/google-cloud-sdk/path.zsh.inc' ]; then
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/derickhermanson/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/derickhermanson/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+

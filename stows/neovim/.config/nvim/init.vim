@@ -289,6 +289,7 @@ function! RunNodeInSplit(split)
    let l:file = '.derick/node_repl.js'
  endif
  let l:cmd = 'cd ' . l:project_dir . ' && node ' . l:file
+"  let l:cmd = 'cd ' . l:project_dir . ' && node '
  let l:pane = CreateTmuxSplitAndRunCommand(l:cmd, a:split)
  let g:my_tmux_repl_pane = l:pane
 
@@ -354,11 +355,16 @@ augroup my_javascript
  autocmd FileType javascript nnoremap <buffer> <localleader>e :echo "You've opened a javascript file!"<CR>
  autocmd FileType javascript nnoremap <buffer> <leader>rs :call RunNodeInSplit("-v")<CR>
  autocmd FileType javascript nnoremap <buffer> <leader>rv :call RunNodeInSplit("-h")<CR>
- autocmd FileType javascript nnoremap <buffer> <M-r> :w<CR> :VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
- autocmd FileType javascript inoremap <buffer> <M-r> <Esc>:w<CR>:call VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
+"  autocmd FileType javascript nnoremap <buffer> <M-r> :w<CR> :VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
+"  autocmd FileType javascript inoremap <buffer> <M-r> <Esc>:w<CR>:call VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
  autocmd Filetype *.txt set spell
 augroup END
-"
+
+augroup my_sh
+ autocmd!
+ autocmd BufNewFile,BufRead .env* setfiletype sh
+augroup END
+
 "
 "augroup typescript
 "  autocmd!
@@ -408,6 +414,12 @@ augroup my_ruby
 "
 "  autocmd FileType ruby nnoremap <buffer> <localleader>mtp :Dispatch create-ruby-ctags.sh<CR>
 augroup END
+
+augroup my_vue
+  autocmd!
+  autocmd FileType vue syntax sync fromstart
+augroup END
+
 "
 "augroup my_elixir
 "  autocmd!
@@ -923,6 +935,75 @@ augroup my_vimenter
   autocmd!
   autocmd VimEnter * call SetupProjectType()
 augroup END
+
+function! RunMochaOnBuffer(buffer_name, split)
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:mocha_exe = fnamemodify('node_modules/.bin/mocha ', ':p')
+  let l:file = expand('%:p')
+  " let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:mocha_exe . ' ' . l:file
+  let l:cmd = 'cd ' . l:project_dir . ' && clear && webpack --display none ' . l:file . ' .test-output.js && ' . l:mocha_exe . ' .test-output.js'
+  exe "Tmux splitw " . a:split . " '" . l:cmd . " ; read'"
+endfunction
+
+" function! RunTapeBuffer(buffer_name, split)
+"   let l:project_dir = fnamemodify('.', ':p')
+"   let l:node_exe = 'babel-node --debug '
+"   let l:file = expand('%:p')
+"   " let l:cmd = 'cd ' . l:project_dir . ' && clear && webpack --config=.derick/webpack.config.js --display none ' . l:file . ' .test-output.js && ' . l:node_exe . ' .test-output.js | tap-spec'
+"   let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:node_exe . ' ' . l:file . ' --inspect | tap-spec'
+"   ruby <<EOD
+"   cmd = VIM::evaluate('l:cmd')
+"   split = VIM::evaluate('a:split')
+"   system "tmux splitw #{split} '#{cmd} ; exec bash'"
+" EOD
+"   " exe "Tmux splitw " . a:split . " '" . l:cmd . " ; exec bash'"
+" endfunction
+
+function! RunTapeBuffer(buffer_name, split, debug)
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:file = expand('%:p')
+
+  if (a:debug)
+    let l:node_exe = 'node --inspect --debug-brk'
+    let l:cmd = 'cd ' . l:project_dir . ' && clear && webpack --config=.derick/webpack.config.js --display none ' . l:file . ' .test-output.js && ' . l:node_exe . ' .test-output.js | tap-spec'
+  else
+    let l:node_exe = 'babel-node'
+    let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:node_exe . ' ' . l:file . ' | tap-spec'
+  endif
+  " let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:node_exe . ' ' . l:file . ' --inspect | tap-spec'
+  " let l:cmd = 'cd ' . l:project_dir . ' && clear && babel ' . l:file . ' .test-output.js && ' . l:mocha_exe . ' .test-output.js'
+  ruby <<EOD
+  cmd = VIM::evaluate('l:cmd')
+  split = VIM::evaluate('a:split')
+  debug = VIM::evaluate('a:debug')
+
+  if debug == 1
+    system "tmux splitw -p 10 -v '#{cmd}'"
+    # system cmd
+    # pid = fork do
+    #   require 'pty'
+    #
+    #   PTY.spawn(cmd) do |stdout, stdin, pid|
+    #     stdout.each { |line|
+    #
+    #       if match = line.match(/chrome-devtools:\S*/)
+    #         url = match[0]
+    #         puts url
+    #         system "osascript",  "tell application \"Google Chrome\" to open location \"#{url}\""
+    #       end
+    #
+    #     }
+    #   end
+    # end
+    # Process.detach(pid)
+  else
+    system "tmux splitw #{split} '#{cmd} ; exec bash'"
+  end
+
+EOD
+  " exe "Tmux splitw " . a:split . " '" . l:cmd . " ; exec bash'"
+endfunction
+
 "------------PHP STUFF MOVE IT!--------------------------------------------------
 
 function! IPhpInsertUse()
@@ -950,7 +1031,7 @@ function! RunPhpSpecOnBuffer(buffer_name)
   exe "Tmux splitw '" . l:cmd . " ; read'"
 endfunction
 
-function! RunPhpUnitOnBuffer(buffer_name)
+function! RunPhpUnitOnBuffer(buffer_name, split)
   " TODO: don't hardcode console:runner.1
   "       maybe use a global config or something
   "exe "Tmux send-keys -t console:runner.1 'clear; phpspec run " . fnameescape(a:buffer_name) . "' Enter"
@@ -962,7 +1043,7 @@ function! RunPhpUnitOnBuffer(buffer_name)
   "exe "Tmux neww -t runner"
   "exe "Tmux send-keys -t runner '" . l:cmd . "' Enter"
   "exe "Tmux neww -t runner '" . l:cmd . "'"
-  exe "Tmux splitw '" . l:cmd . " ; read'"
+  exe "Tmux splitw " . a:split . " '" . l:cmd . " ; read'"
 endfunction
 
 function! RunArtisanTinkerInProjectRootDirectory()

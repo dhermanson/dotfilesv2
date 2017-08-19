@@ -22,7 +22,7 @@ cask 'eclipse-ide'
 cask 'firefox'
 cask 'haskell-platform'
 cask 'inkscape'
-cask 'iterm2'
+cask 'iterm2-beta'
 cask 'mactex'
 cask 'postman'
 cask 'robomongo'
@@ -33,6 +33,7 @@ cask 'virtualbox'
 ################################################################################
 #  Brew Packages
 ################################################################################
+brew 'asciinema'
 brew 'ack'
 brew 'ag'
 brew 'composer'
@@ -48,6 +49,7 @@ brew 'gradle'
 brew 'htop'
 brew 'https://raw.github.com/apiaryio/drafter/master/tools/homebrew/drafter.rb', args: ['HEAD']
 brew 'imagemagick'
+brew 'koekeishiya/formulae/khd'
 brew 'leiningen'
 brew 'llvm', args: ['with-toolchain']
 brew 'maven'

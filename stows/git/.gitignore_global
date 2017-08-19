@@ -74,3 +74,9 @@ erd.pdf
 .tern-project
 
 .ctags*
+
+## neovim bug
+NetrwTreeListing*
+
+.test-output.js
+.test-output.js.map

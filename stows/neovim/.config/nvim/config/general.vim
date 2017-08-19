@@ -60,3 +60,4 @@ endif
 
 " TODO: put this somewhere else: https://superuser.com/questions/359580/error-adding-cronjobs-in-mac-os-x-lion
 autocmd filetype crontab setlocal nobackup nowritebackup
+autocmd BufEnter * set completeopt-=preview

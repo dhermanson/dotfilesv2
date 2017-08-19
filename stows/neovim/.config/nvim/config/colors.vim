@@ -9,6 +9,10 @@ set background=dark
 "colorscheme base16-ashes
 "colorscheme base16-ocean
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let alduin_Shout_Dragon_Aspect = 1
+" colorscheme alduin 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -44,6 +48,14 @@ let g:airline_theme = 'gruvbox'
 "highlight GitGutterDeleteLine ctermbg=0
 "highlight GitGutterChangeDeleteLine ctermbg=0
 "let g:airline_theme = 'base16'
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" jellybeans config
+" colorscheme jellybeans
+" let g:jellybeans_use_term_italics = 1
+" let g:jellybeans_use_gui_italics = 1
+" let g:airline_theme = 'jellybeans'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "colorscheme jellybeans

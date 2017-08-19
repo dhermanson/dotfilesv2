@@ -1,0 +1,32 @@
+snippet vue "boilerplate"
+<template>
+	<div>New Vue Component</div>
+</template>
+
+<script>
+import {mapGetters} from 'vuex';
+
+export default {
+	name: '$0',
+  props: [],
+	data() {
+		return {};
+	},
+	computed: {
+		...mapGetters('user', ['userCan']),
+	},
+	methods: {},
+	async created() {
+
+	},
+}
+</script>
+
+<style>
+</style>
+
+endsnippet
+
+snippet cl "console.log"
+console.log($1);$0
+endsnippet

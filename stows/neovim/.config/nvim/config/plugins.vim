@@ -5,6 +5,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
 Plug 'chriskempson/base16-vim'
+Plug 'AlessandroYorba/Alduin'
+Plug 'nanotech/jellybeans.vim'
 " Plug 'itchyny/lightline.vim'
 " Plug 'shinchu/lightline-gruvbox.vim'
 
@@ -142,7 +144,7 @@ let g:ackprg = 'rg --vimgrep --no-heading '
 "    \ "passive_filetypes": ["html", "blade"] }
 
 " neomake
-"let g:neomake_open_list=2
+" let g:neomake_open_list=2
 let g:neomake_open_list=0
 let g:neomake_verbose=0
 " let g:neomake_error_sign = {'text': '✗', 'texthl': 'NeomakeErrorSign'}
@@ -155,6 +157,7 @@ augroup END
 let g:neomake_ruby_enabled_makers = ['mri']
 " let g:neomake_javascript_enabled_makers = ['eslint', 'jshint']
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_vue_enabled_makers = ['eslint']
 let g:neomake_php_enabled_makers = ["php", "phpstan"] " php, phpstan, phpcs, phpmd, phplint
 function! ProcessEntry(entry)
   let a:entry.type = 'E'
@@ -253,3 +256,6 @@ let g:sneak#use_ic_scs = 1 " ignore case
 
 "------------------Editor Config-------------------------------------------------
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
+"------------------vim-vue-------------------------------------------------------
+let g:vue_disable_pre_processors=1

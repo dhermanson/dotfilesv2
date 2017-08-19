@@ -41,6 +41,10 @@ endsnippet
 #     snip.rv = '$' + match.group(1) + '->'`
 # endsnippet
 
+snippet "\=\." "=>" rA
+=>$0
+endsnippet
+
 snippet "^(\s*)\." "member expansion" r
 `!p
 if not snip.c:
@@ -145,6 +149,15 @@ endsnippet
 ################################################################################
 #                      Laravel Relationships
 ################################################################################
+snippet ho "HasOne"
+/**
+  * Get the $1 associated with the $2.
+  */
+ public function ${1:relation_name}()
+ {
+     return $this->hasOne('$3');
+ }
+endsnippet
 
 snippet hm "HasMany"
 /**
@@ -170,7 +183,7 @@ endsnippet
 
 snippet mtm "MorphToMany"
 /**
- * Get all of the $1 for the $3
+ * Get all of the $1 for this $3
  *
  * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
  */
@@ -269,6 +282,15 @@ protected $guarded= [
 ];
 endsnippet
 
+snippet hidden "hidden"
+/**
+ * The attributes that are not mass assignable.
+ *
+ * @var array
+ */
+protected $hidden= [ $0 ];
+endsnippet
+
 snippet fil "Fillable"
 /**
  * The attributes that are mass assignable.
@@ -278,6 +300,15 @@ snippet fil "Fillable"
 protected $fillable = [
 	'$0'
 ];
+endsnippet
+
+snippet appends "appends"
+/**
+ * The accessors to append to the model's array form.
+ *
+ * @var array
+ */
+protected $appends = [];
 endsnippet
 
 snippet hid "Hidden"
@@ -435,5 +466,17 @@ endsnippet
 snippet setup "PHPUnit: setUp"
 public function setUp() {
 	$0
+}
+endsnippet
+
+snippet cons "__construct()"
+public function __construct($0) {
+
+}
+endsnippet
+
+snippet tm "testMethod"
+public function test$1() {
+  $0
 }
 endsnippet
