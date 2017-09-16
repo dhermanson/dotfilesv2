@@ -1,9 +1,11 @@
 #! /bin/bash
 
 output=$1
-host=$2
-db=$3
-user=$4
-password=$5
+db=$2
+user=$3
+password=$4
 
-docker run -it --rm -v $output:/data mnuessler/schemaspy -hq -t mysql -host $host -db $db -u $user -p $password -norows -o /data
+# dockerhost=$(get_ip)
+
+# docker run -it --add-host dockerhost:$dockerhost --rm -v $output:/data mnuessler/schemaspy -hq -t mysql -host dockerhost  -db $db -u $user -p $password -norows -o /data
+docker run -it --rm -v $output:/data mnuessler/schemaspy -hq -t mysql -host "docker.for.mac.localhost:3306" -db $db -u $user -p $password -norows -o /data

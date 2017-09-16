@@ -29,6 +29,10 @@ nnoremap <Leader>p <Nop>
 nnoremap <Leader>.ev :e $MYVIMRC<CR>
 nnoremap <Leader>.sv :source $MYVIMRC<CR>
 
+" semicolon to colon...and vice-versa
+" nnoremap ; :
+" nnoremap : ;
+
 " escape on jk
 inoremap jk <Esc>
 onoremap jk <Esc>
@@ -104,12 +108,16 @@ vnoremap Q :norm @q<cr>
 " delete buffer
 nnoremap <Leader>q :bdelete<CR>
 nnoremap <M-q> :bdelete<CR>
+" force delete a buffer
+nnoremap <M-Q> :call ConfirmBDeleteBang()<CR>
 
 " close buffer
 nnoremap <M-c> <C-w>c
 
-" force delete a buffer
-nnoremap <Leader>x :call ConfirmBDeleteBang()<CR>
+
+" move between buffers
+nnoremap <M-p> :bprevious<CR>
+nnoremap <M-n> :bnext<CR>
 
 " new horizontal or vertical splits
 nnoremap <Leader>ns :new<CR>
@@ -155,9 +163,9 @@ nnoremap <Leader>k :Tags<CR>
 nnoremap <Leader>l :MyBufferTags<CR>
 
 " tmux interaction
-inoremap <silent> <M-s> <C-o>:call SendToTmuxPane()<CR>
-vnoremap <M-s> :\<C-u>execute "'<,'>Twrite " . g:my_tmux_repl_pane <CR>
-nnoremap <silent> <M-s> :call SendToTmuxPane()<CR>
+nnoremap <silent> <M-s> :call SendLineToTmuxPane(line('.'), g:my_tmux_repl_pane)<CR>
+inoremap <silent> <M-s> <C-o>:call SendLineToTmuxPane(line('.'), g:my_tmux_repl_pane)<CR>
+vnoremap <M-s> :\<C-u>call SendLinesToTmuxPane(line("'<"), line("'>"), g:my_tmux_repl_pane)<CR>
 nnoremap <silent> <M-x> :call KillTmuxRepl()<CR>
 
 " tagbar settings
@@ -168,3 +176,6 @@ nnoremap <Leader>9 :TagbarTogglePause<CR>
 
 " edit crontab
 nnoremap <Leader>.ec :call system('tmux splitw -p 25 "EDITOR=nvim crontab -e"')<CR>
+
+" vim-bufonly
+nnoremap <M-O> :BufOnly<CR>

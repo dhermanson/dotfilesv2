@@ -29,6 +29,16 @@ function! DispatchCommand(command, ...)
   endif
 endfunction
 
+function! SendLinesToTmuxPane(line1, line2, pane)
+  silent call tbone#write_command(0, a:line1, a:line2, 1, a:pane)
+  " silent call system("tmux send-keys -t " . a:pane . "  Enter")
+endfunction
+
+function! SendLineToTmuxPane(line, pane)
+  silent call tbone#write_command(0, a:line, a:line, 1, a:pane)
+  " silent call system("tmux send-keys -t " . a:pane . "  Enter")
+endfunction
+
 function! SendToTmuxPane()
   exe "normal V\<C-[>"
   exe "silent '<,'>Twrite " . g:my_tmux_repl_pane
@@ -99,4 +109,49 @@ function! RunCommandInSplit(command, split)
   let g:my_tmux_repl_pane = l:pane
 
   "call RunCommandInTmuxPane(l:pane, l:cmd)
+endfunction
+
+function! RunCommandInNewSessionWindow(command, session)
+  call KillTmuxRepl()
+  let l:escaped_cmd = shellescape(a:command)
+  let l:project_dir = fnamemodify('.', ':p')
+  " let l:cmd = 'cd ' . l:project_dir . ' && ' . l:escaped_cmd
+  let l:cmd = 'cd ' . l:project_dir . ' && ' . a:command
+  " let l:escaped_cmd = shellescape(l:cmd)
+  let l:timestamp = systemlist('date "+%s"')[0]
+  let g:my_tmux_repl_pane = a:session . ':' . l:timestamp
+  let l:the_command = "tmux new-window -t " . a:session . " -n " . l:timestamp . ' "' . l:cmd . '"'
+  echom l:the_command
+  silent call system(l:the_command)
+endfunction
+
+function! RunNodeInNewSessionWindow(session)
+  call KillTmuxRepl()
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:file = '~/node_repl.js'
+  if findfile('.derick/node_repl.js', l:project_dir) == '.derick/node_repl.js'
+    let l:file = '.derick/node_repl.js'
+  endif
+  let l:cmd = 'cd ' . l:project_dir . ' && node ' . l:file
+  let l:timestamp = systemlist('date "+%s"')[0]
+  let g:my_tmux_repl_pane = a:session . ':' . l:timestamp
+  let l:the_command = "tmux new-window -t " . a:session . " -n " . l:timestamp . ' "' . l:cmd . '"'
+  silent call system(l:the_command)
+endfunction
+
+function! RunPhpUnitOnMethodInBufferInNewSessionWindow(buffer_name, method, session)
+  call KillTmuxRepl()
+  " if exists('g:phpunit_test_tmux_pane')
+  "   call system("tmux kill-pane -t " . g:phpunit_test_tmux_pane)
+  " endif
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:phpunit_exe = fnamemodify('vendor/bin/phpunit ', ':p')
+  let l:file = expand('%:p')
+  let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:phpunit_exe . ' --filter ' . a:method . ' ' . l:file
+  let l:timestamp = systemlist('date "+%s"')[0]
+  let g:my_tmux_repl_pane = a:session . ':' . l:timestamp
+  " let g:phpunit_test_tmux_pane = a:session . ':' . l:timestamp
+  let l:the_command = "tmux new-window -t " . a:session . " -n " . l:timestamp . ' "' . l:cmd . '; exec bash" '
+  silent call system(l:the_command)
+  " exe "Tmux splitw " . a:split . " '" . l:cmd . " ; read'"
 endfunction

@@ -2,6 +2,7 @@
 
 # get paths to applications
 node = `which node`
+tmux = `which tmux`
 # tmux = `which tmux`
 
 # create command
@@ -12,7 +13,7 @@ tell application "System Events"
 end tell
 
 tell application "iTerm2"
-  create window with default profile command "tmux new-session -s blah #{node} ~/node_repl.js"
+  create window with default profile command "#{tmux} new-session -s blah #{node}"
 end tell
 
 tell application frontmostApplicationName

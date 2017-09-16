@@ -22,3 +22,6 @@
 [submodule "stows/php/.language-ctags/php/phpstorm-stubs"]
 	path = stows/php/.language-ctags/php/phpstorm-stubs
 	url = https://github.com/JetBrains/phpstorm-stubs.git
+[submodule "stows/ubersicht/.ubersicht-widgets/bar"]
+	path = stows/ubersicht/.ubersicht-widgets/bar
+	url = https://github.com/callahanrts/bar

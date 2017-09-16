@@ -47,6 +47,12 @@ nnoremap <buffer> <localleader>rps :Tmux splitw 'phpspec run ; read'<CR>
 " nnoremap <buffer> <localleader>rt :call RunPhpUnitOnBuffer(bufname('%')) <CR>
 nnoremap <buffer> <M-r><M-t><M-l> :call RunPhpUnitOnBuffer(bufname('%'), '-h') <CR>
 nnoremap <buffer> <M-r><M-t><M-j> :call RunPhpUnitOnBuffer(bufname('%'), '-v') <CR>
+" nnoremap <buffer> <M-r><M-t><M-m><M-l> :call RunPhpUnitOnMethodInBuffer(bufname('%'), expand('<cword>'), '-h')<CR>
+" nnoremap <buffer> <M-r><M-t><M-m><M-j> :call RunPhpUnitOnMethodInBuffer(bufname('%'), expand('<cword>'), '-v')<CR>
+nnoremap <buffer> <M-r><M-t><M-m><M-l> :call RunPhpUnitOnMethodInBuffer(bufname('%'), tagbar#currenttag("%s", 'none'), '-h')<CR>
+nnoremap <buffer> <M-r><M-t><M-m><M-j> :call RunPhpUnitOnMethodInBuffer(bufname('%'), tagbar#currenttag("%s", 'none'), '-v')<CR>
+nnoremap <buffer> <M-u><M-o> :call RunPhpUnitOnMethodInBufferInNewSessionWindow(bufname('%'), tagbar#currenttag("%s", 'none'), "repl")<CR>
+nnoremap <buffer> <M-r><M-t><M-m><M-s> :MyPhpUnitTestMethod<CR>
 nnoremap <buffer> <localleader>rpt :Start phpunit && read<CR>
 
 " laravel
@@ -57,8 +63,9 @@ nnoremap <buffer> <silent> <leader>rr :call RunArtisanTinkerInProjectRootDirecto
 nnoremap <buffer> <silent> <leader>rc :call ClearRepl()<CR>
 nnoremap <buffer> <silent><localleader>ts :call CreatePhpSplitAndStartRepl("vnew", "-v")<CR>
 nnoremap <buffer> <silent><localleader>tv :call CreatePhpSplitAndStartRepl("new", "-h")<CR>
-nnoremap <buffer> <silent> <leader>rs :call RunCommandInSplit("psysh", "-v")<CR>
-nnoremap <buffer> <silent> <leader>rv :call RunCommandInSplit("psysh", "-h")<CR>
+nnoremap <buffer> <silent> <M-r><M-j> :call RunCommandInSplit("psysh", "-v")<CR>
+nnoremap <buffer> <silent> <M-r><M-l> :call RunCommandInSplit("psysh", "-h")<CR>
+nnoremap <buffer> <silent> <M-r><M-o> :call RunCommandInNewSessionWindow("psysh", "repl")<CR>
 
 " codesniffer
 nnoremap <buffer> <localleader>cs :Dispatch phpcs % --standard=~/phpcsconfig.xml<CR>

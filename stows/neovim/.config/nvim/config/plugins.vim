@@ -9,6 +9,9 @@ Plug 'AlessandroYorba/Alduin'
 Plug 'nanotech/jellybeans.vim'
 " Plug 'itchyny/lightline.vim'
 " Plug 'shinchu/lightline-gruvbox.vim'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'ap/vim-buftabline'
 
 " Essentials
 Plug 'benmills/vimux'
@@ -43,9 +46,10 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-vinegar'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
+Plug 'airblade/vim-gitgutter'
+Plug 'schickling/vim-bufonly'
 
 " Languages
 Plug 'sheerun/vim-polyglot'
@@ -259,3 +263,7 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 "------------------vim-vue-------------------------------------------------------
 let g:vue_disable_pre_processors=1
+
+
+"------------------vim-dirvish---------------------------------------------------
+let g:dirvish_mode = ':sort ,^.*[\/],'

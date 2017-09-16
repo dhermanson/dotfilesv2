@@ -35,6 +35,7 @@
 --regex-php=/^[ \t]*trait[ \t]+([a-zA-Z0-9_]+)/\1/t,trait/
 --regex-php=/^[ \t]*((final|abstract)[ \t]+)*class[ \t]+([a-zA-Z0-9_]+)/\3/z,class/
 --regex-php=/^[ \t]*((static|abstract|public|protected|private)[ \t]+)*function[ \t]+(\&\s+)?([^ (]+)/\4/x,function/
+--regex-php=/^[ \t]*((static|abstract|public|protected|private)[ \t]+)*function[ \t]+test(\&\s+)?([^ (]+)/\4/u,testMethod/
 --regex-php=/^[ \t]*interface[ \t]+([a-zA-Z0-9_]+)/\1/y,interface/
 --regex-php=/^[ \t]*const[ \t]+([a-zA-Z0-9_]+)/const.\1/w,constant/
 --regex-php=/^[ \t]*\*[ \t]*@property(\-read|\-write)*[ \t]+[a-zA-Z0-9_]+[ \t]+\$([a-zA-Z0-9_]+)/\2/p,property/

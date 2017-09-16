@@ -1,5 +1,10 @@
 set nocompatible
 
+let project_root=$VIM_PROJECT_ROOT
+if project_root != ''
+  silent exe "cd " . project_root
+endif
+
 source $HOME/.config/nvim/config/plugins.vim
 source $HOME/.config/nvim/config/colors.vim
 source $HOME/.config/nvim/config/general.vim
@@ -296,8 +301,8 @@ function! RunNodeInSplit(split)
  "call RunCommandInTmuxPane(l:pane, l:cmd)
 endfunction
 "
-nnoremap <silent> <leader>rs :call RunCommandInSplit("bash", "-v")<CR>
-nnoremap <silent> <leader>rv :call RunCommandInSplit("bash", "-h")<CR>
+nnoremap <silent> <M-r><M-j> :call RunCommandInSplit("bash", "-v")<CR>
+nnoremap <silent> <M-r><M-l> :call RunCommandInSplit("bash", "-h")<CR>
 "
 ""-------------Auto-Commands--------------"
 "
@@ -353,8 +358,9 @@ augroup my_javascript
  autocmd!
  autocmd FileType javascript nnoremap <buffer> <localleader>e :echo "You've opened a javascript file!"<CR>
  autocmd FileType javascript nnoremap <buffer> <localleader>e :echo "You've opened a javascript file!"<CR>
- autocmd FileType javascript nnoremap <buffer> <leader>rs :call RunNodeInSplit("-v")<CR>
- autocmd FileType javascript nnoremap <buffer> <leader>rv :call RunNodeInSplit("-h")<CR>
+ autocmd FileType javascript nnoremap <buffer> <M-r><M-j> :call RunNodeInSplit("-v")<CR>
+ autocmd FileType javascript nnoremap <buffer> <M-r><M-l> :call RunNodeInSplit("-h")<CR>
+ autocmd FileType javascript nnoremap <buffer> <M-r><M-o> :call RunNodeInNewSessionWindow("repl")<CR>
 "  autocmd FileType javascript nnoremap <buffer> <M-r> :w<CR> :VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
 "  autocmd FileType javascript inoremap <buffer> <M-r> <Esc>:w<CR>:call VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
  autocmd Filetype *.txt set spell
@@ -382,13 +388,13 @@ augroup END
 "
 augroup my_python
  autocmd!
- autocmd FileType python nnoremap <buffer> <leader>rs :call RunCommandInSplit("ipython", "-v")<CR>
- autocmd FileType python nnoremap <buffer> <leader>rv :call RunCommandInSplit("ipython", "-h")<CR>
+ autocmd FileType python nnoremap <buffer> <M-r><M-j> :call RunCommandInSplit("ipython", "-v")<CR>
+ autocmd FileType python nnoremap <buffer> <M-r><M-l> :call RunCommandInSplit("ipython", "-h")<CR>
 augroup END
 augroup my_ruby
  autocmd!
- autocmd FileType ruby nnoremap <buffer> <leader>rs :call RunCommandInSplit("pry", "-v")<CR>
- autocmd FileType ruby nnoremap <buffer> <leader>rv :call RunCommandInSplit("pry", "-h")<CR>
+ autocmd FileType ruby nnoremap <buffer> <M-r><M-j> :call RunCommandInSplit("pry", "-v")<CR>
+ autocmd FileType ruby nnoremap <buffer> <M-r><M-l> :call RunCommandInSplit("pry", "-h")<CR>
 "  " rails
 "  autocmd FileType ruby nnoremap <buffer> <localleader>rr :Rake 
 "  autocmd FileType ruby nnoremap <buffer> <localleader>rev :Eview<CR>
@@ -457,13 +463,12 @@ augroup END
 
 function! RunSchemaspyOnProjectDatabase()
   let l:project_dir = fnamemodify('.', ':p')
-  let l:ip = input("Enter your IP address: ")
 
   ruby <<EOD
   require 'fileutils'
   require 'pathname'
 
-  ip = VIM::evaluate('l:ip')
+  # ip = VIM::evaluate('l:ip')
   project_dir = VIM::evaluate('l:project_dir')
   directory = Pathname.new(project_dir) + '.derick/schema'
   FileUtils.mkdir_p directory
@@ -479,7 +484,7 @@ function! RunSchemaspyOnProjectDatabase()
       pass = ENV['DB_PASSWORD']
 
       unless db.nil? and user.nil? and pass.nil? and ip.nil? and directory.nil?
-        cmd = %Q( tmux splitw -p 10 'schemaspy #{directory} #{ip} #{db} #{user} #{pass} && open #{directory}/relationships.html' )
+        cmd = %Q( tmux splitw -p 10 'schemaspy #{directory} #{db} #{user} #{pass} && open #{directory}/relationships.html' )
         system cmd
         system 'tmux last-pane'
       end
@@ -815,8 +820,9 @@ function! SetupLaravelProject()
 
   augroup my_laravel
     autocmd!
-    autocmd FileType php nnoremap <buffer> <silent> <leader>rs :call RunArtisanTinkerInSplit("-v")<CR>
-    autocmd FileType php nnoremap <buffer> <silent> <leader>rv :call RunArtisanTinkerInSplit("-h")<CR>
+    autocmd FileType php nnoremap <buffer> <silent> <M-r><M-j> :call RunArtisanTinkerInSplit("-v")<CR>
+    autocmd FileType php nnoremap <buffer> <silent> <M-r><M-l> :call RunArtisanTinkerInSplit("-h")<CR>
+    autocmd FileType php nnoremap <buffer> <silent> <M-r><M-o> :call RunCommandInNewSessionWindow('php artisan tinker' , "repl")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <leader>rrs :call RunArtisanTinkerInVagrantSplit("-v")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <leader>rrv :call RunArtisanTinkerInVagrantSplit("-h")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <localleader>rs :call RunPhpSpecOnBuffer(bufname('%')) <CR>
@@ -918,6 +924,7 @@ EOD
   endfunction
 
   nnoremap <silent> <leader>pa :call RunArtisan()<CR>
+  nnoremap <silent> <M-a> :call RunArtisan()<CR>
   "nnoremap <silent> <leader>a :call fzf#run({
         "\  'source': GetAvailableArtisanCommands(),
         "\  'sink': function('RunArtisanCommand'),
@@ -1046,6 +1053,21 @@ function! RunPhpUnitOnBuffer(buffer_name, split)
   exe "Tmux splitw " . a:split . " '" . l:cmd . " ; read'"
 endfunction
 
+function! RunPhpUnitOnMethodInBuffer(buffer_name, method, split)
+  " TODO: don't hardcode console:runner.1
+  "       maybe use a global config or something
+  "exe "Tmux send-keys -t console:runner.1 'clear; phpspec run " . fnameescape(a:buffer_name) . "' Enter"
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:phpunit_exe = fnamemodify('vendor/bin/phpunit ', ':p')
+  let l:file = expand('%:p')
+  let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:phpunit_exe . ' --filter ' . a:method . ' ' . l:file
+  "exe "Start phpunit run " . fnameescape(a:buffer_name) . " && read"
+  "exe "Tmux neww -t runner"
+  "exe "Tmux send-keys -t runner '" . l:cmd . "' Enter"
+  "exe "Tmux neww -t runner '" . l:cmd . "'"
+  exe "Tmux splitw " . a:split . " '" . l:cmd . " ; read'"
+endfunction
+
 function! RunArtisanTinkerInProjectRootDirectory()
   let l:project_dir = fnamemodify('.', ':p')
   let l:cmd = 'cd ' . l:project_dir . ' && php artisan tinker'
@@ -1123,3 +1145,8 @@ endfunction
 
 
 "command DropProjectDatabase :call DropProjectDatabase()
+
+augroup my_on_exit
+  autocmd!
+  autocmd VimLeavePre * call KillTmuxRepl()
+augroup END

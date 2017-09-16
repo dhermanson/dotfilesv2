@@ -169,7 +169,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 #fi
 #
 # node version manager settings
-export MY_NVM_VERSION="v7.7.2"
+export MY_NVM_VERSION="v8.5.0"
 export NVM_DIR=~/.nvm
 [ -s ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh # This loads nvm
 #

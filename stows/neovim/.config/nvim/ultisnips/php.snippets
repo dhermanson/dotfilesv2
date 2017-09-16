@@ -139,10 +139,15 @@ snippet psy "PsySh"
 eval(\Psy\sh());
 endsnippet
 
-snippet mf "model factory"
+snippet mfa "model factory"
 $factory->define($0, function(Faker\Generator $faker) {
 	return [
 	];
+});
+endsnippet
+
+snippet mfs "model factory state"
+$factory->state($0,  '$1', function (Faker\Generator $faker) {
 });
 endsnippet
 
@@ -153,9 +158,8 @@ snippet ho "HasOne"
 /**
   * Get the $1 associated with the $2.
   */
- public function ${1:relation_name}()
- {
-     return $this->hasOne('$3');
+ public function ${1:relation_name}() {
+   return $this->hasOne('$3');
  }
 endsnippet
 
@@ -284,7 +288,7 @@ endsnippet
 
 snippet hidden "hidden"
 /**
- * The attributes that are not mass assignable.
+ * The attributes that should be hidden for serialization.
  *
  * @var array
  */
@@ -360,6 +364,12 @@ endsnippet
 snippet sc "query scope"
 public function scope$1($query$0) {
   return $query->;
+}
+endsnippet
+
+snippet g "getter"
+public function get$1Attribute() {
+  $0
 }
 endsnippet
 
@@ -477,6 +487,54 @@ endsnippet
 
 snippet tm "testMethod"
 public function test$1() {
+	// Arrange
   $0
+
+	// Act
+
+	// Assert
+}
+endsnippet
+
+snippet ppv "prepareForValidation"
+/**
+ * Prepare the data for validation.
+ *
+ * @return void
+ */
+protected function prepareForValidation() {
+	$0
+}
+endsnippet
+
+snippet validate "validate"
+/**
+ * Validate the class instance.
+ *
+ * @return void
+ */
+public function validate()
+{
+  $this->prepareForValidation();
+
+  $instance = $this->getValidatorInstance();
+
+  if (! $this->passesAuthorization()) {
+      $this->failedAuthorization();
+  } elseif (! $instance->passes()) {
+      $this->failedValidation($instance);
+  }
+}
+endsnippet
+
+snippet boot "the booting method of the model"
+/**
+ * The "booting" method of the model.
+ *
+ * @return void
+ */
+protected static function boot()
+{
+  parent::boot();$0
 }
 endsnippet
