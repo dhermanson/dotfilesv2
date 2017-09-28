@@ -39,6 +39,24 @@ function! SendLineToTmuxPane(line, pane)
   " silent call system("tmux send-keys -t " . a:pane . "  Enter")
 endfunction
 
+function! SendSymbolToTmuxPane(symbol, pane)
+  let l:cmd = "tmux send-keys -t " . a:pane . " '" . a:symbol . "'"
+  echom l:cmd
+  call system(l:cmd)
+endfunction
+
+function! GetPhpDocsForSymbol(symbol, pane)
+  " let l:cmd = shellescape(a:text)
+  " let l:escaped_symbol = shellescape(a:symbol)
+  let l:cmd = "tmux send-keys -t " . a:pane . " '" . 'doc ' . a:symbol . "' Enter"
+  echom l:cmd
+  call system(l:cmd)
+endfunction
+
+function! GetSingleLineVisualSelection()
+  return getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]
+endfunction
+
 function! SendToTmuxPane()
   exe "normal V\<C-[>"
   exe "silent '<,'>Twrite " . g:my_tmux_repl_pane

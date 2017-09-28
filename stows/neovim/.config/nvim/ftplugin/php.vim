@@ -49,8 +49,8 @@ nnoremap <buffer> <M-r><M-t><M-l> :call RunPhpUnitOnBuffer(bufname('%'), '-h') <
 nnoremap <buffer> <M-r><M-t><M-j> :call RunPhpUnitOnBuffer(bufname('%'), '-v') <CR>
 " nnoremap <buffer> <M-r><M-t><M-m><M-l> :call RunPhpUnitOnMethodInBuffer(bufname('%'), expand('<cword>'), '-h')<CR>
 " nnoremap <buffer> <M-r><M-t><M-m><M-j> :call RunPhpUnitOnMethodInBuffer(bufname('%'), expand('<cword>'), '-v')<CR>
-nnoremap <buffer> <M-r><M-t><M-m><M-l> :call RunPhpUnitOnMethodInBuffer(bufname('%'), tagbar#currenttag("%s", 'none'), '-h')<CR>
-nnoremap <buffer> <M-r><M-t><M-m><M-j> :call RunPhpUnitOnMethodInBuffer(bufname('%'), tagbar#currenttag("%s", 'none'), '-v')<CR>
+nnoremap <buffer> <M-u><M-l> :call RunPhpUnitOnMethodInBuffer(bufname('%'), tagbar#currenttag("%s", 'none'), '-h')<CR>
+nnoremap <buffer> <M-u><M-j> :call RunPhpUnitOnMethodInBuffer(bufname('%'), tagbar#currenttag("%s", 'none'), '-v')<CR>
 nnoremap <buffer> <M-u><M-o> :call RunPhpUnitOnMethodInBufferInNewSessionWindow(bufname('%'), tagbar#currenttag("%s", 'none'), "repl")<CR>
 nnoremap <buffer> <M-r><M-t><M-m><M-s> :MyPhpUnitTestMethod<CR>
 nnoremap <buffer> <localleader>rpt :Start phpunit && read<CR>
@@ -83,3 +83,10 @@ inoremap <buffer> <localleader>.s <Esc>:call PhpSortUse()<CR>
 nnoremap <buffer> <localleader>.s :call PhpSortUse()<CR>
 
 nnoremap <buffer> <localleader>d :call pdv#DocumentWithSnip()<CR>
+
+" get docs for word under cursor
+nnoremap <silent> <M-d> :call GetPhpDocsForSymbol(expand('<cword>'), g:my_tmux_repl_pane)<CR>
+inoremap <silent> <M-d> <C-o>:call GetPhpDocsForSymbol(expand('<cword>'), g:my_tmux_repl_pane)<CR>
+vnoremap <silent> <M-d> :call GetPhpDocsForSymbol(GetSingleLineVisualSelection(), g:my_tmux_repl_pane)<CR>
+" send literal to repl
+nnoremap <silent> <M-r>q :call SendSymbolToTmuxPane('q', g:my_tmux_repl_pane)<CR>

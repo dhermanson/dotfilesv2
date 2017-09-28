@@ -16,6 +16,7 @@ cask 'java'
 cask 'osxfuse'
 cask 'xquartz'
 
+cask 'android-platform-tools'
 cask 'docker'
 cask 'dropbox'
 cask 'eclipse-ide'
@@ -33,9 +34,9 @@ cask 'virtualbox'
 ################################################################################
 #  Brew Packages
 ################################################################################
-brew 'asciinema'
 brew 'ack'
 brew 'ag'
+brew 'asciinema'
 brew 'composer'
 brew 'coreutils'
 brew 'ctags'

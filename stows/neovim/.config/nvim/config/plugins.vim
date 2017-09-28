@@ -15,7 +15,7 @@ Plug 'ap/vim-buftabline'
 
 " Essentials
 Plug 'benmills/vimux'
-" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
 " Plugin outside ~/.local/share/nvim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -50,6 +50,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'justinmk/vim-dirvish'
 Plug 'airblade/vim-gitgutter'
 Plug 'schickling/vim-bufonly'
+Plug 'tpope/vim-scriptease'
 
 " Languages
 Plug 'sheerun/vim-polyglot'

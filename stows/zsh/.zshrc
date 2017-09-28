@@ -143,7 +143,12 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 #
 #source ~/.repositories/github/dhermanson/dotfiles/zsh/aliases.sh
 ##alias vim="mvim -v"
-##alias vim="nvim"
+alias vim="nvim"
+alias vi="nvim"
+alias v="nvim"
+alias n="nvim"
+alias nv="nvim"
+alias nvi="nvim"
 #
 #alias xon='export XDEBUG_CONFIG="idekey=PHPSTORM"'
 #alias xoff='export XDEBUG_CONFIG=""'

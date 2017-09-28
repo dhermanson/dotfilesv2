@@ -160,7 +160,8 @@ nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
 " nnoremap <Leader>k :MyTagList<CR>
 nnoremap <Leader>k :Tags<CR>
-nnoremap <Leader>l :MyBufferTags<CR>
+" nnoremap <Leader>l :MyBufferTags<CR>
+nnoremap <Leader>l :CtrlPBufTag<CR>
 
 " tmux interaction
 nnoremap <silent> <M-s> :call SendLineToTmuxPane(line('.'), g:my_tmux_repl_pane)<CR>

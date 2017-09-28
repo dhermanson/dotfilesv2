@@ -650,6 +650,11 @@ function! RunMycli(split)
 EOD
 endfunction
 
+function! SetupComposerProject()
+  nnoremap <leader>pmtp :Dispatch $HOME/.config/nvim/bin/create-php-ctags.sh<CR>
+  nnoremap <leader>pmtv :Dispatch $HOME/.config/nvim/bin/create-php-vendor-tags.sh<CR>
+endfunction
+
 function! SetupLaravelProject()
 
   set tags+=.ctags-php
@@ -826,8 +831,8 @@ function! SetupLaravelProject()
     autocmd FileType php nnoremap <buffer> <silent> <leader>rrs :call RunArtisanTinkerInVagrantSplit("-v")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <leader>rrv :call RunArtisanTinkerInVagrantSplit("-h")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <localleader>rs :call RunPhpSpecOnBuffer(bufname('%')) <CR>
-    autocmd FileType php nnoremap <buffer> <silent> <M-d> :! open http://php.net/<cword><CR><Esc>
-    autocmd FileType php inoremap <buffer> <silent> <M-d> <Esc>:! open http://php.net/<cword><CR><Esc>e
+    autocmd FileType php nnoremap <buffer> <silent> <M-D> :! open http://php.net/<cword><CR><Esc>
+    autocmd FileType php inoremap <buffer> <silent> <M-D> <Esc>:! open http://php.net/<cword><CR><Esc>e
   augroup END
 
 
@@ -847,8 +852,6 @@ function! SetupLaravelProject()
 EOD
   endfunction
 
-  nnoremap <leader>pmtp :Dispatch $HOME/.config/nvim/bin/create-php-ctags.sh<CR>
-  nnoremap <leader>pmtv :Dispatch $HOME/.config/nvim/bin/create-php-vendor-tags.sh<CR>
   nnoremap <leader>pmdoc :call RunNpmDocs()<CR>
   nnoremap <leader>pdoc :call system('open public/docs/index.html')<CR>
   nnoremap <leader>pwd :call RunNpmWatchDocs()<CR>
@@ -864,7 +867,8 @@ EOD
   nnoremap <leader>priv :call OpenProjectRootInVagrantSplit("-h")<CR>
 
   function! RunArtisanCommand(cmd)
-    let escaped_cmd = "php -dxdebug.remote_enable=0 -dxdebug.remote_autostart=0 artisan " . shellescape(a:cmd)
+    " let escaped_cmd = "php -dxdebug.remote_enable=0 -dxdebug.remote_autostart=0 artisan " . shellescape(a:cmd)
+    let escaped_cmd = "php artisan " . shellescape(a:cmd)
 
     let run_script = $HOME."/.config/nvim/bin/run_then_close_tmux_window"
 
@@ -933,6 +937,9 @@ EOD
 endfunction
 
 function! SetupProjectType()
+  if filereadable("composer.json")
+    call SetupComposerProject()
+  endif
   if filereadable("artisan")
     call SetupLaravelProject()
   endif

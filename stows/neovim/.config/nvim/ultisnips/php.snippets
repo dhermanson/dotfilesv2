@@ -361,7 +361,7 @@ snippet usd "use SoftDeletes"
 use SoftDeletes$0;
 endsnippet
 
-snippet sc "query scope"
+snippet qs "query scope"
 public function scope$1($query$0) {
   return $query->;
 }
@@ -427,7 +427,7 @@ $table->string('$1');$0
 endsnippet
 
 snippet bpin "blueprint: index"
-$table->index('$1');$0
+$table->index(['$1']);$0
 endsnippet
 
 snippet bpui "Blueprint: unsigned integer"
