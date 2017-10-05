@@ -4,6 +4,7 @@ sudo apt install -y \
      composer \
 		 docker-ce \
      emacs \
+     emacs25-common-non-dfsg \
      exuberant-ctags \
      graphviz \
      konsole \
