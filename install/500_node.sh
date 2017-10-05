@@ -2,7 +2,7 @@
 # ~/.nvm/nvm.sh
 # nvm install $MY_NVM_VERSION
 source ~/.nvm/nvm.sh
-nvm install $(echo $MY_NVM_VERSION)
+nvm install $MY_NVM_VERSION
 
 yarn global add aglio
 yarn global add bower

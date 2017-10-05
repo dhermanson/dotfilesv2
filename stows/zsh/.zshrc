@@ -124,7 +124,12 @@ export EDITOR='nvim'
 #
 # gruvbox
 # source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
-source "$HOME/.local/share/nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
+if [[ "$OSX" == "1" ]]
+then
+  source "$HOME/.local/share/nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
+else
+  source "/home/derick/.local/share/nvim/plugged/gruvbox/gruvbox_256palette.sh"
+fi
 
 # tmux
 alias tmux="tmux -2"
@@ -183,13 +188,18 @@ export NVM_DIR=~/.nvm
 #export GOROOT=/usr/local/opt/go/libexec
 #export PATH=$PATH:$GOPATH/bin
 #export PATH=$PATH:$GOROOT/bin
-#
+
+
 # add local node_modules bin to path
 export PATH=$PATH:./node_modules/.bin
 # add local composer bin to path
 export PATH=$PATH:./vendor/bin
 # add global composer to path
 export PATH=$PATH:~/.composer/vendor/bin
+# add ~/.local/bin to path
+export PATH=$PATH:~/.local/bin
+# add rust cargo to path
+export PATH="$HOME/.cargo/bin:$PATH"
 ## add cabal bin to path
 #export PATH=$PATH:~/.cabal/bin
 ## add stack binary path to bin
@@ -239,11 +249,4 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export PATH=~/bin:$PATH
 
 ##############i stopped x'ing stuff here########################################
-
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/derickhermanson/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/derickhermanson/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/derickhermanson/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/derickhermanson/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 

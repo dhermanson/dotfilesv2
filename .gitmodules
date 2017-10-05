@@ -7,9 +7,6 @@
 [submodule "stows/rbenv-plugins/.rbenv/plugins/ruby-build"]
 	path = stows/rbenv-plugins/.rbenv/plugins/ruby-build
 	url = https://github.com/rbenv/ruby-build
-[submodule "stows/fzf/.fzf"]
-	path = stows/fzf/.fzf
-	url = https://github.com/junegunn/fzf.git
 [submodule "stows/rbenv-plugins/.rbenv/plugins/rbenv-default-gems"]
 	path = stows/rbenv-plugins/.rbenv/plugins/rbenv-default-gems
 	url = https://github.com/rbenv/rbenv-default-gems.git
@@ -28,3 +25,12 @@
 [submodule "stows/ubersicht/.ubersicht-widgets/bar"]
 	path = stows/ubersicht/.ubersicht-widgets/bar
 	url = https://github.com/callahanrts/bar
+[submodule "stows/fonts/.local/share/fonts/source-code-pro"]
+	path = stows/fonts/.local/share/fonts/source-code-pro
+	url = https://github.com/adobe-fonts/source-code-pro
+[submodule "stows/fonts/.local/share/fonts/Hack"]
+	path = stows/fonts/.local/share/fonts/Hack
+	url = https://github.com/source-foundry/Hack
+[submodule "stows/fonts/.local/share/fonts/Hasklig"]
+	path = stows/fonts/.local/share/fonts/Hasklig
+	url = https://github.com/i-tu/Hasklig

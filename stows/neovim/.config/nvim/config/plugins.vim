@@ -11,7 +11,7 @@ Plug 'nanotech/jellybeans.vim'
 " Plug 'shinchu/lightline-gruvbox.vim'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
-Plug 'ap/vim-buftabline'
+" Plug 'ap/vim-buftabline'
 
 " Essentials
 Plug 'benmills/vimux'
@@ -51,6 +51,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'airblade/vim-gitgutter'
 Plug 'schickling/vim-bufonly'
 Plug 'tpope/vim-scriptease'
+Plug 'scrooloose/nerdtree'
 
 " Languages
 Plug 'sheerun/vim-polyglot'
@@ -248,9 +249,10 @@ let g:pdv_template_dir = $HOME ."/.local/share/nvim/plugged/pdv/templates_snip"
 
 "------------------Ultisnips-----------------------------------------------------
 let g:UltiSnipsSnippetsDir = $HOME . "/.config/nvim/ultisnips"
+let g:UltiSnipsSnippetDirectories = ['ultisnips']
 
 "------------------Tagbar--------------------------------------------------------
-let g:tagbar_width = 60
+" let g:tagbar_width = 60
 let g:tagbar_autopreview = 0
 let g:tagbar_expand = 1
 let g:tagbar_autoclose = 0

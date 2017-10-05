@@ -19,7 +19,8 @@ set background=dark
 " gruvbox config
 let g:gruvbox_italic=0
 let g:gruvbox_invert_signs=1
-let g:gruvbox_contrast_dark='soft'
+" let g:gruvbox_contrast_dark='soft'
+" let g:gruvbox_contrast_dark='soft'
 "let g:gruvbox_contrast_light='soft'
 let g:gruvbox_invert_selection=0
 let g:gruvbox_italic=1
@@ -62,6 +63,7 @@ highlight VertSplit ctermbg=236
 "highlight SignColumn ctermbg=233
 "highlight VertSplit ctermbg=233
 
+highlight Comment gui=italic
 highlight Comment cterm=italic
 
 "colorscheme jellybeans<Paste>

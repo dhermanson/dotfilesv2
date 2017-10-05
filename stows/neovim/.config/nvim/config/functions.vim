@@ -146,10 +146,14 @@ endfunction
 function! RunNodeInNewSessionWindow(session)
   call KillTmuxRepl()
   let l:project_dir = fnamemodify('.', ':p')
-  let l:file = '~/node_repl.js'
+  let l:file = ''
+  if findfile($HOME.'/node_repl.js') == $HOME.'/node_repl.js'
+    let l:file = $HOME.'/node_repl.js'
+  endif
   if findfile('.derick/node_repl.js', l:project_dir) == '.derick/node_repl.js'
     let l:file = '.derick/node_repl.js'
   endif
+  let l:cmd = 'cd ' . l:project_dir . ' && node ' . l:file
   let l:cmd = 'cd ' . l:project_dir . ' && node ' . l:file
   let l:timestamp = systemlist('date "+%s"')[0]
   let g:my_tmux_repl_pane = a:session . ':' . l:timestamp

@@ -289,7 +289,10 @@ let g:tagbar_type_markdown = {
 function! RunNodeInSplit(split)
  call KillTmuxRepl()
  let l:project_dir = fnamemodify('.', ':p')
- let l:file = '~/node_repl.js'
+ let l:file = ''
+ if findfile($HOME.'/node_repl.js') == $HOME.'/node_repl.js'
+   let l:file = $HOME.'/node_repl.js'
+ endif
  if findfile('.derick/node_repl.js', l:project_dir) == '.derick/node_repl.js'
    let l:file = '.derick/node_repl.js'
  endif
@@ -356,11 +359,9 @@ nnoremap <silent> <M-r><M-l> :call RunCommandInSplit("bash", "-h")<CR>
 "
 augroup my_javascript
  autocmd!
- autocmd FileType javascript nnoremap <buffer> <localleader>e :echo "You've opened a javascript file!"<CR>
- autocmd FileType javascript nnoremap <buffer> <localleader>e :echo "You've opened a javascript file!"<CR>
- autocmd FileType javascript nnoremap <buffer> <M-r><M-j> :call RunNodeInSplit("-v")<CR>
- autocmd FileType javascript nnoremap <buffer> <M-r><M-l> :call RunNodeInSplit("-h")<CR>
- autocmd FileType javascript nnoremap <buffer> <M-r><M-o> :call RunNodeInNewSessionWindow("repl")<CR>
+ autocmd FileType javascript nnoremap <buffer> <silent> <M-r><M-j> :call RunNodeInSplit("-v")<CR>
+ autocmd FileType javascript nnoremap <buffer> <silent> <M-r><M-l> :call RunNodeInSplit("-h")<CR>
+ autocmd FileType javascript nnoremap <buffer> <silent> <M-r><M-o> :call RunNodeInNewSessionWindow("repl")<CR>
 "  autocmd FileType javascript nnoremap <buffer> <M-r> :w<CR> :VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
 "  autocmd FileType javascript inoremap <buffer> <M-r> <Esc>:w<CR>:call VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
  autocmd Filetype *.txt set spell
@@ -653,11 +654,14 @@ endfunction
 function! SetupComposerProject()
   nnoremap <leader>pmtp :Dispatch $HOME/.config/nvim/bin/create-php-ctags.sh<CR>
   nnoremap <leader>pmtv :Dispatch $HOME/.config/nvim/bin/create-php-vendor-tags.sh<CR>
+  set tags+=~/.language-ctags/php/tags
+  set tags+=.ctags-php
+  set tags+=.ctags-php-vendor
 endfunction
 
 function! SetupLaravelProject()
 
-  set tags+=.ctags-php
+  " set tags+=.ctags-php
   let g:projectionist_heuristics = {
         \   "artisan": {
         \     "app/*.php": {
