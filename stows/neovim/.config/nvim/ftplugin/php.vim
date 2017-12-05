@@ -85,8 +85,8 @@ nnoremap <buffer> <localleader>.s :call PhpSortUse()<CR>
 nnoremap <buffer> <localleader>d :call pdv#DocumentWithSnip()<CR>
 
 " get docs for word under cursor
-nnoremap <silent> <M-d> :call GetPhpDocsForSymbol(expand('<cword>'), g:my_tmux_repl_pane)<CR>
-inoremap <silent> <M-d> <C-o>:call GetPhpDocsForSymbol(expand('<cword>'), g:my_tmux_repl_pane)<CR>
-vnoremap <silent> <M-d> :call GetPhpDocsForSymbol(GetSingleLineVisualSelection(), g:my_tmux_repl_pane)<CR>
+nnoremap <buffer> <silent> <M-d> :call GetPhpDocsForSymbol(expand('<cword>'), g:my_tmux_repl_pane)<CR>
+inoremap <buffer> <silent> <M-d> <C-o>:call GetPhpDocsForSymbol(expand('<cword>'), g:my_tmux_repl_pane)<CR>
+vnoremap <buffer> <silent> <M-d> :call GetPhpDocsForSymbol(GetSingleLineVisualSelection(), g:my_tmux_repl_pane)<CR>
 " send literal to repl
-nnoremap <silent> <M-r>q :call SendSymbolToTmuxPane('q', g:my_tmux_repl_pane)<CR>
+nnoremap <buffer> <silent> <M-r>q :call SendSymbolToTmuxPane('q', g:my_tmux_repl_pane)<CR>

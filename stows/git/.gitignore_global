@@ -58,7 +58,7 @@ vendortags
 
 
 ## any .vimrc's #####
-.vimrc
+# .vimrc
 
 ## todos ###
 todo.txt
@@ -80,3 +80,5 @@ NetrwTreeListing*
 
 .test-output.js
 .test-output.js.map
+
+phpstan.neon

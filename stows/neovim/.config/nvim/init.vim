@@ -1,4 +1,6 @@
 set nocompatible
+syntax on
+filetype plugin indent on
 
 let project_root=$VIM_PROJECT_ROOT
 if project_root != ''
@@ -301,8 +303,6 @@ function! RunNodeInSplit(split)
  "call RunCommandInTmuxPane(l:pane, l:cmd)
 endfunction
 "
-nnoremap <silent> <M-r><M-j> :call RunCommandInSplit("bash", "-v")<CR>
-nnoremap <silent> <M-r><M-l> :call RunCommandInSplit("bash", "-h")<CR>
 "
 ""-------------Auto-Commands--------------"
 "
@@ -354,6 +354,14 @@ nnoremap <silent> <M-r><M-l> :call RunCommandInSplit("bash", "-h")<CR>
 "  autocmd FileType java setlocal tags+=~/tags/java.tags
 "augroup END
 "
+augroup my_sql
+ autocmd!
+ autocmd FileType sql nnoremap <buffer> <M-r><M-j> :call RunMycli('-v')<CR>
+ autocmd FileType sql nnoremap <buffer> <M-r><M-l> :call RunMycli('-h')<CR>
+"  autocmd FileType javascript nnoremap <buffer> <M-r> :w<CR> :VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
+"  autocmd FileType javascript inoremap <buffer> <M-r> <Esc>:w<CR>:call VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
+augroup END
+
 augroup my_javascript
  autocmd!
  autocmd FileType javascript nnoremap <buffer> <localleader>e :echo "You've opened a javascript file!"<CR>
@@ -363,12 +371,13 @@ augroup my_javascript
  autocmd FileType javascript nnoremap <buffer> <M-r><M-o> :call RunNodeInNewSessionWindow("repl")<CR>
 "  autocmd FileType javascript nnoremap <buffer> <M-r> :w<CR> :VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
 "  autocmd FileType javascript inoremap <buffer> <M-r> <Esc>:w<CR>:call VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
- autocmd Filetype *.txt set spell
 augroup END
 
 augroup my_sh
  autocmd!
  autocmd BufNewFile,BufRead .env* setfiletype sh
+ autocmd FileType sh nnoremap <buffer> <silent> <M-r><M-j> :call RunCommandInSplit("bash", "-v")<CR>
+ autocmd FileType sh nnoremap <buffer> <silent> <M-r><M-l> :call RunCommandInSplit("bash", "-h")<CR>
 augroup END
 
 "
@@ -594,8 +603,8 @@ def create_database
        puts "No database configured"
      else
        #create = %Q( mysqladmin -u #{user} --password=#{pass} create #{db})
-      create = %Q( mysql -u #{user} --password=#{pass} -e 'create database #{db} character set utf8mb4 collate utf8mb4_unicode_ci')
-      grant = %Q( mysql -u #{user} --password=#{pass} -e "grant all on #{db}.* to '#{user}'@'%'" )
+      create = %Q( mysql -u #{user} --password=#{pass} -e 'create database `#{db}` character set utf8mb4 collate utf8mb4_unicode_ci')
+      grant = %Q( mysql -u #{user} --password=#{pass} -e "grant all on `#{db}`.* to '#{user}'@'%'" )
       system create
       system grant
      end
@@ -616,38 +625,42 @@ EOD
   endfunction
 
 function! RunMycli(split)
+  call KillTmuxRepl()
   ruby <<EOD
   split = VIM::evaluate('a:split')
-  fork do
-    require 'dotenv'
-  
-    create_database
-  
-    if File.exists? '.env'
-      Dotenv.load '.env'
-  
-      host = ENV['DB_HOST'] || '127.0.0.1'
-      port = ENV['DB_PORT'] || '3306'
-      db = ENV['DB_DATABASE']
-      user = ENV['DB_USERNAME']
-      pass = ENV['DB_PASSWORD']
-  
-      unless host.nil? and
-             port.nil? and
-             user.nil? and
-             pass.nil?
-       if db.nil?
+
+  require 'dotenv'
+
+  create_database
+
+  if File.exists? '.env'
+    Dotenv.load '.env'
+
+    host = ENV['DB_HOST'] || '127.0.0.1'
+    port = ENV['DB_PORT'] || '3306'
+    db = ENV['DB_DATABASE']
+    user = ENV['DB_USERNAME']
+    pass = ENV['DB_PASSWORD']
+
+    unless host.nil? and
+           port.nil? and
+           user.nil? and
+           pass.nil?
+      if db.nil?
         system "tmux splitw #{split} 'mycli -h #{host} -P #{port} -u #{user} -p #{pass}'"
-       else
+      else
         system "tmux splitw #{split} 'mycli -h #{host} -P #{port} -D #{db} -u #{user} -p #{pass}'"
-       end
-  
       end
-    else
-      system "tmux splitw 'mycli --login-path=local'"
+
     end
+  else
+    system "tmux splitw 'mycli --login-path=local'"
   end
 EOD
+  let l:pane = GetTmuxPaneId()
+  " call system("tmux last-pane")
+  let g:my_tmux_repl_pane = l:pane
+  
 endfunction
 
 function! SetupComposerProject()
@@ -661,7 +674,7 @@ function! SetupLaravelProject()
   let g:projectionist_heuristics = {
         \   "artisan": {
         \     "app/*.php": {
-        \       "alternate": "spec/{}Spec.php"
+        \       "alternate": "tests/{}Test.php"
         \     },
         \     "app/Models/*.php": {
         \       "type": "model",
@@ -822,17 +835,21 @@ function! SetupLaravelProject()
   nnoremap <leader>pfmig :exe ":FZF database/migrations"<CR>
   nnoremap <leader>pfpro :exe ":FZF app/Providers"<CR>
   nnoremap <leader>pfv :exe ":FZF resources/views"<CR>
+  nnoremap <silent> <leader>pll :call system("tmux splitw -h -p 40 'tail -f storage/logs/laravel.log'")<CR>:call system("tmux last-pane")<CR>
+  nnoremap <silent> <leader>plj :call system("tmux splitw -v -p 10 'tail -f storage/logs/laravel.log'")<CR>:call system("tmux last-pane")<CR>
+  nnoremap <silent> <leader>plc :call system("echo '' > storage/logs/laravel.log'")<CR>
 
   augroup my_laravel
     autocmd!
     autocmd FileType php nnoremap <buffer> <silent> <M-r><M-j> :call RunArtisanTinkerInSplit("-v")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <M-r><M-l> :call RunArtisanTinkerInSplit("-h")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <M-r><M-o> :call RunCommandInNewSessionWindow('php artisan tinker' , "repl")<CR>
+    autocmd FileType php inoremap <buffer> <silent> <M-r><M-o> <C-o>:call RunCommandInNewSessionWindow('php artisan tinker' , "repl")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <leader>rrs :call RunArtisanTinkerInVagrantSplit("-v")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <leader>rrv :call RunArtisanTinkerInVagrantSplit("-h")<CR>
     autocmd FileType php nnoremap <buffer> <silent> <localleader>rs :call RunPhpSpecOnBuffer(bufname('%')) <CR>
     autocmd FileType php nnoremap <buffer> <silent> <M-D> :! open http://php.net/<cword><CR><Esc>
-    autocmd FileType php inoremap <buffer> <silent> <M-D> <Esc>:! open http://php.net/<cword><CR><Esc>e
+    autocmd FileType php inoremap <buffer> <silent> <M-D> <C-o>:! open http://php.net/<cword><CR>
   augroup END
 
 

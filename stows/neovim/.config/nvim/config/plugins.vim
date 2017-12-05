@@ -9,11 +9,14 @@ Plug 'AlessandroYorba/Alduin'
 Plug 'nanotech/jellybeans.vim'
 " Plug 'itchyny/lightline.vim'
 " Plug 'shinchu/lightline-gruvbox.vim'
-" Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
-Plug 'ap/vim-buftabline'
+" Plug 'ap/vim-buftabline'
 
 " Essentials
+Plug 'sbdchd/neoformat'
+Plug 'scrooloose/nerdtree'
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 Plug 'benmills/vimux'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
@@ -22,14 +25,17 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'Konfekt/FastFold'
-Plug 'Lokaltog/vim-easymotion'
+" Plug 'Lokaltog/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 Plug 'majutsushi/tagbar'
 Plug 'mileszs/ack.vim'
 " Plug 'vim-syntastic/syntastic'
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/echodoc.vim'
 Plug 'SirVer/ultisnips'
 Plug 'tobyS/vmustache'
 Plug 'tommcdo/vim-fubitive'
@@ -73,15 +79,20 @@ Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 Plug 'tpope/rbenv-ctags', { 'for': 'ruby' }
 
 " javascript
-Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
-Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript' }
+" Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
+" Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript' }
 
 " python
 Plug 'zchee/deoplete-jedi'
-Plug 'python-mode/python-mode'
+" Plug 'python-mode/python-mode'
+
+" css
+" Plug 'ap/vim-css-color'
 
 " Initialize plugin system
 call plug#end()
+
+set hidden
 
 " Vimux
 let g:VimuxOrientation = "h"
@@ -118,74 +129,25 @@ let g:EasyMotion_smartcase = 1
 let g:ackprg = 'rg --vimgrep --no-heading '
 " let g:ackprg = "ag --vimgrep"
 
-" syntastic
-"" syntastic settings
-"let g:syntastic_error_symbol = "✗"
-"let g:syntastic_warning_symbol = "⚠"
-"let g:syntastic_debug = 0
-"let g:syntastic_always_populate_loc_list=1
-"let g:syntastic_auto_loc_list=0
-"let g:syntastic_check_on_open=0
-"let g:syntastic_check_on_wq=0
-"let g:syntastic_aggregate_errors=1
-"let g:syntastic_ruby_checkers = ['mri']
-"let g:syntastic_javascript_checkers = ['eslint', 'jshint']
-""let g:syntastic_apiblueprint_checkers = ['drafter']
-""let g:syntastic_apiblueprint_drafter_exec = "/usr/local/bin/drafter"
-""let g:syntastic_python_python_exec = '/usr/local/bin/python3'
-"let g:syntastic_python_python_exec = 'python3'
-"let g:syntastic_python_checkers = ['mypy', 'python']
-""let g:syntastic_python_mypy_exec = '/usr/local/bin/mypy'
-"let g:syntastic_cs_checkers = ['mcs']
-""let g:syntastic_typescript_tsc_args = '--module commonjs --target ES5 --experimentalDecorators'
-"let g:syntastic_typescript_tsc_fname = ''
-"let g:syntastic_typescript_checkers = ['']
-"let g:syntastic_php_checkers = ["php"] " php, phpcs, phpmd, phplint
-""let g:syntastic_php_phpmd_args = 'text unusedcode'
-"let g:syntastic_php_phpcs_args = '--standard=~/phpcsconfig.xml'
-"let g:syntastic_mode_map = {
-"    \ "mode": "active",
-"    \ "active_filetypes": ["javascript", "python", "ruby", "php"],
-"    \ "passive_filetypes": ["html", "blade"] }
-
 " neomake
 " let g:neomake_open_list=2
 let g:neomake_open_list=0
 let g:neomake_verbose=0
 " let g:neomake_error_sign = {'text': '✗', 'texthl': 'NeomakeErrorSign'}
 
-augroup my_neomake
-  au!
-  autocmd! BufWritePost * Neomake
-augroup END
+" augroup my_neomake
+"   au!
+"   autocmd! BufWritePost * Neomake
+" augroup END
 
 let g:neomake_ruby_enabled_makers = ['mri']
-" let g:neomake_javascript_enabled_makers = ['eslint', 'jshint']
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_vue_enabled_makers = ['eslint']
+let g:neomake_javascript_enabled_makers = []
+let g:neomake_vue_enabled_makers = []
 let g:neomake_php_enabled_makers = ["php", "phpstan"] " php, phpstan, phpcs, phpmd, phplint
-function! ProcessEntry(entry)
-  let a:entry.type = 'E'
-endfunction
 
-" if filereadable("phpstan.neon")
-"   let g:my_phpstan_args = ['analyse', '--configuration=phpstan.neon', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php']
-" else
-"   let g:my_phpstan_args = ['analyse', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php']
-" endif
-
-let g:neomake_php_phpstan_maker = {
-      \ 'exe': 'php',
-      \ 'args': ['-dxdebug.remote_enable=0', '-dxdebug.remote_autostart=0', '~/.composer/vendor/bin/phpstan', 'analyse', '--no-ansi', '--no-progress', '--autoload-file=vendor/autoload.php'],
-      \ 'errorformat':
-      \   '%-G\ -%.%#,'.
-      \   '%-G\ \[%.%#,'.
-      \   '%EFile:%f:\ \ %l\ %m,'.
-      \   '%E\ \ %l\ %m,'.
-      \   '%-G%.%#',
-      \ 'mapexpr': '"File:" . neomake_bufname . ":" . v:val',
-      \ 'postprocess': function('ProcessEntry')
-      \}
+"--------------------ale---------------------------------------------------------
+" let g:ale_php_phpstan_level = 4
+let g:ale_php_phpstan_configuration = 'phpstan.neon'
 
 "--------------------FZF---------------------------------------------------------
 command! -bang -nargs=* Rg
@@ -210,32 +172,8 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 
 "---------------------DEOPLETE---------------------------------------------------
 let g:deoplete#enable_at_startup = 1
-"let g:deoplete#omni_patterns = {}
-"let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-"let g:deoplete#auto_completion_start_length = 2
-let g:deoplete#sources = {}
-let g:deoplete#sources['php'] = ['omni', 'tag', 'file', 'ultisnips', 'buffer', 'member']
-let g:deoplete#sources['vim'] = ['omni', 'tag', 'file', 'ultisnips', 'buffer', 'member']
-let g:deoplete#sources['javascript'] = ['file', 'ultisnips', 'ternjs']
-"let g:deoplete#sources['python'] = ['file', 'ultisnips', 'jedi']
-let g:deoplete#omni#functions = {}
-let g:deoplete#omni#functions['javascript'] = [
-  \ 'tern#Complete'
-\]
-let g:tern#command = ['tern']
-let g:tern#arguments = ['--persistent']
 let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_smart_case = 1
-"let g:deoplete#keyword_patterns = {}
-"let g:deoplete#keyword_patterns['php'] = 'function\w*'
-"let g:deoplete#sources._ = []
-"let g:deoplete#file#enable_buffer_path = 1
-
-"call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
-let g:deoplete#sources#jedi#show_docstring=1
-let g:deoplete#sources#jedi#extra_path = [
-      \    systemlist($HOME . "/.config/nvim/bin/get_python3_site_modules_path")[0]
-      \  ]
 
 "------------------DELIMITMATE---------------------------------------------------
 " delimitmate settings
@@ -250,7 +188,7 @@ let g:pdv_template_dir = $HOME ."/.local/share/nvim/plugged/pdv/templates_snip"
 let g:UltiSnipsSnippetsDir = $HOME . "/.config/nvim/ultisnips"
 
 "------------------Tagbar--------------------------------------------------------
-let g:tagbar_width = 60
+" let g:tagbar_width = 60
 let g:tagbar_autopreview = 0
 let g:tagbar_expand = 1
 let g:tagbar_autoclose = 0
@@ -268,3 +206,28 @@ let g:vue_disable_pre_processors=1
 
 "------------------vim-dirvish---------------------------------------------------
 let g:dirvish_mode = ':sort ,^.*[\/],'
+
+"------------------emmet---------------------------------------------------------
+" let g:user_emmet_leader_key = '<C-p>'
+
+"------------------echodoc-------------------------------------------------------
+" set cmdheight=2
+" set noshowmode
+let g:echodoc_enable_at_startup = 1
+
+"------------------NERDTree------------------------------------------------------
+let g:NERDTreeQuitOnOpen=1
+
+"------------------languageClient-neovim-----------------------------------------
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': [$HOME.'/tools/lsp-servers/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ 'typescript': [$HOME.'/tools/lsp-servers/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ 'javascript.jsx': [$HOME.'/tools/lsp-servers/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ }
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
+" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>

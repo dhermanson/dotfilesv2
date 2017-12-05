@@ -28,3 +28,6 @@
 [submodule "stows/ubersicht/.ubersicht-widgets/bar"]
 	path = stows/ubersicht/.ubersicht-widgets/bar
 	url = https://github.com/callahanrts/bar
+[submodule "stows/language-server-protocol/tools/lsp-servers/javascript-typescript-langserver"]
+	path = stows/language-server-protocol/tools/lsp-servers/javascript-typescript-langserver
+	url = https://github.com/sourcegraph/javascript-typescript-langserver

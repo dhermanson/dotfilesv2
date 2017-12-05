@@ -1,3 +1,4 @@
+export CLICOLOR=1
 # check if osx or linux
 if [[ `uname` == 'Linux' ]]
 then
@@ -174,7 +175,8 @@ alias nvi="nvim"
 #fi
 #
 # node version manager settings
-export MY_NVM_VERSION="v8.5.0"
+export MY_NVM_VERSION="v8.9.1"
+# export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export NVM_DIR=~/.nvm
 [ -s ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh # This loads nvm
 #

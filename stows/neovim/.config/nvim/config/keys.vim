@@ -29,6 +29,10 @@ nnoremap <Leader>p <Nop>
 nnoremap <Leader>.ev :e $MYVIMRC<CR>
 nnoremap <Leader>.sv :source $MYVIMRC<CR>
 
+" save
+inoremap <M-w> <C-o>:w<CR>
+nnoremap <M-w> :w<CR>
+
 " semicolon to colon...and vice-versa
 " nnoremap ; :
 " nnoremap : ;
@@ -116,15 +120,15 @@ nnoremap <M-c> <C-w>c
 
 
 " move between buffers
-nnoremap <M-p> :bprevious<CR>
-nnoremap <M-n> :bnext<CR>
+nnoremap <M-[> :bprevious<CR>
+nnoremap <M-]> :bnext<CR>
 
 " new horizontal or vertical splits
 nnoremap <Leader>ns :new<CR>
 nnoremap <Leader>nv :vnew<CR>
 
 " ack
-nnoremap <Leader>a :Ack 
+nnoremap <Leader>a :Ack! 
 
 " easymotion
 map <silent> / <Plug>(easymotion-sn)
@@ -157,7 +161,11 @@ vnoremap <Leader>ds y:call DispatchCommand(@@, "Start")<CR>
 
 " searching
 nnoremap <Leader>f :Files<CR>
+inoremap <M-f> <Esc>:Files<CR>
+nnoremap <M-f> :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
+nnoremap <M-b> :Buffers<CR>
+inoremap <M-b> <Esc>:Buffers<CR>
 " nnoremap <Leader>k :MyTagList<CR>
 nnoremap <Leader>k :Tags<CR>
 " nnoremap <Leader>l :MyBufferTags<CR>
@@ -171,8 +179,8 @@ nnoremap <silent> <M-x> :call KillTmuxRepl()<CR>
 
 " tagbar settings
 nnoremap <Leader>0 :TagbarToggle<CR>
-nnoremap <M-b> :TagbarToggle<CR>
-inoremap <M-b> <esc>:TagbarToggle<CR>
+nnoremap <M-B> :TagbarToggle<CR>
+inoremap <M-B> <esc>:TagbarToggle<CR>
 nnoremap <Leader>9 :TagbarTogglePause<CR>
 
 " edit crontab
@@ -180,3 +188,11 @@ nnoremap <Leader>.ec :call system('tmux splitw -p 25 "EDITOR=nvim crontab -e"')<
 
 " vim-bufonly
 nnoremap <M-O> :BufOnly<CR>
+
+" nerdtree
+nnoremap <M-;> :NERDTreeFocus<CR>
+nnoremap <M-:> :NERDTreeFind<CR>
+
+"ale
+nnoremap <leader>ep :ALEPrevious<CR>
+nnoremap <leader>en :ALENext<CR>

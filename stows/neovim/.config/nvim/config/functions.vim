@@ -30,7 +30,18 @@ function! DispatchCommand(command, ...)
 endfunction
 
 function! SendLinesToTmuxPane(line1, line2, pane)
-  silent call tbone#write_command(0, a:line1, a:line2, 1, a:pane)
+  let l:sleep = 0
+  if a:line2 - a:line1 > 10
+    let l:sleep = 1
+  endif
+
+  for line in range(a:line1, a:line2)
+    silent call SendLineToTmuxPane(line, a:pane)
+    if l:sleep == 1
+      sleep 1m
+    endif
+  endfor
+  " silent call tbone#write_command(0, a:line1, a:line2, 1, a:pane)
   " silent call system("tmux send-keys -t " . a:pane . "  Enter")
 endfunction
 

@@ -1,0 +1,72 @@
+snippet schema "Schema"
+{
+	"id": "$1",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "$2",
+  "description": "$3",
+  "type": "object",
+  "properties": {
+  	$0
+  },
+  "required": []
+}
+endsnippet
+
+snippet b "boolean" w
+"$1": {
+	"type": "boolean",
+	"title": "$2",
+	"description": "$3"
+}$0
+endsnippet
+
+snippet o "object" w
+"$1": {
+	"type": "object",
+	"title": "$2",
+	"description": "$3",
+	"properties": {
+		$4
+	},
+	"required": [ ]
+}$0
+endsnippet
+
+snippet a "array" w
+"$1": {
+	"type": "array",
+	"title": "$2",
+	"description": "$3",
+	"items": {
+		"type": "${4:string}"
+	}
+}$0
+endsnippet
+
+snippet n "number" w
+"$1": {
+	"type": "number",
+	"title": "$2",
+	"description": "$3"
+}$0
+endsnippet
+
+snippet i "integer" w
+"$1": {
+	"type": "integer",
+	"title": "$2",
+	"description": "$3"
+}$0
+endsnippet
+
+snippet s "string" w
+"$1": {
+	"type": "string",
+	"title": "$2",
+	"description": "$3"
+}$0
+endsnippet
+
+snippet r "$ref" w
+"$1": { "$ref": "$2" }$0
+endsnippet

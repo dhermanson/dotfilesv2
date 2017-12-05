@@ -67,66 +67,17 @@ highlight Comment cterm=italic
 "colorscheme jellybeans<Paste>
 
 " " airline
+let g:airline#extensions#ale#enabled = 1
 " let g:airline#extensions#tabline#enabled = 1
-" let g:airline_powerline_fonts = 1
-" if !has('gui_running')		
-"   let g:airline_left_sep=''		
-"   let g:airline_right_sep=''		
-" endif
-" if !exists('g:airline_symbols')		
-"   let g:airline_symbols = {}		
-" endif		
-" " let g:airline_symbols.space = "\ua0"
-"
-" " lightline
-" let g:lightline = {
-"       \ 'colorscheme': 'gruvbox',
-"       \ 'active': {
-"       \   'left': [ [ 'mode', 'paste' ],
-"       \             [ 'fugitive', 'filename' ] ]
-"       \ },
-"       \ 'component_function': {
-"       \   'fugitive': 'LightlineFugitive',
-"       \   'readonly': 'LightlineReadonly',
-"       \   'modified': 'LightlineModified',
-"       \   'filename': 'LightlineFilename'
-"       \ },
-"       \ 'separator': { 'left': '', 'right': '' },
-"       \ 'subseparator': { 'left': '', 'right': '' }
-"       \ }
-" " change separator and subseparator
-" let g:lightline.separator = { 'left': '', 'right': '' }
-" let g:lightline.subseparator = { 'left': '|', 'right': '|' }
-"
-" function! LightlineModified()
-"   if &filetype == "help"
-"     return ""
-"   elseif &modified
-"     return "+"
-"   elseif &modifiable
-"     return ""
-"   else
-"     return ""
-"   endif
-" endfunction
-"
-" function! LightlineReadonly()
-" 	return &readonly ? '' : ''
-" endfunction
-" function! LightlineFugitive()
-" 	if exists('*fugitive#head')
-" 		let branch = fugitive#head()
-" 		return branch !=# '' ? ''.branch : ''
-" 	endif
-" 	return ''
-" endfunction
-"
-"
-" function! LightlineFilename()
-"   return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-"        \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-"        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-" endfunction
+let g:airline_powerline_fonts = 1
+if !has('gui_running')		
+  let g:airline_left_sep=''		
+  let g:airline_right_sep=''		
+endif
+if !exists('g:airline_symbols')		
+  let g:airline_symbols = {}		
+endif		
+" let g:airline_symbols.space = "\ua0"
 
 " fzf
 let g:fzf_colors = { 'fg':      ['fg', 'Normal'],

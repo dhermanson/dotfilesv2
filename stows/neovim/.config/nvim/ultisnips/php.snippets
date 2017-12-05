@@ -423,43 +423,57 @@ endsnippet
 # Blueprint Methods
 ###########################################################################
 snippet bps "blueprint: string"
-$table->string('$1');$0
+$table->string('$1')$0
 endsnippet
 
 snippet bpin "blueprint: index"
-$table->index(['$1']);$0
+$table->index(['$1'])$0
 endsnippet
 
 snippet bpui "Blueprint: unsigned integer"
-$table->unsignedInteger('$1');$0
+$table->unsignedInteger('$1')$0
 endsnippet
 
 snippet bpd "Blueprint: date"
-$table->date('$1');$0
+$table->date('$1')$0
+endsnippet
+
+snippet bpdt "Blueprint: datetime"
+$table->dateTime('$1')$0
 endsnippet
 
 snippet bpfk "Blueprint: Foreign Key"
-$table->foreign('$1_id')->references('id')->on('$1s');$0
+$table->foreign('$1_id')->references('id')->on('$1s')$0
 endsnippet
 
 snippet bpfkc "Blueprint: Foreign Key (cascade)"
-$table->foreign('$1_id')->references('id')->on('$1s')->onDelete('cascade');$0
+$table->foreign('$1_id')->references('id')->on('$1s')->onDelete('cascade')$0
 endsnippet
 
 snippet bpb "Blueprint: boolean"
-$table->boolean('$1');$0
+$table->boolean('$1')$0
 endsnippet
 
 snippet bpdc "Blueprint: drop column"
-$table->dropColumn('$1');$0
+$table->dropColumn('$1')$0
 endsnippet
 
 snippet bpsd "Blueprint: soft delete"
-$table->softDeletes();
+$table->softDeletes()
 endsnippet
 
 snippet bpts "Blueprint: timestamps"
-$table->timestamps();
+$table->timestamps()
+endsnippet
+
+snippet bplt "Blueprint: longText"
+$table->longText('$1')$0
+endsnippet
+
+snippet bptb "Blueprint: table"
+Schema::table('$1', function (Blueprint $table) {
+  $0
+});
 endsnippet
 
 ###########################################################################
@@ -519,11 +533,21 @@ public function validate()
 
   $instance = $this->getValidatorInstance();
 
+	${1:$instance->after([$this, 'afterHook']);}
+
   if (! $this->passesAuthorization()) {
       $this->failedAuthorization();
   } elseif (! $instance->passes()) {
       $this->failedValidation($instance);
   }
+}
+endsnippet
+
+snippet afterhook "afterhook"
+public function afterHook($validator) {
+  $errors = $validator->errors();
+
+	$0
 }
 endsnippet
 
@@ -537,4 +561,30 @@ protected static function boot()
 {
   parent::boot();$0
 }
+endsnippet
+
+snippet pf "public function"
+public function $1($0) {
+}
+endsnippet
+
+snippet dbl "DB::listen"
+$count = 0;
+\Illuminate\Support\Facades\DB::listen(function ($q) use (&$count) {
+  $count++;
+  logger($count . ' -- ' . $q->sql);
+});
+endsnippet
+
+snippet rqc "reset query count"
+$GLOBALS['my-query-count'] = 0;
+endsnippet
+
+snippet pwd "bcrypt('password')"
+bcrypt('${1:password}');
+endsnippet
+
+snippet bpu "unique"
+$table->unique([$1]);
+$table->dropUnique([$1]);
 endsnippet

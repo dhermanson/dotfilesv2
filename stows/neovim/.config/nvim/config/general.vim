@@ -24,13 +24,14 @@ set nohlsearch
 set cursorline
 set nosplitbelow
 set splitright
-set completeopt=longest,menuone,preview
+" set completeopt=longest,menuone,preview
+set completeopt=longest,menuone
 set ignorecase
 
 " use ripgrep as grep implementation
-if executable('rg')
-  set grepprg=rg\ --vimgrep\ --color=never
-endif
+" if executable('rg')
+"   set grepprg=rg\ --vimgrep\ --color=never
+" endif
 
 " no bells
 set noerrorbells visualbell t_vb=
@@ -60,63 +61,16 @@ endif
 
 " TODO: put this somewhere else: https://superuser.com/questions/359580/error-adding-cronjobs-in-mac-os-x-lion
 autocmd filetype crontab setlocal nobackup nowritebackup
-autocmd BufEnter * set completeopt-=preview
+" autocmd BufEnter * set completeopt-=preview
 
-" " statusline
-" exec 'hi User1 guifg=' . g:terminal_color_10 . ' guibg=#282828'
-" exec 'hi User2 guifg=' . g:terminal_color_9 . ' guibg=#282828'
-" exec 'hi User3 guifg=' . g:terminal_color_12 . ' guibg=#282828'
-" exec 'hi User4 guifg=' . g:terminal_color_13 . ' guibg=#282828'
-" exec 'hi User5 guifg=' . g:terminal_color_11 . ' guibg=#282828'
-"
-" hi StatusLineNC guibg='#ebdbb2'
-"
-" function! MyActiveWindow()
-"
-"   if !exists("w:my_is_window_active")
-"     let w:my_is_window_active = 0
-"   endif
-"
-"   if w:my_is_window_active == 0
-"     setl statusline=
-"     setl statusline +=%1*\ %n\ %*            "buffer number
-"     setl statusline +=%5*%{&ff}%*            "file format
-"     setl statusline +=%3*%y%*                "file type
-"     " set statusline +=%4*\ %<%F%*            "full path
-"     setl statusline +=%4*\ %<%f%*            "full path
-"     setl statusline +=%2*%m%*                "modified flag
-"     setl statusline +=%1*%=%5l%*             "current line
-"     setl statusline +=%2*/%L%*               "total lines
-"     setl statusline +=%1*%4v\ %*             "virtual column number
-"     setl statusline +=%2*0x%04B\ %*          "character under cursor
-"   endif
-"
-"   let w:my_is_window_active = 1
-"
-" endfunction
-"
-" function! MyInactiveWindow()
-"
-"   if !exists("w:my_is_window_active")
-"     let w:my_is_window_active = 1
-"   endif
-"
-"   if w:my_is_window_active == 1
-"     setl statusline=
-"     setl statusline +=%f            "full path
-"   endif
-"
-"   let w:my_is_window_active = 0
-" endfunction
-"
-"
-" augroup BgHighlight
-"   autocmd!
-"
-"   " whether to highlight current line or not
-"   autocmd WinEnter,BufWinEnter * set cul
-"   autocmd WinLeave,BufWinLeave * set nocul
-"
-"   autocmd WinEnter,BufWinEnter * call MyActiveWindow()
-"   autocmd WinLeave,BufWinLeave * call MyInactiveWindow()
-" augroup END
+
+augroup BgHighlight
+  autocmd!
+
+  " whether to highlight current line or not
+  autocmd WinEnter,BufWinEnter * set cul
+  autocmd WinLeave,BufWinLeave * set nocul
+
+  " autocmd WinEnter,BufWinEnter * call MyActiveWindow()
+  " autocmd WinLeave,BufWinLeave * call MyInactiveWindow()
+augroup END

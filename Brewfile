@@ -6,7 +6,9 @@ tap 'homebrew/fuse'
 tap 'homebrew/homebrew-php'
 tap 'homebrew/homebrew-services'
 tap 'homebrew/versions'
+tap 'macvim-dev/macvim'
 tap 'neovim/neovim'
+tap 'railwaycat/emacsmacport'
 
 ################################################################################
 #  Brew Casks
@@ -42,17 +44,19 @@ brew 'coreutils'
 brew 'ctags'
 brew 'editorconfig'
 brew 'elixir'
-brew 'emacs', args: ['with-cocoa']
+# brew 'emacs', args: ['with-cocoa']
+brew 'emacs-mac' # trying out the railwaycat version of emacs for mac
 brew 'fontconfig'
 brew 'gcc', args: ['enable-cxx']
 brew 'global'
 brew 'gradle'
 brew 'htop'
 brew 'https://raw.github.com/apiaryio/drafter/master/tools/homebrew/drafter.rb', args: ['HEAD']
+brew 'macvim-dev/macvim/macvim', args: ['HEAD']
 brew 'imagemagick'
 brew 'koekeishiya/formulae/khd'
 brew 'leiningen'
-brew 'llvm', args: ['with-toolchain']
+# brew 'llvm', args: ['with-toolchain']
 brew 'maven'
 brew 'mpc'
 brew 'mpd'
@@ -99,5 +103,5 @@ brew 'stow'
 brew 'supervisor'
 brew 'tmux'
 brew 'wget'
-brew 'yarn'
+# brew 'yarn'
 brew 'zsh'
