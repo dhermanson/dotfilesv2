@@ -184,3 +184,15 @@ function! RunPhpUnitOnMethodInBufferInNewSessionWindow(buffer_name, method, sess
   silent call system(l:the_command)
   " exe "Tmux splitw " . a:split . " '" . l:cmd . " ; read'"
 endfunction
+
+function! RunPhpUnitOnBufferInNewSessionWindow(buffer_name, session)
+  call KillTmuxRepl()
+  let l:project_dir = fnamemodify('.', ':p')
+  let l:phpunit_exe = fnamemodify('vendor/bin/phpunit ', ':p')
+  let l:file = expand('%:p')
+  let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:phpunit_exe . ' ' . l:file
+  let l:timestamp = systemlist('date "+%s"')[0]
+  let g:my_tmux_repl_pane = a:session . ':' . l:timestamp
+  let l:the_command = "tmux new-window -t " . a:session . " -n " . l:timestamp . ' "' . l:cmd . '; exec bash" '
+  silent call system(l:the_command)
+endfunction

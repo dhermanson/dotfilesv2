@@ -1063,17 +1063,10 @@ function! RunPhpSpecOnBuffer(buffer_name)
 endfunction
 
 function! RunPhpUnitOnBuffer(buffer_name, split)
-  " TODO: don't hardcode console:runner.1
-  "       maybe use a global config or something
-  "exe "Tmux send-keys -t console:runner.1 'clear; phpspec run " . fnameescape(a:buffer_name) . "' Enter"
   let l:project_dir = fnamemodify('.', ':p')
   let l:phpunit_exe = fnamemodify('vendor/bin/phpunit ', ':p')
   let l:file = expand('%:p')
   let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:phpunit_exe . ' ' . l:file
-  "exe "Start phpunit run " . fnameescape(a:buffer_name) . " && read"
-  "exe "Tmux neww -t runner"
-  "exe "Tmux send-keys -t runner '" . l:cmd . "' Enter"
-  "exe "Tmux neww -t runner '" . l:cmd . "'"
   exe "Tmux splitw " . a:split . " '" . l:cmd . " ; read'"
 endfunction
 

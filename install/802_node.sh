@@ -16,6 +16,7 @@ npm install -g jshint
 npm install -g lodash
 npm install -g typescript
 npm install -g vscode-json-languageservice
+npm install -g prettier
 # yarn global add tern
 # yarn global add jsctags
 

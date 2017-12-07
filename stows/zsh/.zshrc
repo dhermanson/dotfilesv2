@@ -127,6 +127,9 @@ export EDITOR='nvim'
 # source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
 source "$HOME/.local/share/nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
+# python pip
+alias pip="pip2"
+
 # tmux
 alias tmux="tmux -2"
 

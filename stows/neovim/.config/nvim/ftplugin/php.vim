@@ -47,6 +47,7 @@ nnoremap <buffer> <localleader>rps :Tmux splitw 'phpspec run ; read'<CR>
 " nnoremap <buffer> <localleader>rt :call RunPhpUnitOnBuffer(bufname('%')) <CR>
 nnoremap <buffer> <M-r><M-t><M-l> :call RunPhpUnitOnBuffer(bufname('%'), '-h') <CR>
 nnoremap <buffer> <M-r><M-t><M-j> :call RunPhpUnitOnBuffer(bufname('%'), '-v') <CR>
+nnoremap <buffer> <M-r><M-t><M-o> :call RunPhpUnitOnBufferInNewSessionWindow(bufname('%'), 'repl') <CR>
 " nnoremap <buffer> <M-r><M-t><M-m><M-l> :call RunPhpUnitOnMethodInBuffer(bufname('%'), expand('<cword>'), '-h')<CR>
 " nnoremap <buffer> <M-r><M-t><M-m><M-j> :call RunPhpUnitOnMethodInBuffer(bufname('%'), expand('<cword>'), '-v')<CR>
 nnoremap <buffer> <M-u><M-l> :call RunPhpUnitOnMethodInBuffer(bufname('%'), tagbar#currenttag("%s", 'none'), '-h')<CR>
