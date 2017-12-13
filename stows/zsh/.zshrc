@@ -178,10 +178,9 @@ alias nvi="nvim"
 #fi
 #
 # node version manager settings
-export MY_NVM_VERSION="v8.9.1"
-# export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export NVM_DIR=~/.nvm
-[ -s ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh # This loads nvm
+# export MY_NVM_VERSION="v8.9.1"
+# export NVM_DIR=~/.nvm
+# [ -s ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh # This loads nvm
 #
 ## setup homebrew golang
 #export GOPATH=$HOME/workspace/golang

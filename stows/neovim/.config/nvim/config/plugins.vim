@@ -16,7 +16,10 @@ Plug 'vim-airline/vim-airline'
 " Essentials
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdtree'
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'autozimu/LanguageClient-neovim', {
+      \    'branch': 'next',
+      \    'do': './install.sh'
+      \  }
 Plug 'benmills/vimux'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
@@ -34,8 +37,8 @@ Plug 'mileszs/ack.vim'
 Plug 'w0rp/ale'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/denite.nvim'
-Plug 'Shougo/deoplete.nvim'
-Plug 'Shougo/echodoc.vim'
+" Plug 'Shougo/deoplete.nvim'
+" Plug 'Shougo/echodoc.vim'
 Plug 'SirVer/ultisnips'
 Plug 'tobyS/vmustache'
 Plug 'tommcdo/vim-fubitive'
@@ -57,6 +60,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'airblade/vim-gitgutter'
 Plug 'schickling/vim-bufonly'
 Plug 'tpope/vim-scriptease'
+Plug 'roxma/nvim-completion-manager'
 
 " Languages
 Plug 'sheerun/vim-polyglot'
@@ -83,7 +87,7 @@ Plug 'tpope/rbenv-ctags', { 'for': 'ruby' }
 " Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript' }
 
 " python
-Plug 'zchee/deoplete-jedi'
+" Plug 'zchee/deoplete-jedi'
 " Plug 'python-mode/python-mode'
 
 " css
@@ -148,6 +152,10 @@ let g:neomake_php_enabled_makers = ["php", "phpstan"] " php, phpstan, phpcs, php
 "--------------------ale---------------------------------------------------------
 " let g:ale_php_phpstan_level = 4
 let g:ale_php_phpstan_configuration = 'phpstan.neon'
+let g:ale_fixers = {
+      \    'javascript': ['prettier']
+      \  }
+" let g:ale_fix_on_save = 1
 
 "--------------------FZF---------------------------------------------------------
 command! -bang -nargs=* Rg
@@ -171,9 +179,9 @@ command! -bang -nargs=* Rg
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
 "---------------------DEOPLETE---------------------------------------------------
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_ignore_case = 1
-let g:deoplete#enable_smart_case = 1
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_ignore_case = 1
+" let g:deoplete#enable_smart_case = 1
 
 "------------------DELIMITMATE---------------------------------------------------
 " delimitmate settings
@@ -217,6 +225,12 @@ let g:echodoc_enable_at_startup = 1
 
 "------------------NERDTree------------------------------------------------------
 let g:NERDTreeQuitOnOpen=1
+
+"------------------neoformat-----------------------------------------------------
+" augroup fmt
+"   autocmd!
+"   autocmd BufWritePre * undojoin | Neoformat
+" augroup END
 
 "------------------languageClient-neovim-----------------------------------------
 let g:LanguageClient_serverCommands = {

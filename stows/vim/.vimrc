@@ -80,6 +80,3 @@ nnoremap <Leader>l :CtrlPBufTag<CR>
 " nerdtree
 nnoremap <leader>t :NERDTreeFocus<CR>
 nnoremap <leader>T :NERDTreeFind<CR>
-
-" lightline
-let g:lightline = { 'colorscheme': 'gruvbox' }

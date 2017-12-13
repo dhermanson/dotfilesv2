@@ -174,7 +174,7 @@ nnoremap <Leader>l :CtrlPBufTag<CR>
 " tmux interaction
 nnoremap <silent> <M-s> :call SendLineToTmuxPane(line('.'), g:my_tmux_repl_pane)<CR>
 inoremap <silent> <M-s> <C-o>:call SendLineToTmuxPane(line('.'), g:my_tmux_repl_pane)<CR>
-vnoremap <M-s> :\<C-u>call SendLinesToTmuxPane(line("'<"), line("'>"), g:my_tmux_repl_pane)<CR>
+vnoremap <silent> <M-s> :\<C-u>call SendLinesToTmuxPane(line("'<"), line("'>"), g:my_tmux_repl_pane)<CR>
 nnoremap <silent> <M-x> :call KillTmuxRepl()<CR>
 
 " tagbar settings
@@ -196,3 +196,5 @@ nnoremap <M-:> :NERDTreeFind<CR>
 "ale
 nnoremap <leader>ep :ALEPrevious<CR>
 nnoremap <leader>en :ALENext<CR>
+
+" neoformat

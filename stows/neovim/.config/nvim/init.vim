@@ -291,7 +291,7 @@ let g:tagbar_type_markdown = {
 function! RunNodeInSplit(split)
  call KillTmuxRepl()
  let l:project_dir = fnamemodify('.', ':p')
- let l:file = '~/node_repl.js'
+ let l:file = $HOME.'/node_repl.js'
  if findfile('.derick/node_repl.js', l:project_dir) == '.derick/node_repl.js'
    let l:file = '.derick/node_repl.js'
  endif
