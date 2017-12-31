@@ -69,8 +69,10 @@ nnoremap <buffer> <silent> <M-r><M-l> :call RunCommandInSplit("psysh", "-h")<CR>
 nnoremap <buffer> <silent> <M-r><M-o> :call RunCommandInNewSessionWindow("psysh", "repl")<CR>
 
 " codesniffer
-nnoremap <buffer> <localleader>cs :Dispatch phpcs % --standard=~/phpcsconfig.xml<CR>
-nnoremap <buffer> <localleader>cbf :Dispatch phpcbf % --standard=~/phpcsconfig.xml<CR>
+nnoremap <buffer> <localleader>cs :Dispatch phpcs %<CR>
+nnoremap <buffer> <localleader>cbf :Dispatch phpcbf %<CR>
+" nnoremap <buffer> <localleader>cs :Dispatch phpcs % --standard=~/phpcsconfig.xml<CR>
+" nnoremap <buffer> <localleader>cbf :Dispatch phpcbf % --standard=~/phpcsconfig.xml<CR>
 
 " setting xdebug on and off
 nnoremap <buffer> <localleader>xon :let $XDEBUG_CONFIG="idekey=PHPSTORM"<CR>

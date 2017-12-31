@@ -191,6 +191,7 @@ nnoremap <M-O> :BufOnly<CR>
 
 " nerdtree
 nnoremap <M-;> :NERDTreeFocus<CR>
+nnoremap <M-'> :NERDTreeToggle<CR>
 nnoremap <M-:> :NERDTreeFind<CR>
 
 "ale
@@ -198,3 +199,6 @@ nnoremap <leader>ep :ALEPrevious<CR>
 nnoremap <leader>en :ALENext<CR>
 
 " neoformat
+
+" tabularize
+vnoremap <M-t> :Tab /

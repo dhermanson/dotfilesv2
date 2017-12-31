@@ -118,7 +118,7 @@ export EDITOR='nvim'
 #[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 # MPD daemon start (if no other user instance exists)
-[ ! -s ~/.config/mpd/pid ] && mpd ~/.config/mpd/mpd.conf 2> /dev/null
+# [ ! -s ~/.config/mpd/pid ] && mpd ~/.config/mpd/mpd.conf 2> /dev/null
 
 
 ##############i started x'ing stuff here########################################
@@ -138,6 +138,9 @@ export RBENV_VERSION="2.4.0"
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
+# # curl
+# export PATH="/usr/local/opt/curl/bin:$PATH"
+
 
 ## adjust path to prefer homebrew
 #export PATH=/usr/local/bin:$PATH
@@ -153,6 +156,8 @@ alias v="nvim"
 alias n="nvim"
 alias nv="nvim"
 alias nvi="nvim"
+
+# alias phpstan='docker run -v $PWD:/app --rm phpstan/phpstan'
 #
 #alias xon='export XDEBUG_CONFIG="idekey=PHPSTORM"'
 #alias xoff='export XDEBUG_CONFIG=""'

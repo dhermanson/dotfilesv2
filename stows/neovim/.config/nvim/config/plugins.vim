@@ -61,6 +61,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'schickling/vim-bufonly'
 Plug 'tpope/vim-scriptease'
 Plug 'roxma/nvim-completion-manager'
+Plug 'godlygeek/tabular'
+" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
 " Languages
 Plug 'sheerun/vim-polyglot'
@@ -152,8 +154,11 @@ let g:neomake_php_enabled_makers = ["php", "phpstan"] " php, phpstan, phpcs, php
 "--------------------ale---------------------------------------------------------
 " let g:ale_php_phpstan_level = 4
 let g:ale_php_phpstan_configuration = 'phpstan.neon'
+let g:ale_linters = {
+      \    'php': ['php', 'phpstan'],
+      \  }
 let g:ale_fixers = {
-      \    'javascript': ['prettier']
+      \    'javascript': ['prettier'],
       \  }
 " let g:ale_fix_on_save = 1
 

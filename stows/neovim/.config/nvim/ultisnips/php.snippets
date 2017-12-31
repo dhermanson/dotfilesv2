@@ -583,3 +583,9 @@ snippet bpu "unique"
 $table->unique([$1]);
 $table->dropUnique([$1]);
 endsnippet
+
+snippet beforescenario "Before Scenario"
+/** @BeforeScenario */
+public function before(BeforeScenarioScope $scope) {
+}
+endsnippet

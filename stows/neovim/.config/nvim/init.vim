@@ -929,7 +929,7 @@ EOD
 
   function! RunArtisan()
     let width = +system("tput cols")
-    let preview = 'down:75%'
+    let preview = 'down:25%'
 
     " TODO: fix this
     let width = 200
