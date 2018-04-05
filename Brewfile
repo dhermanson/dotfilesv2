@@ -49,6 +49,7 @@ brew 'emacs-mac' # trying out the railwaycat version of emacs for mac
 brew 'fontconfig'
 brew 'gcc', args: ['enable-cxx']
 brew 'global'
+brew 'groovy'
 brew 'gradle'
 brew 'htop'
 brew 'https://raw.github.com/apiaryio/drafter/master/tools/homebrew/drafter.rb', args: ['HEAD']
