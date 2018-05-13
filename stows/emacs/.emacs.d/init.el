@@ -1,3 +1,4 @@
+(setq evil-want-C-u-scroll t)
 (require 'package)
 
 (add-to-list 'load-path "~/.emacs.d/init.d/")
@@ -24,13 +25,16 @@
 	darktooth-theme
 	dockerfile-mode
 	dracula-theme
+	eclim
 	edit-indirect
 	evil
 	evil-surround
 	exec-path-from-shell
 	expand-region
+	f
 	feature-mode
 	flycheck
+	ggtags
 	go-mode
 	groovy-mode
 	gruvbox-theme
@@ -39,16 +43,20 @@
 	helm
 	helm-projectile
 	hlinum
+	ht
 	inf-groovy
 	js2-mode
+	kotlin-mode
 	lsp-php
 	markdown-mode
 	monokai-theme
+	org-bullets
 	ox-gfm
 	ox-twbs
 	php-mode
 	prodigy
 	projectile
+	restclient
 	robe
 	smartparens
 	solarized-theme
@@ -61,9 +69,16 @@
         color-theme-sanityinc-tomorrow
         magit
         paredit
-        plantuml-mode))
+        plantuml-mode
+	yaml-mode
+	omtose-phellack-theme))
 
 (package-initialize)
+
+(require 'f)
+
+;; TODO: put this somewhere else
+(setenv "NODE_NO_READLINE" "1")
 
 ;; fetch the list of packages available 
 ;; (package-refresh-contents)
@@ -96,8 +111,19 @@
 (column-number-mode 1) ; display column/row of cursor in mode-line
 (show-paren-mode 1)
 (global-hl-line-mode 0)
+;; (setq-default cursor-type '(bar . 2))
 
+
+(require 'deh-evil)
+(require 'deh-eclim)
 (require 'deh-php)
+(require 'deh-json)
+(require 'deh-movement)
+(require 'deh-project)
+(require 'deh-kotlin)
+(require 'deh-java)
+(require 'deh-org)
+(require 'deh-fsharp)
 
 ;; (require 'hlinum)
 ;; (hlinum-activate)
@@ -118,7 +144,7 @@
 
 ;; fonts
 (require 'markdown-mode)
-(set-default-font "Monaco-18" nil t)
+(set-default-font "Monaco-14" nil t)
 ;; (set-face-font 'markdown-pre-face "Monaco-14")
 ;; (set-face-font 'markdown-inline-code-face "Monaco-14")
 ;; (set-face-font 'markdown-language-keyword-face "Monaco-14")
@@ -128,11 +154,14 @@
 ;; (color-theme-sanityinc-tomorrow-night)
 ;; (load-theme 'sanityinc-tomorrow-night t)
 ;; (load-theme 'sanityinc-tomorrow-day t)
+;; (load-theme 'sanityinc-tomorrow-eighties t)
+;; (load-theme 'omtose-softer t)
+;; (load-theme 'omtose-darker t)
 ;; (load-theme 'solarized-light t)
 ;; (load-theme 'solarized-dark t)
 ;; (load-theme 'darktooth t)
 ;; (darktooth-modeline)
-;; (load-theme 'gruvbox-dark-medium t)
+;; (load-theme 'gruvbox-dark-hard t)
 ;; (load-theme 'gruvbox-dark-soft t)
 (load-theme 'zenburn t)
 ;; (load-theme 'hc-zenburn t)
@@ -147,6 +176,7 @@
 ;; (load-theme 'leuven t)
 ;; (load-theme 'adwaita t)
 ;; (load-theme 'tango t)
+;; (load-theme 'railscasts t)
 
 ;; backups
 ;; (setq backup-directory-alist `(("." . "~/.saves")))
@@ -157,7 +187,7 @@
 
 ;; ediff
 (setq ediff-split-window-function 'split-window-horizontally)
-(setq ediff-highlight-all-diffs nil)
+(setq ediff-highlight-all-diffs t)
 (setq ediff-diff-options "-w") ;; ignore whitespace
 
 ;; undo-tree
@@ -179,26 +209,8 @@
   (interactive)
   (switch-to-buffer "*scratch*"))
 
-(require 'evil)
-(define-key global-map (kbd "C-z") nil)
-(define-key global-map (kbd "H-h") 'windmove-left)
-(define-key global-map (kbd "H-j") 'windmove-down)
-(define-key global-map (kbd "H-k") 'windmove-up)
-(define-key global-map (kbd "H-l") 'windmove-right)
-(define-key global-map (kbd "H-H") 'evil-window-move-far-left)
-(define-key global-map (kbd "H-J") 'evil-window-move-very-bottom)
-(define-key global-map (kbd "H-K") 'evil-window-move-very-top)
-(define-key global-map (kbd "H-L") 'evil-window-move-far-right)
-(define-key global-map (kbd "H-o") 'other-window)
-(define-key global-map (kbd "H-0") 'delete-window)
-(define-key global-map (kbd "H-1") 'delete-other-windows)
-(define-key global-map (kbd "H-2") 'split-window-below)
-(define-key global-map (kbd "H-3") 'split-window-right)
-(define-key global-map (kbd "C-c o i") 'deh/open-init-file)
-(define-key global-map (kbd "C-c o n") 'deh/open-notes-file)
-(define-key global-map (kbd "C-c o s") 'deh/open-scratch-buffer)
-(define-key global-map (kbd "M-i") 'helm-imenu)
-
+(setq flycheck-check-syntax-automatically '(save))
+;; (setq flycheck-check-syntax-automatically nil)
 
 ;; yasnippet
 (setq yas-snippet-dirs
@@ -217,6 +229,7 @@
 ;; company
 (define-key global-map (kbd "H-SPC") 'company-complete)
 (define-key global-map (kbd "C-;") 'company-complete)
+(setq company-gtags-insert-arguments nil)
 
 ;; (define-key global-map (kbd "H-;") 'company-complete)
 (define-key global-map (kbd "C-c c") 'company-complete)
@@ -265,50 +278,27 @@
 ;; javascript
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
-;; org
-(require 'org)
-(require 'ob-ruby)
-(require 'ob-sh)
-(require 'ob-haskell)
-(require 'ob-plantuml)
-(require 'ox-latex)
-(require 'ox-twbs)
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(;; other Babel languages
-   (plantuml . t)
-   (emacs-lisp . t)
-   (ruby . t)
-   (python . t)
-   (sh . t)
-   (js . t)
-   (sql . t)
-   (dot . t)
-   (haskell . t)))
-
-(setq org-startup-indented nil)
-(setq org-src-fontify-natively t)
-
-;; org-plantuml
-(setq plantuml-jar-path "~/bin/plantuml.jar")
-(setq org-plantuml-jar-path "~/bin/plantuml.jar")
-
-;; org-latex
-(setq org-latex-pdf-process
-      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+;; visual-basic
+(require 'visual-basic-mode)
+(add-to-list 'auto-mode-alist '("\\.vb\\'" . visual-basic-mode))
 
 ;; projectile-mode
 (projectile-global-mode)
-(setq projectile-switch-project-action 'projectile-find-file)
+;; (setq projectile-project-types nil)
+;; (setq projectile-project-root-files (list ".derick"))
+(require 'projectile)
+;; (setq projectile-project-root-files-functions
+;;       (list projectile-root-local
+;; 	    projectile-root-bottom-up
+;; 	    projectile-root-top-down
+;; 	    projectile-root-top-down-recurring))
+(setq projectile-switch-project-action 'projectile-run-shell)
+;; (setq projectile-tags-backend 'etags-select-find-tag)
+(setq projectile-tags-backend 'helm-gtags-select)
 
 ;; feature more
 (require 'feature-mode)
 (add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
-
-
 
 ;; which key
 (which-key-mode)
@@ -320,12 +310,20 @@
 (setq sh-shell "bash")
 
 ;; paredit
-;; (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-;; (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-;; (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-;; (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-;; (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-;; (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+
+;; lisp smartparens
+;; (add-hook 'emacs-lisp-mode-hook       #'smartparens-mode)
+;; (add-hook 'eval-expression-minibuffer-setup-hook #'smartparens-mode)
+;; (add-hook 'ielm-mode-hook             #'smartparens-mode)
+;; (add-hook 'lisp-mode-hook             #'smartparens-mode)
+;; (add-hook 'lisp-interaction-mode-hook #'smartparens-mode)
+;; (add-hook 'scheme-mode-hook           #'smartparens-mode)
 
 
 ;; haskell-mode
@@ -382,11 +380,31 @@
 (require 'wgrep)
 (setq wgrep-auto-save-buffer t)
 
+;; web-mode
+;; TODO: read about associating specific engines.
+;; example:
+;;   (setq web-mode-engines-alist
+;;         '(("php"    . "\\.phtml\\'")
+;;           ("blade"  . "\\.blade\\."))
+;;   )
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
 ;; dired
 (defun deh/dired-mode-hook ()
   "my dired mode hook"
   (dired-hide-details-mode 0))
 (add-hook 'dired-mode-hook 'deh/dired-mode-hook)
+
+;; fsharp
+(require 'fsharp-mode)
 
 ;; lsp
 ;; (require 'lsp-php)
@@ -399,41 +417,21 @@
 (define-key global-map (kbd "H-t") 'helm-etags-select)
 (define-key global-map (kbd "H-f") 'projectile-find-file)
 
-;; embrace
-;; (require 'embrace)
-;; (define-key global-map (kbd "C-,") 'embrace-commander)
-
-;; evil-surround
-;; use this without evil mode
-;; (require 'evil-surround)
-;; (evil-surround-mode)
-;; (define-key global-map (kbd "C-; c s") 'evil-surround-change)
-;; (define-key global-map (kbd "C-; c s") ')
-;; (define-key global-map (kbd "C-c s r") 'evil-surround-region)
-;; evil-mode
-;; (require 'evil)
-;; (setq evil-default-state 'emacs)
-;; (evil-mode 1)
-;; (evil-set-initial-state 'ruby-mode 'normal)
-
-;; (defvar deh/evil-leader-map (make-sparse-keymap)
-;;   "Keymap for \"leader key\" shortcuts.")
-;; (define-key evil-normal-state-map (kbd "SPC") deh/evil-leader-map)
-;; (define-key deh/evil-leader-map ";" 'ace-jump-char-mode)
-
-
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'scroll-left 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
-
-(define-key global-map (kbd "C-s-f") 'toggle-frame-fullscreen)
 
 (defun deh/newline-indent-action (id action context)
   (when (eq action 'insert)
     (newline-and-indent)
     (previous-line)
     (indent-according-to-mode)))
+
+(defun deh/dockblock-line-action (id action context)
+  (when (eq action 'insert)
+    (newline-and-indent)
+    (insert "* ")))
 
 (require 'smartparens)
 (sp-with-modes '(php-mode json-mode)
@@ -442,14 +440,17 @@
 		 :post-handlers '(:add deh/newline-indent-action)
 		 :actions '(insert)))
 
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(eclim-eclipse-dirs (list "~/eclipse/java-oxygen/Eclipse.app/Contents/Eclipse"))
  '(package-selected-packages
    (quote
-    (wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit lsp-php js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
+    (ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f treemacs linum-relative helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit lsp-php js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
