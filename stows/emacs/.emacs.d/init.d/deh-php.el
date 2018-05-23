@@ -6,6 +6,7 @@
 (require 's)
 (require 'smartparens)
 (require 'evil)
+(require 'evil-leader)
 (require 'ht)
 (require 'deh-phpspec)
 (require 'deh-phpunit)
@@ -132,7 +133,9 @@
       (unless (f-exists? deh-php-vendor-ctags-file)
 	(deh-generate-php-vendor-tags))
       (setq tags-table-list (list full-project-tags-path full-vendor-tags-path deh-php-language-ctags-file))
-      (helm-etags-select t))))
+      ;; (helm-etags-select t)
+      (counsel-etags-find-tag)
+      )))
 
 (defun deh-run-phpcbf-on-buffer ()
   "run phpcbf on current file"
@@ -290,6 +293,8 @@
 ;; (define-key php-mode-map (kbd "C-c c t f") 'deh-projectile-phpunit-on-current-file)
 ;; (define-key php-mode-map (kbd "H-t") 'deh-find-interface-tag)
 
+(evil-leader/set-key-for-mode 'php-mode
+  "k" 'deh-find-interface-tag)
 
 (defun deh-php-mode-hook ()
   "my php mode hook"
@@ -302,8 +307,9 @@
 	tab-width 2
 	c-basic-offset 2)
   (set (make-local-variable 'company-backends) '((company-dabbrev-code
-						  ;; company-etags
-						  company-gtags)))
+						  company-etags
+						  ;; company-gtags
+						  )))
   (if (and (buffer-file-name)
 	   (s-matches? "\\(s\\|S\\)pec\\.php" (buffer-file-name)))
       (deh-phpspec-mode 1)
@@ -313,20 +319,23 @@
       (deh-phpunit-mode 1))
 
   (setenv "GTAGSLIBPATH" (concat (file-name-as-directory (getenv "HOME")) ".language-ctags/php/"))
-  (flycheck-mode 1)
-  (smartparens-mode)
+  (flycheck-mode t)
+  (smartparens-mode t)
   ;; (ggtags-mode 1)
-  (require 'helm-gtags)
-  (helm-gtags-mode 1)
+  ;; (require 'helm-gtags)
+  ;; (helm-gtags-mode)
 
   (evil-surround-mode t)
+  (evil-leader-mode t)
+
+  ;; (setq helm-etags-fuzzy-match t)
+  ;; (customize-set-variable 'helm-etags-fuzzy-match nil)
 
   (setq evil-want-C-u-scroll t)
-  (define-key deh/evil-leader-map "k" 'helm-gtags-select)
-  (define-key deh/evil-leader-map "b" 'helm-projectile-switch-to-buffer)
-  (define-key deh/evil-leader-map "l" 'deh-helm-imenu)
+  ;; (define-key deh/evil-leader-map "k" 'helm-gtags-select)
+  ;; (define-key deh/evil-leader-map "b" 'helm-projectile-switch-to-buffer)
+  ;; (define-key deh/evil-leader-map "l" 'deh-helm-imenu)
   ;; (define-key evil-normal-state-map (kbd "C-]") 'helm-gtags-dwim)
-
 
   (setq-local eldoc-documentation-function #'ggtags-eldoc-function)
   ;; (setq-local imenu-create-index-function #'ggtags-build-imenu-index)

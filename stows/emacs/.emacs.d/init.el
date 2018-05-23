@@ -27,10 +27,14 @@
 	;; embrace
 	ace-jump-mode
 	alchemist
+	anti-zenburn-theme
 	badger-theme
 	cider
 	company
 	company-go
+	counsel
+	counsel-etags
+	counsel-projectile
 	csharp-mode
 	csv-mode
 	darktooth-theme
@@ -39,6 +43,7 @@
 	eclim
 	edit-indirect
 	evil
+	evil-leader
 	evil-surround
 	exec-path-from-shell
 	expand-region
@@ -58,6 +63,7 @@
 	ht
 	inf-groovy
 	js2-mode
+	json-mode
 	kotlin-mode
 	markdown-mode
 	monokai-theme
@@ -72,6 +78,7 @@
 	restclient
 	robe
 	smartparens
+	spacemacs-theme
 	solarized-theme
 	tide
 	treemacs
@@ -119,6 +126,9 @@
 (setq Info-directory-list
       (cons "~/manuals/" Info-default-directory-list))
 
+;; disable control-z
+(define-key global-map (kbd "C-z") nil)
+
 ;; general settings
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
@@ -133,6 +143,7 @@
 (require 'deh-evil)
 (require 'deh-eclim)
 (require 'deh-prog)
+(require 'deh-ruby)
 (require 'deh-php)
 (require 'deh-json)
 (require 'deh-movement)
@@ -187,6 +198,9 @@
 ;; (load-theme 'gruvbox-dark-hard t)
 ;; (load-theme 'gruvbox-dark-soft t)
 (load-theme 'zenburn t)
+;; (load-theme 'anti-zenburn t)
+;; (load-theme 'spacemacs-dark t)
+;; (require 'spacemacs-theme)
 ;; (load-theme 'hc-zenburn t)
 ;; (load-theme 'badger t)
 ;; (load-theme 'dracula t)
@@ -231,6 +245,10 @@
   "open my scratch buffer"
   (interactive)
   (switch-to-buffer "*scratch*"))
+
+(define-key global-map (kbd "C-c o i") 'deh/open-init-file)
+(define-key global-map (kbd "C-c o n") 'deh/open-notes-file)
+(define-key global-map (kbd "C-c o s") 'deh/open-scratch-buffer)
 
 (setq flycheck-check-syntax-automatically '(save))
 ;; (setq flycheck-check-syntax-automatically nil)
@@ -278,24 +296,6 @@
 ;; (ido-mode 1)
 ;; (setq ido-everywhere t)
 ;; (setq ido-enable-flex-matching t)
-
-;; ruby
-(defun deh/my-ruby-mode-hook ()
-  "my ruby mode hook"
-  (require 'smartparens-config)
-  (require 'smartparens-ruby)
-  (require 'robe)
-  (robe-mode)
-  (smartparens-mode)
-  (show-smartparens-mode)
-  (setq company-idle-delay nil)
-  (set (make-local-variable 'company-backends) '(company-robe
-						 company-files))
-  (setq inf-ruby-default-implementation "pry")
-  ;; turn flycheck mode on
-  (flycheck-mode 0))
-
-(add-hook 'ruby-mode-hook 'deh/my-ruby-mode-hook)
 
 ;; expand-region
 ;; (require 'expand-region)
@@ -480,7 +480,7 @@
  '(eclim-eclipse-dirs (list "~/eclipse/java-oxygen/Eclipse.app/Contents/Eclipse"))
  '(package-selected-packages
    (quote
-    (omnisharp tide ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f treemacs helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
+    (counsel-etags json-mode anti-zenburn-theme spacemacs-theme evil-leader omnisharp tide ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f treemacs helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

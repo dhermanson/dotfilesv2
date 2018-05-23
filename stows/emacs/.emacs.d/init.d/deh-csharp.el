@@ -14,6 +14,7 @@
   (eldoc-mode)
   (smartparens-mode)
   (set (make-local-variable 'company-backends) '(company-omnisharp))
+  (setq eldoc-documentation-function #'omnisharp-eldoc-function)
 
   ;; (setq indent-tabs-mode nil)
   ;; (setq c-syntactic-indentation t)

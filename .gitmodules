@@ -37,3 +37,6 @@
 [submodule "stows/php/repos/github.com/nikic/PHP-Parser"]
 	path = stows/php/repos/github.com/nikic/PHP-Parser
 	url = https://github.com/nikic/PHP-Parser
+[submodule "stows/php/repos/github.com/squizlabs/PHP_CodeSniffer"]
+	path = stows/php/repos/github.com/squizlabs/PHP_CodeSniffer
+	url = https://github.com/squizlabs/PHP_CodeSniffer
