@@ -66,7 +66,7 @@ todo.txt
 erd.pdf
 
 ## org mode ##
-*.org
+
 \#*
 
 ## tern stuff ##
@@ -82,3 +82,5 @@ NetrwTreeListing*
 .test-output.js.map
 
 phpstan.neon
+
+.projectile

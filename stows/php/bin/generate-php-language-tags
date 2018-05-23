@@ -2,3 +2,4 @@
 
 cd ~/.language-ctags/php
 ctags -R --fields=K --PHP-kinds=ztxy --languages=php
+ctags -R --fields=K --PHP-kinds=ztxy --languages=php -e -f emacs-tags

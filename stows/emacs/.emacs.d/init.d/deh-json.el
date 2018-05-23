@@ -4,7 +4,8 @@
 (defun deh-json-mode-hook ()
   "my json mode hook"
   (smartparens-mode 1)
-  (flycheck-mode 1))
+  (flycheck-mode 1)
+  (evil-surround-mode t))
 
 (add-hook 'json-mode-hook 'deh-json-mode-hook)
 

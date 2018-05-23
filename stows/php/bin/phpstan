@@ -1,0 +1,2 @@
+#! /bin/bash
+~/repos/github.com/phpstan/phpstan/bin/phpstan "$@"

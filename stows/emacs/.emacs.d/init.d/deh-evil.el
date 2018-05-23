@@ -1,8 +1,10 @@
 (setq evil-default-state 'emacs)
+(setq evil-disable-insert-state-bindings t)
 
 
 (require 'evil-surround)
 (require 'evil)
+(require 'neotree)
 
 (define-key global-map (kbd "C-z") nil)
 (define-key global-map (kbd "H-h") 'windmove-left)
@@ -39,11 +41,22 @@
 (evil-set-initial-state 'eshell-mode 'emacs)
 (evil-set-initial-state 'shell-mode 'emacs)
 (evil-set-initial-state 'help-mode 'emacs)
+(evil-set-initial-state 'reb-mode 'emacs)
+(evil-set-initial-state 'elisp-mode 'emacs)
+(evil-set-initial-state 'undo-tree-visualizer-mode 'emacs)
+(evil-set-initial-state 'nxml-mode 'normal)
+
 
 (defvar deh/evil-leader-map (make-sparse-keymap)
   "Keymap for \"leader key\" shortcuts.")
 (define-key evil-normal-state-map (kbd "SPC") deh/evil-leader-map)
 (define-key deh/evil-leader-map ";" 'ace-jump-char-mode)
+(define-key deh/evil-leader-map "p" 'projectile-command-map)
+(define-key deh/evil-leader-map "l" 'deh-helm-imenu)
+(define-key deh/evil-leader-map "f" 'helm-projectile-find-file)
+
+(define-key evil-normal-state-map (kbd "] q") 'next-error)
+(define-key evil-normal-state-map (kbd "[ q") 'previous-error)
 
 (define-key evil-normal-state-map (kbd "M-w") 'save-buffer)
 (define-key evil-insert-state-map (kbd "M-w") 'save-buffer)
@@ -52,5 +65,6 @@
 (define-key evil-normal-state-map (kbd "M-q") '(lambda ()
 						 (interactive)
 						 (evil-delete-buffer (current-buffer))))
+(define-key evil-normal-state-map (kbd "M-;") 'neotree)
 
 (provide 'deh-evil)

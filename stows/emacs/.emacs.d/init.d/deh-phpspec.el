@@ -31,4 +31,4 @@
 
 ;; (add-to-list 'auto-mode-alist '("\\(s\\|S\\)pec\\.php" . deh-phpspec-mode))
 
-(provide 'deh-phpspec-mode)
+(provide 'deh-phpspec)

@@ -9,6 +9,7 @@ tap 'homebrew/versions'
 tap 'macvim-dev/macvim'
 tap 'neovim/neovim'
 tap 'railwaycat/emacsmacport'
+tap 'samritchie/forge'
 
 ################################################################################
 #  Brew Casks
@@ -19,6 +20,7 @@ cask 'osxfuse'
 cask 'xquartz'
 
 cask 'android-platform-tools'
+cask 'calibre'
 cask 'docker'
 cask 'dropbox'
 cask 'eclipse-ide'
@@ -33,6 +35,7 @@ cask 'sequel-pro'
 cask 'vagrant'
 cask 'virtualbox'
 
+
 ################################################################################
 #  Brew Packages
 ################################################################################
@@ -45,7 +48,7 @@ brew 'ctags'
 brew 'editorconfig'
 brew 'elixir'
 # brew 'emacs', args: ['with-cocoa']
-brew 'emacs-mac' # trying out the railwaycat version of emacs for mac
+# brew 'emacs-mac' # trying out the railwaycat version of emacs for mac
 brew 'fontconfig'
 brew 'gcc', args: ['enable-cxx']
 brew 'global'
@@ -56,6 +59,7 @@ brew 'https://raw.github.com/apiaryio/drafter/master/tools/homebrew/drafter.rb',
 brew 'macvim-dev/macvim/macvim', args: ['HEAD']
 brew 'imagemagick'
 brew 'koekeishiya/formulae/khd'
+brew 'kotlin'
 brew 'leiningen'
 # brew 'llvm', args: ['with-toolchain']
 brew 'mariadb'
@@ -64,19 +68,21 @@ brew 'mpc'
 brew 'mpd'
 brew 'mplayer'
 brew 'mycli'
-brew 'mysql'
+# brew 'mysql'
+brew 'mariadb'
 brew 'ncmpcpp'
 brew 'neovim'
 brew 'nginx'
-brew 'php56'
-brew 'php56-imagick'
-brew 'php56-mcrypt'
-brew 'php56-pdo-dblib'
-brew 'php56-pdo-pgsql'
-brew 'php56-redis'
-brew 'php56-xdebug'
+# brew 'php56'
+# brew 'php56-imagick'
+# brew 'php56-mcrypt'
+# brew 'php56-pdo-dblib'
+# brew 'php56-pdo-pgsql'
+# brew 'php56-redis'
+# brew 'php56-xdebug'
 brew 'php72'
 brew 'php72-imagick'
+brew 'php72-intl'
 brew 'php72-pdo-dblib'
 brew 'php72-pdo-pgsql'
 brew 'php72-redis'

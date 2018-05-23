@@ -5,9 +5,20 @@
 
 ;; add package archives
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("marmalade" . "https://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("org" . "https://orgmode.org/elpa/") t)
+
+;; (setq package-archive-priorities
+;;       '(("org" . 40)
+;; 	("melpa-stable" . 30)
+;; 	("marmalade" . 20)
+;; 	("gnu" . 15)
+;; 	("melpa" . 10)))
 
 ;; packages
 (setq package-list
@@ -32,6 +43,7 @@
 	exec-path-from-shell
 	expand-region
 	f
+	fsharp-mode
 	feature-mode
 	flycheck
 	ggtags
@@ -47,12 +59,13 @@
 	inf-groovy
 	js2-mode
 	kotlin-mode
-	lsp-php
 	markdown-mode
 	monokai-theme
+	neotree
 	org-bullets
 	ox-gfm
 	ox-twbs
+	omnisharp
 	php-mode
 	prodigy
 	projectile
@@ -60,6 +73,8 @@
 	robe
 	smartparens
 	solarized-theme
+	tide
+	treemacs
 	undo-tree
 	web-mode
 	wgrep
@@ -75,7 +90,6 @@
 
 (package-initialize)
 
-(require 'f)
 
 ;; TODO: put this somewhere else
 (setenv "NODE_NO_READLINE" "1")
@@ -87,6 +101,8 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
+
+(require 'f)
 
 ;; os-x specific settings
 (when (memq window-system '(mac ns))
@@ -106,8 +122,8 @@
 ;; general settings
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
-(menu-bar-mode t)
-(global-linum-mode 0) ; display line numbers
+(menu-bar-mode 0)
+;; (global-linum-mode 0) ; display line numbers
 (column-number-mode 1) ; display column/row of cursor in mode-line
 (show-paren-mode 1)
 (global-hl-line-mode 0)
@@ -116,6 +132,7 @@
 
 (require 'deh-evil)
 (require 'deh-eclim)
+(require 'deh-prog)
 (require 'deh-php)
 (require 'deh-json)
 (require 'deh-movement)
@@ -124,6 +141,12 @@
 (require 'deh-java)
 (require 'deh-org)
 (require 'deh-fsharp)
+(require 'deh-typescript)
+(require 'deh-text)
+(require 'deh-makefile)
+(require 'deh-neotree)
+(require 'deh-csharp)
+(require 'deh-helm)
 
 ;; (require 'hlinum)
 ;; (hlinum-activate)
@@ -227,6 +250,9 @@
 ;; (switch-to-buffer (create-file-buffer "test-buffer"))
 
 ;; company
+(require 'company)
+(setq company-dabbrev-downcase nil)
+(setq company-show-numbers 1)
 (define-key global-map (kbd "H-SPC") 'company-complete)
 (define-key global-map (kbd "C-;") 'company-complete)
 (setq company-gtags-insert-arguments nil)
@@ -292,7 +318,7 @@
 ;; 	    projectile-root-bottom-up
 ;; 	    projectile-root-top-down
 ;; 	    projectile-root-top-down-recurring))
-(setq projectile-switch-project-action 'projectile-run-shell)
+(setq projectile-switch-project-action 'projectile-run-eshell)
 ;; (setq projectile-tags-backend 'etags-select-find-tag)
 (setq projectile-tags-backend 'helm-gtags-select)
 
@@ -434,7 +460,11 @@
     (insert "* ")))
 
 (require 'smartparens)
-(sp-with-modes '(php-mode json-mode)
+(sp-with-modes '(php-mode
+		 json-mode
+		 fsharp-mode
+		 js2-mode
+		 typescript-mode)
   (sp-local-pair "{" "}"
 		 :when '(("RET"))
 		 :post-handlers '(:add deh/newline-indent-action)
@@ -450,7 +480,7 @@
  '(eclim-eclipse-dirs (list "~/eclipse/java-oxygen/Eclipse.app/Contents/Eclipse"))
  '(package-selected-packages
    (quote
-    (ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f treemacs linum-relative helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit lsp-php js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
+    (omnisharp tide ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f treemacs helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

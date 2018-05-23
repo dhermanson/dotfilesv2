@@ -24,6 +24,7 @@ $config =  array(
   // 'defaultIncludes' => [
   //   'vendor/autoload.php',
   // ]
+  'prompt' => "> ",
 );
 
 if (getenv("INSIDE_EMACS")) {

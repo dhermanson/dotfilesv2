@@ -23,7 +23,17 @@ export ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
-#ZSH_THEME="juanghurtado"
+# ZSH_THEME="agnoster"
+# ZSH_THEME="lambda"
+# ZSH_THEME="wezm"
+# ZSH_THEME="miloshadzic"
+# ZSH_THEME="simple"
+# ZSH_THEME="deh"
+# ZSH_THEME="refined"
+# ZSH_THEME="norm"
+# ZSH_THEME="wedisagree"
+# ZSH_THEME="terminalparty"
+# ZSH_THEME="sunaku"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -127,6 +137,9 @@ export EDITOR='nvim'
 # source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
 source "$HOME/.local/share/nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
+
+alias ls="gls --color"
+
 # python pip
 alias pip="pip2"
 
@@ -183,22 +196,25 @@ alias nvi="nvim"
 #fi
 #
 # node version manager settings
-# export MY_NVM_VERSION="v8.9.1"
-# export NVM_DIR=~/.nvm
-# [ -s ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh # This loads nvm
-#
-## setup homebrew golang
-#export GOPATH=$HOME/workspace/golang
+export MY_NVM_VERSION="v8.9.1"
+export NVM_DIR=~/.nvm
+[ -s ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh # This loads nvm
+
+# setup homebrew golang
+export GOPATH=$HOME/go
 #export GOROOT=/usr/local/opt/go/libexec
-#export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin
 #export PATH=$PATH:$GOROOT/bin
-#
+
 # add local node_modules bin to path
 export PATH=$PATH:./node_modules/.bin
+
 # add local composer bin to path
 export PATH=$PATH:./vendor/bin
+
 # add global composer to path
 export PATH=$PATH:~/.composer/vendor/bin
+
 ## add cabal bin to path
 #export PATH=$PATH:~/.cabal/bin
 ## add stack binary path to bin
@@ -247,12 +263,15 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 # add bin to path
 export PATH=~/bin:$PATH
 
+# add mono /bin folder to path
+export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
+
 ##############i stopped x'ing stuff here########################################
 
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/derickhermanson/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/derickhermanson/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/derickhermanson/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/derickhermanson/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-
+# # The next line updates PATH for the Google Cloud SDK.
+# if [ -f '/Users/derickhermanson/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/derickhermanson/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+#
+# # The next line enables shell command completion for gcloud.
+# if [ -f '/Users/derickhermanson/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/derickhermanson/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+#

@@ -37,7 +37,8 @@
 
 (defun deh-org-mode-hook ()
   "my org mode hook"
-  (org-bullets-mode t))
+  (org-bullets-mode t)
+  (visual-line-mode t))
 
 (add-hook 'org-mode-hook #'deh-org-mode-hook)
 

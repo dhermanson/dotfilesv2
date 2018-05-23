@@ -7,8 +7,8 @@
 (require 'smartparens)
 (require 'evil)
 (require 'ht)
-(require 'linum-relative)
-(require 'deh-phpspec-mode)
+(require 'deh-phpspec)
+(require 'deh-phpunit)
 
 ;; TODO: create a "project init" function that creates ./.derick and other things??
 ;; TODO: make a "with-php-tooling-setup" macro
@@ -89,23 +89,14 @@
 	 (project-root (projectile-project-root))
 	 (relative-path (file-relative-name filename project-root)))
     (setq default-directory project-root)
-    (compile (concat deh-phpstan-executable " analyse --level=6 --no-ansi --no-interaction --errorFormat=raw " relative-path))))
-
-(defun deh-projectile-phpunit-on-current-file ()
-  "run phpunit on current file"
-  (interactive)
-  (let* ((filename (buffer-file-name))
-	 (project-root (projectile-project-root))
-	 (relative-path (file-relative-name filename project-root)))
-    (setq default-directory project-root)
-    (compile (concat  " phpunit --bootstrap vendor/autoload.php " relative-path))))
+    (compile (concat deh-phpstan-executable " analyse --no-progress --level=6 --no-ansi --no-interaction --errorFormat=raw " relative-path))))
 
 (defun deh-projectile-phpstan-on-project ()
   "run phpstan on current project"
   (interactive)
   (let* ((project-root (projectile-project-root)))
     (setq default-directory project-root)
-    (compile (concat deh-phpstan-executable " analyse --level=6 --no-ansi --no-interaction --errorFormat=raw " (deh-php-src-dir)))))
+    (compile (concat deh-phpstan-executable " analyse --no-progress --level=6 --no-ansi --no-interaction --errorFormat=raw " (deh-php-src-dir)))))
 
 (defun deh-generate-php-project-tags ()
   "generate etags for php codebase"
@@ -115,7 +106,7 @@
     (progn
       (setq default-directory project-root)
       (deh-initialize-php-tooling-for-project)
-      (shell-command project-ctags-cmd))))
+      (async-shell-command project-ctags-cmd))))
 
 (defun deh-generate-php-vendor-tags ()
   "generate etags for php codebase"
@@ -125,7 +116,7 @@
     (progn
       (setq default-directory project-root)
       (deh-initialize-php-tooling-for-project) 
-      (shell-command vendor-ctags-cmd))))
+      (async-shell-command vendor-ctags-cmd))))
 
 ;; TODO: look into helm-etags-select: the tag aggregation specifically
 (defun deh-find-interface-tag ()
@@ -157,54 +148,14 @@
 	buffer-file-name
 	(f-join (projectile-project-root) "vendor"))))
 
-(defun deh-php-mode-hook ()
-  "my php mode hook"
-  (linum-relative-mode)
-  ;; if in vendor directory, make read-only
-  (if (deh-php-current-file-in-vendor-dir?)
-      (read-only-mode))
-  (linum-mode 0)
-  ;; setup etag completion
-  (setq indent-tabs-mode nil
-	tab-width 2
-	c-basic-offset 2)
-  (set (make-local-variable 'company-backends) '((company-dabbrev-code
-						  ;; company-etags
-						  company-gtags)))
-  (if (and (buffer-file-name)
-	   (s-matches? "\\(s\\|S\\)pec\\.php" (buffer-file-name)))
-      (deh-phpspec-mode 1)
-    (define-key php-mode-map (kbd "C-c M-s M-r") 'deh-phpspec-run-current-file))
-
-  (setenv "GTAGSLIBPATH" (concat (file-name-as-directory (getenv "HOME")) ".language-ctags/php/"))
-  (flycheck-mode 1)
-  (smartparens-mode)
-  ;; (ggtags-mode 1)
-  (require 'helm-gtags)
-  (helm-gtags-mode 1)
-
-  (evil-surround-mode t)
-
-  (setq evil-want-C-u-scroll t)
-  (define-key deh/evil-leader-map "k" 'helm-gtags-select)
-  (define-key deh/evil-leader-map "b" 'helm-projectile-switch-to-buffer)
-  (define-key deh/evil-leader-map "l" 'helm-imenu)
-  (define-key evil-normal-state-map (kbd "C-]") 'helm-gtags-dwim)
-
-
-  (setq-local eldoc-documentation-function #'ggtags-eldoc-function)
-  ;; (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
-  )
-
-(add-hook 'php-mode-hook 'deh-php-mode-hook)
-
-(define-key php-mode-map (kbd "H-t") 'helm-gtags-select)
-(define-key php-mode-map (kbd "M-.") 'helm-gtags-dwim)
-(define-key php-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+;; (define-key php-mode-map (kbd "H-t") 'helm-gtags-select)
+;; (define-key php-mode-map (kbd "M-.") 'helm-gtags-dwim)
+;; (define-key php-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
 
 (defun deh-php-docblock-newline (orig-fun &rest args)
   "add * prefix when inside docblock on newline"
-  (if (and (s-equals? major-mode "php-mode")
+  (if (and major-mode
+	   (s-equals? major-mode "php-mode")
 	   (s-match "^[[:space:]]*\\(\\*\\|\\/\\*\\*\\)" (thing-at-point 'line t)))
       (progn
 	(apply orig-fun args)
@@ -283,9 +234,7 @@
 	(with-current-buffer repl-buffer
 	  (send-string (deh-php-project-repl-name) "exit")
 	  (send-string (deh-php-project-repl-name) "\n")
-	  (sleep-for 0.1)
-	  (comint-clear-buffer)
-	  (sleep-for 0.1)
+	  (sleep-for 0.3)
 	  (deh-php-create-repl))
       (deh-php-create-repl))
     (switch-to-buffer current-buffer)))
@@ -338,8 +287,53 @@
 (define-key php-mode-map (kbd "C-c c c b f") 'deh-run-phpcbf-on-buffer)
 ;; (define-key php-mode-map (kbd "C-c c t p g") 'deh-generate-php-project-tags)
 ;; (define-key php-mode-map (kbd "C-c c t v g") 'deh-generate-php-vendor-tags)
-(define-key php-mode-map (kbd "C-c c t f") 'deh-projectile-phpunit-on-current-file)
+;; (define-key php-mode-map (kbd "C-c c t f") 'deh-projectile-phpunit-on-current-file)
 ;; (define-key php-mode-map (kbd "H-t") 'deh-find-interface-tag)
+
+
+(defun deh-php-mode-hook ()
+  "my php mode hook"
+  ;; if in vendor directory, make read-only
+  (if (deh-php-current-file-in-vendor-dir?)
+      (read-only-mode))
+  (linum-mode 0)
+  ;; setup etag completion
+  (setq indent-tabs-mode nil
+	tab-width 2
+	c-basic-offset 2)
+  (set (make-local-variable 'company-backends) '((company-dabbrev-code
+						  ;; company-etags
+						  company-gtags)))
+  (if (and (buffer-file-name)
+	   (s-matches? "\\(s\\|S\\)pec\\.php" (buffer-file-name)))
+      (deh-phpspec-mode 1)
+    (define-key php-mode-map (kbd "C-c M-s M-r") 'deh-phpspec-run-current-file))
+  (if (and (buffer-file-name)
+	   (s-matches? "\\(t\\|T\\)est\\.php" (buffer-file-name)))
+      (deh-phpunit-mode 1))
+
+  (setenv "GTAGSLIBPATH" (concat (file-name-as-directory (getenv "HOME")) ".language-ctags/php/"))
+  (flycheck-mode 1)
+  (smartparens-mode)
+  ;; (ggtags-mode 1)
+  (require 'helm-gtags)
+  (helm-gtags-mode 1)
+
+  (evil-surround-mode t)
+
+  (setq evil-want-C-u-scroll t)
+  (define-key deh/evil-leader-map "k" 'helm-gtags-select)
+  (define-key deh/evil-leader-map "b" 'helm-projectile-switch-to-buffer)
+  (define-key deh/evil-leader-map "l" 'deh-helm-imenu)
+  ;; (define-key evil-normal-state-map (kbd "C-]") 'helm-gtags-dwim)
+
+
+  (setq-local eldoc-documentation-function #'ggtags-eldoc-function)
+  ;; (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
+  )
+
+(add-hook 'php-mode-hook 'deh-php-mode-hook)
+
 
 (provide 'deh-php)
 
