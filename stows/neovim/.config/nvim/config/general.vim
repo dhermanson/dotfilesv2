@@ -27,6 +27,7 @@ set splitright
 " set completeopt=longest,menuone,preview
 set completeopt=longest,menuone
 set ignorecase
+set nolazyredraw
 
 " use ripgrep as grep implementation
 " if executable('rg')

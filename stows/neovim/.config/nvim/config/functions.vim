@@ -60,7 +60,6 @@ function! GetPhpDocsForSymbol(symbol, pane)
   " let l:cmd = shellescape(a:text)
   " let l:escaped_symbol = shellescape(a:symbol)
   let l:cmd = "tmux send-keys -t " . a:pane . " '" . 'doc ' . a:symbol . "' Enter"
-  echom l:cmd
   call system(l:cmd)
 endfunction
 

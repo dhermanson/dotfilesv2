@@ -32,6 +32,7 @@
 	cider
 	company
 	company-go
+	company-tern
 	counsel
 	counsel-etags
 	counsel-projectile
@@ -80,6 +81,7 @@
 	smartparens
 	spacemacs-theme
 	solarized-theme
+	tern
 	tide
 	treemacs
 	undo-tree
@@ -146,12 +148,15 @@
 (require 'deh-ruby)
 (require 'deh-php)
 (require 'deh-json)
+(require 'deh-ivy)
+(require 'deh-counsel)
 (require 'deh-movement)
 (require 'deh-project)
 (require 'deh-kotlin)
 (require 'deh-java)
 (require 'deh-org)
 (require 'deh-fsharp)
+(require 'deh-javascript)
 (require 'deh-typescript)
 (require 'deh-text)
 (require 'deh-makefile)
@@ -178,7 +183,7 @@
 
 ;; fonts
 (require 'markdown-mode)
-(set-default-font "Monaco-14" nil t)
+(set-default-font "Monaco-18" nil t)
 ;; (set-face-font 'markdown-pre-face "Monaco-14")
 ;; (set-face-font 'markdown-inline-code-face "Monaco-14")
 ;; (set-face-font 'markdown-language-keyword-face "Monaco-14")
@@ -200,6 +205,7 @@
 (load-theme 'zenburn t)
 ;; (load-theme 'anti-zenburn t)
 ;; (load-theme 'spacemacs-dark t)
+;; (load-theme 'spacemacs-light t)
 ;; (require 'spacemacs-theme)
 ;; (load-theme 'hc-zenburn t)
 ;; (load-theme 'badger t)
@@ -292,6 +298,11 @@
 ;; helm-projectile
 (helm-projectile-on)
 
+;; counsel
+;; (define-key global-map (kbd "M-x") 'counsel-M-x)
+;; (define-key global-map (kbd "C-x C-f") 'counsel-find-file)
+;; (counsel-projectile-mode)
+
 ;; ido
 ;; (ido-mode 1)
 ;; (setq ido-everywhere t)
@@ -300,9 +311,6 @@
 ;; expand-region
 ;; (require 'expand-region)
 (global-set-key (kbd "H-e") 'er/expand-region)
-
-;; javascript
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 ;; visual-basic
 (require 'visual-basic-mode)
@@ -480,7 +488,7 @@
  '(eclim-eclipse-dirs (list "~/eclipse/java-oxygen/Eclipse.app/Contents/Eclipse"))
  '(package-selected-packages
    (quote
-    (counsel-etags json-mode anti-zenburn-theme spacemacs-theme evil-leader omnisharp tide ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f treemacs helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
+    (counsel-gtags company-tern counsel-etags json-mode anti-zenburn-theme spacemacs-theme evil-leader omnisharp tide ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f treemacs helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

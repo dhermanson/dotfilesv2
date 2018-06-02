@@ -27,6 +27,7 @@ nnoremap <Leader>p <Nop>
 
 " updating vimrc file
 nnoremap <Leader>.ev :e $MYVIMRC<CR>
+nnoremap <Leader>.ep :e ~/.config/nvim/config/plugins.vim<CR>
 nnoremap <Leader>.sv :source $MYVIMRC<CR>
 
 " save
@@ -34,8 +35,8 @@ inoremap <M-w> <C-o>:w<CR>
 nnoremap <M-w> :w<CR>
 
 " semicolon to colon...and vice-versa
-" nnoremap ; :
-" nnoremap : ;
+nnoremap ; :
+nnoremap : ;
 
 " escape on jk
 inoremap jk <Esc>
@@ -195,8 +196,8 @@ nnoremap <M-'> :NERDTreeToggle<CR>
 nnoremap <M-:> :NERDTreeFind<CR>
 
 "ale
-nnoremap <leader>ep :ALEPrevious<CR>
-nnoremap <leader>en :ALENext<CR>
+nnoremap [w :ALEPrevious<CR>
+nnoremap ]w :ALENext<CR>
 
 " neoformat
 

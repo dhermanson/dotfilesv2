@@ -26,13 +26,14 @@
 (evil-mode 1)
 (evil-set-initial-state 'Info-mode 'emacs)
 (evil-set-initial-state 'Man-mode 'emacs)
+(evil-set-initial-state 'dockerfile-mode 'normal)
 (evil-set-initial-state 'elisp-mode 'emacs)
 (evil-set-initial-state 'eshell-mode 'emacs)
 (evil-set-initial-state 'fsharp-mode 'normal)
 (evil-set-initial-state 'go-mode 'normal)
 (evil-set-initial-state 'help-mode 'emacs)
 (evil-set-initial-state 'java-mode 'normal)
-(evil-set-initial-state 'js2-mode 'normal)
+
 (evil-set-initial-state 'json-mode 'normal)
 (evil-set-initial-state 'kotlin-mode 'normal)
 (evil-set-initial-state 'nxml-mode 'normal)
@@ -68,5 +69,6 @@
 
 ;; setup jumps (https://github.com/noctuid/evil-guide#jump)
 (evil-add-command-properties #'deh-find-interface-tag :jump t)
+(evil-add-command-properties #'counsel-imenu :jump t)
 
 (provide 'deh-evil)

@@ -2,78 +2,38 @@ set nocompatible
 syntax on
 filetype plugin indent on
 
-let project_root=$VIM_PROJECT_ROOT
-if project_root != ''
-  silent exe "cd " . project_root
-endif
-
 source $HOME/.config/nvim/config/plugins.vim
 source $HOME/.config/nvim/config/colors.vim
 source $HOME/.config/nvim/config/general.vim
 source $HOME/.config/nvim/config/functions.vim
 source $HOME/.config/nvim/config/keys.vim
 
+" setup projects
+let s:vim_project_file = $HOME.'/projects.vim'
+if filereadable(s:vim_project_file)
+  :execute 'source ' . fnameescape(s:vim_project_file)
+endif
 
 
-"" tern_for_vim settings
-"set updatetime=1000
-"let g:tern_show_argument_hints = 'on_hold'
-"let g:tern_show_signature_in_pum = 1
-"
-"" sql_complete settings
-"let g:ftplugin_sql_omni_key = '<C-C>'
-"let g:sql_type_default = 'pgsql'
-"
-"" vim-slime
-"let g:slime_target = "tmux"
-"" selects entire buffer and slimes it
-""nnoremap <space>bs gg<S-v><S-g><C-c><C-C>
-"
-"" dbext configuration
-"" TODO: configure dbext, cuz i just turned off all mapping with
-""       the line below this one
-"let g:dbext_default_usermaps = 0
-"let g:dbext_default_use_sep_result_buffer = 1
-"let g:dbext_default_buffer_lines = 25
-""let g:dbext_default_window_use_horiz = 0  " Use vertical split
-""let g:dbext_default_window_use_right = 1   " Right
-""let g:dbext_default_window_width = 80
-"
-"" python
-"let g:jedi#popup_on_dot = 1
-"let g:jedi#auto_close_doc = 0
-"let g:jedi#show_call_signatures = 2
-"let g:jedi#popup_select_first = 1
-"
-"" vim-rest-console
-"let g:vrc_trigger = '<Leader>.mr'
-"
-"
-"
-"nnoremap <Leader>.p :set paste!<CR>
-"nnoremap <Leader>.egt :e ~/todo.txt<CR>
-"nnoremap <Leader>.ept :e .derick/todo.txt<CR>
-"nnoremap <Leader>.epn :e .derick/notes.md<CR>
-"
-""vnoremap <Leader>,b64e :!python -m base64 -e<CR>
-""vnoremap <Leader>,b64d :!python -m base64 -d<CR>
-"
-""let g:pymode_rope_autoimport = 1
-""let g:pymode_run_bind = '<localleader>r'
-""let g:pymode_breakpoint_bind = '<localleader>b'
-""let g:pymode_lint = 0
-""let g:pymode_lint_cwindow = 0
-""let g:pymode_lint_checkers = []
-"
-"" view
-"set viewdir=$HOME/.vim_view//
-"au BufWritePost,BufLeave,WinLeave *.rest mkview " for tabs
-"au BufWinEnter *.rest silent loadview
-"
-"
-"
+
 " tagbar settings
+let g:tagbar_type_vbnet = {
+    \ 'ctagstype' : 'vb',
+    \ 'kinds' : [
+        \ 'f:functions',
+        \ 's:subroutine',
+    \ ]
+\ }
 let g:tagbar_type_ruby = {
+    \ 'kinds' : [
+        \ 'f:functions',
+        \ 'v:private variables',
+        \ 'u:public variables',
+        \ 'c:classes',
+    \ ]
+\ }
+
+let g:tagbar_type_groovy = {
     \ 'kinds' : [
         \ 'm:modules',
         \ 'c:classes',
@@ -145,149 +105,7 @@ let g:tagbar_type_markdown = {
         \ 'k:Heading_L3'
     \ ]
 \ }
-"
-""" youcompleteme
-""let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-""let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-"
-"" ultisnips
-"nnoremap <Leader>.eas :e ~/.vim/Ultisnips/all.snippets<CR>
-"
-""inoremap <c-l> <esc>:Unite ultisnips -start-insert<CR>
-"inoremap <M-s> <c-o>:Snippets<CR>
-""inoremap <M-s> <c-o>:Unite ultisnips -start-insert<CR>
-"
-"nnoremap <Leader>.os :syntax on<CR>
-"
-"nnoremap <Leader>.sc :SyntasticCheck<CR>
-"nnoremap <Leader>.st :SyntasticToggleMode<CR>
-"
-"
-"
-"
-"vnoremap <Leader>be y:call Base64Encode(@@)<CR>
-"vnoremap <Leader>bd y:call Base64Decode(@@)<CR>
-"
-"nnoremap <Leader>,jt :%!python -m json.tool<CR>
-"
-"
-"nnoremap <Leader>,a yiw:call AckSearchWord(@@, '.')<CR>
-"
-"
-""imap <c-x><c-f> <plug>(fzf-complete-path)
-"
-""" omnisharp
-""let g:OmniSharp_selector_ui = 'ctrlp'
-""let g:OmniSharp_server_type = 'roslyn'
-"
-"
-"
-"
-""------------php cs-fixer----------------------------------------
-"let g:php_cs_fixer_level = "symfony"              " which level ?
-"let g:php_cs_fixer_config = "default"             " configuration
-""let g:php_cs_fixer_config_file = '.php_cs'       " configuration file
-"let g:php_cs_fixer_php_path = "php"               " Path to PHP
-"" If you want to define specific fixers:
-"let g:php_cs_fixer_fixers_list = "-braces,-psr0"  " need psr0 here because laravel's app/ should be App
-"let g:php_cs_fixer_enable_default_mapping = 0     " Enable the mapping by default (<leader>pcd)
-"let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
-"let g:php_cs_fixer_verbose = 1                    " Return the output of command if 1, else an inline information.
-""----------------------------------------------------------------
-"
-"" markown
-"let g:vim_markdown_folding_disabled = 1
-"let g:vim_markdown_json_frontmatter = 1
-"let g:vim_markdown_conceal = 0
-"
-"" neovim
-"" deoplete.
-"if has('nvim')
-"  let g:deoplete#enable_at_startup = 1
-"  "let g:deoplete#omni_patterns = {}
-"  "let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-"  "let g:deoplete#auto_completion_start_length = 2
-"  let g:deoplete#sources = {}
-"  let g:deoplete#sources['php'] = ['omni', 'tag', 'file', 'ultisnips', 'buffer', 'member']
-"  let g:deoplete#enable_ignore_case = 1
-"  let g:deoplete#enable_smart_case = 1
-"  "let g:deoplete#keyword_patterns = {}
-"  "let g:deoplete#keyword_patterns['php'] = 'function\w*'
-"  "let g:deoplete#sources._ = []
-"  "let g:deoplete#file#enable_buffer_path = 1
-"  
-"  "call deoplete#custom#set('ultisnips', 'matchers', ['matcher_fuzzy'])
-"endif
-"
-"" alchemist.vim
-""let g:alchemist_iex_term_split = 'vsplit'
-"
-""if has('gui_macvim') && has('gui_running')
-"  "let g:my_tmux_pane= 'runner'
-""else
-"  "let g:my_tmux_pane= 'runner'
-""endif
-"
-"
-"
-"" slimux
-""nnoremap <M-s> :SlimuxREPLSendLine<CR>
-""vnoremap <M-s> :\<C-u>execute "'<,'>SlimuxREPLSendSelection" <CR>
-""inoremap <silent> <M-s> <C-o>:SlimuxREPLSendLine<CR>
-"
-""-------- Functions ------------------------------- 
-"
-"function! AckSearchWord(word, directory)
-"  execute "Ack " . a:word . " " . a:directory
-"endfunction
-"
-"function! Base64Encode(value)
-"ruby <<EOF
-"  require 'base64'
-"
-"  value = Vim::evaluate('a:value').strip
-"  encoded = Base64.encode64(value).strip
-"  line = Vim::Buffer.current.line_number
-"
-"  Vim::Buffer.current.append(line, encoded)
-"EOF
-"endfunction
-"
-"function! Base64Decode(value)
-"ruby <<EOF
-"  require 'base64'
-"
-"  value = Vim::evaluate('a:value').strip
-"  encoded = Base64.decode64(value).strip
-"  line = Vim::Buffer.current.line_number
-"
-"  Vim::Buffer.current.append(line, encoded)
-"EOF
-"endfunction
-"
-"
-"function! WriteNumberList(numbers)
-"  ruby <<EOL
-"  buffer = Vim::Buffer.current
-"  current_line = buffer.line_number
-"  numbers = Vim::evaluate("a:numbers")
-"
-"  numbers.times do |num|
-"    Vim::Buffer.current.append current_line, num.to_s
-"    current_line += 1
-"  end
-"EOL
-"endfunction
-"
-""function! RunPhpSpecOnBuffer(buffer_name)
-"  "" TODO: don't hardcode console:runner.1
-"  ""       maybe use a global config or something
-"  ""exe "Tmux send-keys -t console:runner.1 'clear; phpspec run " . fnameescape(a:buffer_name) . "' Enter"
-"  "exe "Start phpspec run " . fnameescape(a:buffer_name) . " && read"
-""endfunction
-"
-"
-"
+
 function! RunNodeInSplit(split)
  call KillTmuxRepl()
  let l:project_dir = fnamemodify('.', ':p')
@@ -302,64 +120,11 @@ function! RunNodeInSplit(split)
 
  "call RunCommandInTmuxPane(l:pane, l:cmd)
 endfunction
-"
-"
-""-------------Auto-Commands--------------"
-"
-"augroup filetype_dosini
-"  autocmd!
-"  autocmd BufRead,BufNewFile php-fpm.conf set syntax=dosini
-"  autocmd BufRead,BufNewFile php.ini set syntax=dosini
-"  autocmd BufRead,BufNewFile www.conf set syntax=dosini
-"  autocmd BufRead,BufNewFile *.conf set syntax=dosini
-"augroup END
-"
-"augroup filetype_css
-"  autocmd!
-"  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-"augroup END
-"
-"" surround settings for erb templates
-"augroup filetype_erb
-"  autocmd!
-"  autocmd FileType erb let b:surround_{char2nr('=')} = "<%= \r %>"
-"  autocmd FileType erb let b:surround_{char2nr('-')} = "<% \r %>"
-"augroup END
-"
-"" cucumber
-"augroup my_cucumber
-"  autocmd!
-"  autocmd FileType cucumber setlocal shiftwidth=2 tabstop=2 expandtab softtabstop=2
-"  "autocmd FileType cucumber nnoremap <buffer> <localleader>rb :Start behat % && read<CR>
-"  autocmd FileType cucumber nnoremap <buffer> <localleader>rb :call RunBehatOnFile()<CR>
-"augroup END
-"
-"
-"augroup ApiBlueprint
-"  autocmd!
-"  autocmd FileType apiblueprint nnoremap <buffer> <localleader>md :Dispatch gulp apidocs<CR>
-"augroup END
-"
-"
-"augroup html
-"  autocmd!
-"  "autocmd BufWritePre,BufRead *.html :normal; gg=G
-"  autocmd BufNewFile,BufRead *.html setlocal nowrap
-"  "autocmd FileType html nnoremap <buffer> <localleader>e :echo "You've opened a html file!"<CR>
-"augroup END
-"
-"augroup my_java
-"  autocmd!
-"  autocmd FileType java setlocal omnifunc=javacomplete#Complete
-"  autocmd FileType java setlocal tags+=~/tags/java.tags
-"augroup END
-"
+
 augroup my_sql
  autocmd!
  autocmd FileType sql nnoremap <buffer> <M-r><M-j> :call RunMycli('-v')<CR>
  autocmd FileType sql nnoremap <buffer> <M-r><M-l> :call RunMycli('-h')<CR>
-"  autocmd FileType javascript nnoremap <buffer> <M-r> :w<CR> :VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
-"  autocmd FileType javascript inoremap <buffer> <M-r> <Esc>:w<CR>:call VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
 augroup END
 
 augroup my_javascript
@@ -369,8 +134,6 @@ augroup my_javascript
  autocmd FileType javascript nnoremap <buffer> <M-r><M-j> :call RunNodeInSplit("-v")<CR>
  autocmd FileType javascript nnoremap <buffer> <M-r><M-l> :call RunNodeInSplit("-h")<CR>
  autocmd FileType javascript nnoremap <buffer> <M-r><M-o> :call RunNodeInNewSessionWindow("repl")<CR>
-"  autocmd FileType javascript nnoremap <buffer> <M-r> :w<CR> :VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
-"  autocmd FileType javascript inoremap <buffer> <M-r> <Esc>:w<CR>:call VimuxRunCommand("clear && node " . bufname("%") . ' \| tap-spec')<CR>
 augroup END
 
 augroup my_sh
@@ -380,54 +143,34 @@ augroup my_sh
  autocmd FileType sh nnoremap <buffer> <silent> <M-r><M-l> :call RunCommandInSplit("bash", "-h")<CR>
 augroup END
 
-"
-"augroup typescript
-"  autocmd!
-"  " tsuquyomi
-"  autocmd FileType typescript nnoremap <buffer> <localleader>d :TsuquyomiDefinition<CR>
-"  autocmd FileType typescript nnoremap <buffer> <localleader>r :TsuquyomiReferences<CR>
-"  autocmd FileType typescript nnoremap <buffer> <localleader>c :TsuquyomiRenameSymbolC<CR>
-"  autocmd FileType typescript nnoremap <buffer> <localleader>b :TsuquyomiGoBack<CR>
-"  autocmd FileType typescript nnoremap <buffer> <localleader>ef :TsuquyomiGeterr<CR>
-"  autocmd FileType typescript nnoremap <buffer> <localleader>ep :TsuquyomiGeterrProject<CR>
-"  autocmd FileType typescript nnoremap <buffer> <localleader>t :YcmCompleter GetType<CR>
-"  autocmd FileType typescript setlocal completeopt+=menu,preview
-"  "autocmd FileType typescript nnoremap <buffer> <localleader>r :call RunTypescriptFile()<CR>
-"augroup END
-"
 augroup my_python
  autocmd!
  autocmd FileType python nnoremap <buffer> <M-r><M-j> :call RunCommandInSplit("ipython", "-v")<CR>
  autocmd FileType python nnoremap <buffer> <M-r><M-l> :call RunCommandInSplit("ipython", "-h")<CR>
 augroup END
+
 augroup my_ruby
  autocmd!
  autocmd FileType ruby nnoremap <buffer> <M-r><M-j> :call RunCommandInSplit("pry", "-v")<CR>
  autocmd FileType ruby nnoremap <buffer> <M-r><M-l> :call RunCommandInSplit("pry", "-h")<CR>
-"  " rails
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rr :Rake 
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rev :Eview<CR>
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rem :Emodel<CR>
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rec :Econtroller<CR>
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rsv :Sview<CR>
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rsm :Smodel<CR>
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rsc :Scontroller<CR>
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rvv :Vview<CR>
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rvm :Vmodel<CR>
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rvc :Vcontroller<CR>
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rgc :Rgenerate controller 
-"
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rev<Space> :Eview 
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rem<Space> :Emodel 
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rec<Space> :Econtroller 
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rsv<Space> :Sview 
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rsm<Space> :Smodel 
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rsc<Space> :Scontroller 
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rvv<Space> :Vview 
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rvm<Space> :Vmodel 
-"  autocmd FileType ruby nnoremap <buffer> <localleader>rvc<Space> :Vcontroller 
-"
-"  autocmd FileType ruby nnoremap <buffer> <localleader>mtp :Dispatch create-ruby-ctags.sh<CR>
+ autocmd FileType ruby nnoremap <buffer> <silent> <M-r><M-o> :call RunCommandInNewSessionWindow("pry", "repl")<CR>
+ autocmd FileType ruby inoremap <buffer> <silent> <M-i> <Esc>mayiW`a:call TabCompleteInTmuxPrySession(@@, g:my_tmux_repl_pane)<CR>a
+ autocmd FileType ruby nnoremap <buffer> <silent> <M-d> mayiW`a:call ShowPryDocForExpression(@@, g:my_tmux_repl_pane)<CR>
+ autocmd FileType ruby inoremap <buffer> <silent> <M-d> <Esc>mayiW`a:call ShowPryDocForExpression(@@, g:my_tmux_repl_pane)<CR>a
+ autocmd FileType ruby nnoremap <buffer> <silent> <M-BS> :call DeleteAllTextOnReplLine(g:my_tmux_repl_pane)<CR>
+ autocmd FileType ruby inoremap <buffer> <silent> <M-BS> <C-o>:call DeleteAllTextOnReplLine(g:my_tmux_repl_pane)<CR>
+augroup END
+
+augroup my_groovy
+ autocmd!
+ autocmd FileType groovy nnoremap <buffer> <silent> <M-r><M-j> :call RunCommandInSplit("groovysh", "-v")<CR>
+ autocmd FileType groovy nnoremap <buffer> <silent> <M-r><M-l> :call RunCommandInSplit("groovysh", "-h")<CR>
+ autocmd FileType groovy nnoremap <buffer> <silent> <M-r><M-o> :call RunCommandInNewSessionWindow("groovysh", "repl")<CR>
+ autocmd FileType groovy nnoremap <buffer> <silent> <M-r><M-p> :call SendSymbolToTmuxPaneAndEnter(":purge all", g:my_tmux_repl_pane)<CR>
+ autocmd FileType groovy nnoremap <buffer> <silent> <M-r><M-c> :call ClearTmuxRepl(g:my_tmux_repl_pane)<CR>
+ autocmd FileType groovy nnoremap <buffer> <silent> <M-BS> :call DeleteAllTextOnReplLine(g:my_tmux_repl_pane)<CR>
+ autocmd FileType groovy inoremap <buffer> <silent> <M-i> <Esc>mayiW`a:call TabCompleteInTmuxGroovyShSession(@@, g:my_tmux_repl_pane)<CR>a
+ autocmd FileType groovy inoremap <buffer> <silent> <M-BS> <C-o>:call DeleteAllTextOnReplLine(g:my_tmux_repl_pane)<CR>
 augroup END
 
 augroup my_vue
@@ -435,40 +178,6 @@ augroup my_vue
   autocmd FileType vue syntax sync fromstart
 augroup END
 
-"
-"augroup my_elixir
-"  autocmd!
-"  autocmd FileType elixir setlocal tags+=~/tags/tags.elixir
-"  autocmd FileType elixir imap <buffer> <M-d> <Esc><s-k> <C-w>pa<C-x><C-o>
-"augroup END
-"
-"augroup my_vimscript
-"  autocmd!
-"  autocmd FileType vim setlocal omnifunc=syntaxcomplete#Complete
-"augroup END
-"
-""augroup my_netrw
-"    "au!
-"    ""au VimEnter * sil! au! FileExplorer *
-"    ""au BufEnter * if s:isdir(expand('%')) | bd | exe 'Ranger' | endif
-"    "au BufEnter * if s:isdir(expand('%')) | let g:netrw_list_hide= '^.*/tmp/.*$,^.*\.so$,^.*\.swp$,^.*\.zip$,^.*\.class$,^\.\.\=/\=$' | endif
-""augroup END
-"
-""fu! s:isdir(dir) abort
-"    "return !empty(a:dir) && (isdirectory(a:dir) ||
-"                "\ (!empty($SYSTEMDRIVE) && isdirectory('/'.tolower($SYSTEMDRIVE[0]).a:dir)))
-""endfu
-"
-""inoremap <c-space> <esc>:CtrlPBufTagAll <CR>
-"
-"
-""let g:dbext_default_profile_homestead = 'type=MYSQL:user=dev:passwd=dev:srvname=192.168.10.10:dbname=home    stead:host=192.168.10.10:port=3306'
-""let g:dbext_default_profile = 'homestead'
-"
-"
-"" nerdtree
-""nnoremap <leader>t :NERDTreeToggle<CR>
-"
 
 function! RunSchemaspyOnProjectDatabase()
   let l:project_dir = fnamemodify('.', ':p')
@@ -664,13 +373,14 @@ EOD
 endfunction
 
 function! SetupComposerProject()
+  set tags+=.ctags-php
+  set tags+=.ctags-php-vendor
   nnoremap <leader>pmtp :Dispatch $HOME/.config/nvim/bin/create-php-ctags.sh<CR>
   nnoremap <leader>pmtv :Dispatch $HOME/.config/nvim/bin/create-php-vendor-tags.sh<CR>
 endfunction
 
 function! SetupLaravelProject()
 
-  set tags+=.ctags-php
   let g:projectionist_heuristics = {
         \   "artisan": {
         \     "app/*.php": {
@@ -971,24 +681,10 @@ function! RunMochaOnBuffer(buffer_name, split)
   let l:project_dir = fnamemodify('.', ':p')
   let l:mocha_exe = fnamemodify('node_modules/.bin/mocha ', ':p')
   let l:file = expand('%:p')
-  " let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:mocha_exe . ' ' . l:file
   let l:cmd = 'cd ' . l:project_dir . ' && clear && webpack --display none ' . l:file . ' .test-output.js && ' . l:mocha_exe . ' .test-output.js'
   exe "Tmux splitw " . a:split . " '" . l:cmd . " ; read'"
 endfunction
 
-" function! RunTapeBuffer(buffer_name, split)
-"   let l:project_dir = fnamemodify('.', ':p')
-"   let l:node_exe = 'babel-node --debug '
-"   let l:file = expand('%:p')
-"   " let l:cmd = 'cd ' . l:project_dir . ' && clear && webpack --config=.derick/webpack.config.js --display none ' . l:file . ' .test-output.js && ' . l:node_exe . ' .test-output.js | tap-spec'
-"   let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:node_exe . ' ' . l:file . ' --inspect | tap-spec'
-"   ruby <<EOD
-"   cmd = VIM::evaluate('l:cmd')
-"   split = VIM::evaluate('a:split')
-"   system "tmux splitw #{split} '#{cmd} ; exec bash'"
-" EOD
-"   " exe "Tmux splitw " . a:split . " '" . l:cmd . " ; exec bash'"
-" endfunction
 
 function! RunTapeBuffer(buffer_name, split, debug)
   let l:project_dir = fnamemodify('.', ':p')
@@ -1001,8 +697,7 @@ function! RunTapeBuffer(buffer_name, split, debug)
     let l:node_exe = 'babel-node'
     let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:node_exe . ' ' . l:file . ' | tap-spec'
   endif
-  " let l:cmd = 'cd ' . l:project_dir . ' && clear && ' . l:node_exe . ' ' . l:file . ' --inspect | tap-spec'
-  " let l:cmd = 'cd ' . l:project_dir . ' && clear && babel ' . l:file . ' .test-output.js && ' . l:mocha_exe . ' .test-output.js'
+
   ruby <<EOD
   cmd = VIM::evaluate('l:cmd')
   split = VIM::evaluate('a:split')

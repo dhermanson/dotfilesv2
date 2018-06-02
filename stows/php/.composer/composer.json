@@ -9,7 +9,6 @@
   "require": {
     "laravel/installer": "^1.3",
     "laravel/valet": "^2.0",
-    "psy/psysh": "@stable",
-    "squizlabs/php_codesniffer": "*"
+    "psy/psysh": "@stable"
   }
 }

@@ -16,10 +16,10 @@ Plug 'vim-airline/vim-airline'
 " Essentials
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdtree'
-Plug 'autozimu/LanguageClient-neovim', {
-      \    'branch': 'next',
-      \    'do': './install.sh'
-      \  }
+" Plug 'autozimu/LanguageClient-neovim', {
+"       \    'branch': 'next',
+"       \    'do': 'bash install.sh'
+"       \  }
 Plug 'benmills/vimux'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
@@ -37,7 +37,7 @@ Plug 'mileszs/ack.vim'
 Plug 'w0rp/ale'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/denite.nvim'
-" Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim'
 " Plug 'Shougo/echodoc.vim'
 Plug 'SirVer/ultisnips'
 Plug 'tobyS/vmustache'
@@ -60,7 +60,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'airblade/vim-gitgutter'
 Plug 'schickling/vim-bufonly'
 Plug 'tpope/vim-scriptease'
-Plug 'roxma/nvim-completion-manager'
+" Plug 'roxma/nvim-completion-manager'
 Plug 'godlygeek/tabular'
 " Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 
@@ -68,6 +68,9 @@ Plug 'godlygeek/tabular'
 Plug 'sheerun/vim-polyglot'
 
 " Language-specific
+" go
+Plug 'fatih/vim-go'
+
 " php
 Plug 'arnaud-lb/vim-php-namespace', { 'for': 'php' }
 Plug 'stephpy/vim-php-cs-fixer', { 'for': 'php' }
@@ -84,6 +87,9 @@ Plug 'tpope/gem-ctags', { 'for': 'ruby' }
 Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 Plug 'tpope/rbenv-ctags', { 'for': 'ruby' }
 
+" " powershell
+" Plug 'PProvost/vim-ps1'
+"
 " javascript
 " Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
 " Plug 'carlitux/deoplete-ternjs', { 'for': 'javascript' }
@@ -94,6 +100,9 @@ Plug 'tpope/rbenv-ctags', { 'for': 'ruby' }
 
 " css
 " Plug 'ap/vim-css-color'
+
+Plug 'amiorin/vim-project'
+" Plug 'airblade/vim-rooter'
 
 " Initialize plugin system
 call plug#end()
@@ -120,6 +129,7 @@ let g:ctrlp_show_hidden = 1
 "let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:50,results:30'
 let g:ctrlp_buftag_types = {
     \ 'php'        : '--fields=K --PHP-kinds=mctdfip --languages=php',
+    \ 'vbnet'        : '--languages=vb',
   \ }
 
 
@@ -153,13 +163,14 @@ let g:neomake_php_enabled_makers = ["php", "phpstan"] " php, phpstan, phpcs, php
 
 "--------------------ale---------------------------------------------------------
 " let g:ale_php_phpstan_level = 4
-let g:ale_php_phpstan_configuration = 'phpstan.neon'
+" let g:ale_php_phpstan_configuration = 'phpstan.neon'
 let g:ale_linters = {
       \    'php': ['php', 'phpstan'],
       \  }
 let g:ale_fixers = {
       \    'javascript': ['prettier'],
       \  }
+let g:ale_lint_on_enter=0
 " let g:ale_fix_on_save = 1
 
 "--------------------FZF---------------------------------------------------------
@@ -184,9 +195,11 @@ command! -bang -nargs=* Rg
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
 "---------------------DEOPLETE---------------------------------------------------
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#enable_ignore_case = 1
-" let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#sources = {}
+let g:deoplete#sources['php'] = ['buffer', 'file', 'tag']
 
 "------------------DELIMITMATE---------------------------------------------------
 " delimitmate settings
@@ -231,6 +244,10 @@ let g:echodoc_enable_at_startup = 1
 "------------------NERDTree------------------------------------------------------
 let g:NERDTreeQuitOnOpen=1
 
+" vim-go
+let g:go_term_mode = "vsplit"
+
+
 "------------------neoformat-----------------------------------------------------
 " augroup fmt
 "   autocmd!
@@ -238,15 +255,21 @@ let g:NERDTreeQuitOnOpen=1
 " augroup END
 
 "------------------languageClient-neovim-----------------------------------------
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': [$HOME.'/tools/lsp-servers/javascript-typescript-langserver/lib/language-server-stdio.js'],
-    \ 'typescript': [$HOME.'/tools/lsp-servers/javascript-typescript-langserver/lib/language-server-stdio.js'],
-    \ 'javascript.jsx': [$HOME.'/tools/lsp-servers/javascript-typescript-langserver/lib/language-server-stdio.js'],
-    \ }
-
-" Automatically start language servers.
-let g:LanguageClient_autoStart = 1
+" let g:LanguageClient_autoStart = 1 " Automatically start language servers.
+" let g:LanguageClient_devel = 1 " Use rust debug build
+" let g:LanguageClient_loggingLevel = 'DEBUG' " Use highest logging level
+"
+" let g:LanguageClient_serverCommands = {
+"     \ 'groovy': [$HOME.'/bin/groovy-language-server'],
+"     \ }
 
 " nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 " nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 " nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+
+"------------------git gutter----------------------------------------------------
+let g:gitgutter_enabled=0
+
+
+"------------------vim-project---------------------------------------------------
