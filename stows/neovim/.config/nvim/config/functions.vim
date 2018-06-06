@@ -149,7 +149,6 @@ function! RunCommandInNewSessionWindow(command, session)
   let l:timestamp = systemlist('date "+%s"')[0]
   let g:my_tmux_repl_pane = a:session . ':' . l:timestamp
   let l:the_command = "tmux new-window -t " . a:session . " -n " . l:timestamp . ' "' . l:cmd . '"'
-  echom l:the_command
   silent call system(l:the_command)
 endfunction
 

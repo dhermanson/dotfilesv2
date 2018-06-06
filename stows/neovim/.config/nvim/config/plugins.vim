@@ -159,13 +159,13 @@ let g:neomake_verbose=0
 let g:neomake_ruby_enabled_makers = ['mri']
 let g:neomake_javascript_enabled_makers = []
 let g:neomake_vue_enabled_makers = []
-let g:neomake_php_enabled_makers = ["php", "phpstan"] " php, phpstan, phpcs, phpmd, phplint
+let g:neomake_php_enabled_makers = ["php"] " php, phpstan, phpcs, phpmd, phplint
 
 "--------------------ale---------------------------------------------------------
 " let g:ale_php_phpstan_level = 4
 " let g:ale_php_phpstan_configuration = 'phpstan.neon'
 let g:ale_linters = {
-      \    'php': ['php', 'phpstan'],
+      \    'php': ['php'],
       \  }
 let g:ale_fixers = {
       \    'javascript': ['prettier'],
@@ -273,3 +273,5 @@ let g:gitgutter_enabled=0
 
 
 "------------------vim-project---------------------------------------------------
+let g:project_use_nerdtree = 1
+
