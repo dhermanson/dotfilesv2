@@ -35,6 +35,11 @@
 	(windmove-up)
       (evil-window-split))))
 
+(define-key global-map (kbd "H-l") 'deh-windmove-create-or-select-window-right)
+(define-key global-map (kbd "H-h") 'deh-windmove-create-or-select-window-left)
+(define-key global-map (kbd "H-k") 'deh-windmove-create-or-select-window-up)
+(define-key global-map (kbd "H-j") 'deh-windmove-create-or-select-window-down)
+
 (define-key evil-normal-state-map (kbd "M-l") 'deh-windmove-create-or-select-window-right)
 (define-key evil-normal-state-map (kbd "M-h") 'deh-windmove-create-or-select-window-left)
 (define-key evil-normal-state-map (kbd "M-k") 'deh-windmove-create-or-select-window-up)

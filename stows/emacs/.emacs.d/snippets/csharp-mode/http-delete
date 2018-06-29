@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: http-delete
+# key: delete
+# --
+[HttpDelete("{id}")]
+public IActionResult Delete(long id)
+{
+	$0
+}

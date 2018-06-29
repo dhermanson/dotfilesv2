@@ -280,10 +280,14 @@
 (define-key php-mode-map (kbd "C-c C-s") 'deh-php-restart-repl)
 (define-key php-mode-map (kbd "H-s") 'deh-php-send-to-repl)
 ;; (define-key php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
-(define-key evil-normal-state-map (kbd "M-s") 'deh-php-send-to-repl)
-(define-key evil-visual-state-map (kbd "M-s") 'deh-php-send-to-repl)
-(define-key evil-insert-state-map (kbd "M-s") 'deh-php-send-to-repl)
-(define-key evil-normal-state-map (kbd "M-a") 'deh-php-artisan-helm-list)
+(evil-define-key 'normal 'php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
+(evil-define-key 'insert 'php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
+(evil-define-key 'visual 'php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
+(evil-define-key 'normal 'php-mode-map (kbd "M-a") 'deh-php-artisan-helm-list)
+;; (define-key evil-normal-state-map (kbd "M-s") 'deh-php-send-to-repl)
+;; (define-key evil-visual-state-map (kbd "M-s") 'deh-php-send-to-repl)
+;; (define-key evil-insert-state-map (kbd "M-s") 'deh-php-send-to-repl)
+;; (define-key evil-normal-state-map (kbd "M-a") 'deh-php-artisan-helm-list)
 ;; (define-key php-mode-map (kbd "M-O") 'deh-php-restart-repl)
 (define-key php-mode-map (kbd "C-c c s f") 'deh-projectile-phpstan-on-current-file)
 (define-key php-mode-map (kbd "C-c c s p") 'deh-projectile-phpstan-on-project)
@@ -343,6 +347,4 @@
 
 (add-hook 'php-mode-hook 'deh-php-mode-hook)
 
-
 (provide 'deh-php)
-

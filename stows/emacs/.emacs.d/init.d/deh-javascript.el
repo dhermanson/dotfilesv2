@@ -9,6 +9,8 @@
 
 (defun deh-javascript-hook ()
   "my javascript hook"
+  (setq js-indent-level 2)
+
   (tern-mode t)
   (company-mode t)
   (flycheck-mode t)

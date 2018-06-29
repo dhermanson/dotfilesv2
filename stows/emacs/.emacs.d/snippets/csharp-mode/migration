@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: migration
+# key: migration
+# --
+[Migration(`(format-time-string "%Y%m%d%H%M%S")`)]
+public class ${1:Class} : Migration
+{
+	public override void Up()
+	{
+		$0
+	}
+
+	public override void Down()
+	{
+		
+	}
+}

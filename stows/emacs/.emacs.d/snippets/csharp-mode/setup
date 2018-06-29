@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: setup
+# key: setup
+# --
+[SetUp]
+public void SetUp()
+{
+	$0
+}
