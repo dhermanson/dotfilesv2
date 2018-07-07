@@ -15,5 +15,7 @@
 (eval-after-load 'autorevert '(diminish 'auto-revert-mode))
 (eval-after-load 'smartparens '(diminish 'smartparens-mode))
 (eval-after-load 'omnisharp '(diminish 'omnisharp-mode))
+(eval-after-load 'robe '(diminish 'robe-mode))
+(eval-after-load 'abbrev '(diminish 'abbrev-mode))
 
 (provide 'deh-appearance)
