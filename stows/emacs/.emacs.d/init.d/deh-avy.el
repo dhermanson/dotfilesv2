@@ -1,0 +1,5 @@
+(require 'avy)
+
+(setq avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?\;))
+
+(provide 'deh-avy)

@@ -170,6 +170,10 @@ alias n="nvim"
 alias nv="nvim"
 alias nvi="nvim"
 
+function vscode() {
+  open -a Visual\ Studio\ Code "$@"
+}
+
 # alias phpstan='docker run -v $PWD:/app --rm phpstan/phpstan'
 #
 #alias xon='export XDEBUG_CONFIG="idekey=PHPSTORM"'
@@ -215,10 +219,15 @@ export PATH=$PATH:./vendor/bin
 # add global composer to path
 export PATH=$PATH:~/.composer/vendor/bin
 
-## add cabal bin to path
-#export PATH=$PATH:~/.cabal/bin
-## add stack binary path to bin
-#export PATH=$PATH:~/.local/bin
+# add cabal bin to path
+export PATH=~/.cabal/bin:$PATH
+# add stack binary path to bin
+export PATH=~/.local/bin:$PATH
+export PATH=~/Library/Haskell/bin:$PATH
+
+# add dotnet tools to path
+export PATH=$PATH:~/.dotnet/tools
+
 # add latex binaries
 if [[ "$OSX" == "1" ]]
 then

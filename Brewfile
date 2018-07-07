@@ -49,7 +49,7 @@ brew 'ctags'
 brew 'editorconfig'
 brew 'elixir'
 # brew 'emacs', args: ['with-cocoa']
-# brew 'emacs-mac' # trying out the railwaycat version of emacs for mac
+brew 'emacs-mac', args: ['with-natural-title-bar'] # trying out the railwaycat version of emacs for mac
 brew 'fontconfig'
 brew 'gcc', args: ['enable-cxx']
 brew 'global'

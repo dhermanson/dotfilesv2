@@ -18,4 +18,6 @@
 
 (add-hook 'ruby-mode-hook 'deh/my-ruby-mode-hook)
 
+(add-to-list 'auto-mode-alist '("Brewfile" . ruby-mode))
+
 (provide 'deh-ruby)

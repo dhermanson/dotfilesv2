@@ -1,6 +1,8 @@
 (setq evil-default-state 'emacs)
 (setq evil-disable-insert-state-bindings t)
 
+(require 'ace-jump-mode)
+(require 'avy)
 (require 'evil-surround)
 (require 'evil)
 (require 'evil-leader)
@@ -11,21 +13,6 @@
 
 (evil-commentary-mode)
 
-(define-key global-map (kbd "H-h") 'windmove-left)
-(define-key global-map (kbd "H-j") 'windmove-down)
-(define-key global-map (kbd "H-k") 'windmove-up)
-(define-key global-map (kbd "H-l") 'windmove-right)
-(define-key global-map (kbd "H-H") 'evil-window-move-far-left)
-(define-key global-map (kbd "H-J") 'evil-window-move-very-bottom)
-(define-key global-map (kbd "H-K") 'evil-window-move-very-top)
-(define-key global-map (kbd "H-L") 'evil-window-move-far-right)
-;; (define-key global-map (kbd "H-o") 'other-window)
-(define-key global-map (kbd "H-0") 'delete-window)
-(define-key global-map (kbd "H-1") 'delete-other-windows)
-(define-key global-map (kbd "H-2") 'split-window-below)
-(define-key global-map (kbd "H-3") 'split-window-right)
-(define-key global-map (kbd "M-i") 'helm-imenu)
-(define-key global-map (kbd "M-I") 'helm-imenu-in-all-buffers)
 
 (evil-mode 1)
 (global-evil-surround-mode t)
@@ -57,6 +44,9 @@
   "Keymap for \"leader key\" shortcuts.")
 (define-key evil-normal-state-map (kbd "SPC") deh/evil-leader-map)
 (define-key deh/evil-leader-map ";" 'ace-jump-char-mode)
+;; (define-key deh/evil-leader-map ";" 'avy-goto-char)
+;; (define-key deh/evil-leader-map (kbd "SPC") 'avy-goto-char)
+;; (define-key deh/evil-leader-map ";" 'avy-goto-word-1)
 (define-key deh/evil-leader-map "p" 'projectile-command-map)
 (define-key deh/evil-leader-map "l" 'deh-helm-imenu)
 ;; (define-key deh/evil-leader-map "l" 'counsel-imenu)
@@ -81,13 +71,15 @@
   (kbd "M-w") 'save-buffer
   (kbd "M-c") 'delete-window
   (kbd "M-o") 'delete-other-windows
+  (kbd "M-n") 'make-frame-command
   (kbd "M-q") '(lambda ()
                  (interactive)
                  (kill-buffer (current-buffer)))
   (kbd "M-;") 'treemacs
   (kbd "C-M-c") 'flycheck-buffer
   (kbd "C-M-p") 'flycheck-previous-error
-  (kbd "C-M-n") 'flycheck-next-error)
+  (kbd "C-M-n") 'flycheck-next-error
+  (kbd "-") 'dired-jump)
 
 (evil-define-key nil evil-insert-state-map
   (kbd "C-SPC") 'company-complete)

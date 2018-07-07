@@ -39,6 +39,10 @@
 (define-key global-map (kbd "H-h") 'deh-windmove-create-or-select-window-left)
 (define-key global-map (kbd "H-k") 'deh-windmove-create-or-select-window-up)
 (define-key global-map (kbd "H-j") 'deh-windmove-create-or-select-window-down)
+(define-key global-map (kbd "H-H") 'evil-window-move-far-left)
+(define-key global-map (kbd "H-J") 'evil-window-move-very-bottom)
+(define-key global-map (kbd "H-K") 'evil-window-move-very-top)
+(define-key global-map (kbd "H-L") 'evil-window-move-far-right)
 
 (define-key evil-normal-state-map (kbd "M-l") 'deh-windmove-create-or-select-window-right)
 (define-key evil-normal-state-map (kbd "M-h") 'deh-windmove-create-or-select-window-left)
@@ -53,5 +57,13 @@
 (define-key evil-normal-state-map (kbd "M-J") 'evil-window-move-very-bottom)
 (define-key evil-normal-state-map (kbd "M-K") 'evil-window-move-very-top)
 (define-key evil-normal-state-map (kbd "M-L") 'evil-window-move-far-right)
+
+(define-key global-map (kbd "H-c") 'delete-window)
+(define-key global-map (kbd "H-o") 'delete-other-windows)
+(define-key global-map (kbd "H-n") 'make-frame-command)
+
+(define-key global-map (kbd "M-i") 'helm-imenu)
+(define-key global-map (kbd "M-I") 'helm-imenu-in-all-buffers)
+
 
 (provide 'deh-movement)
