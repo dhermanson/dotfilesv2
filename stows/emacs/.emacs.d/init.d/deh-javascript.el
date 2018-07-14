@@ -17,7 +17,13 @@
   (eldoc-mode t)
   (smartparens-mode t)
   (set (make-local-variable 'company-backends) '(company-tern))
-  (evil-surround-mode))
+  (evil-surround-mode)
+
+  (setq deh-repl-enabled t)
+  (setq deh-repl-process-name "deh-node")
+  (setq deh-repl-buffer-name "*deh-node*")
+  (setq deh-repl-program "node")
+  (setq deh-repl-program-args (list (concat (getenv "HOME") "/node_repl.js"))))
 
 (add-hook 'js2-mode-hook 'deh-javascript-hook)
 

@@ -212,20 +212,20 @@
     
     (save-excursion
       (unless repl-buffer
-	(progn
-	  (deh-php-create-repl)
-	  (sleep-for 0.1)
-	  (switch-to-buffer existing-buffer)
-	  (switch-to-buffer-other-window repl-buffer-name)
-	  (other-window 1)
-	  ))
+	      (progn
+	        (deh-php-create-repl)
+	        (sleep-for 0.1)
+	        (switch-to-buffer existing-buffer)
+	        (switch-to-buffer-other-window repl-buffer-name)
+	        (other-window 1)
+	        ))
       
       
       (if (use-region-p)
-	  (progn
-	    (send-region repl-buffer-name start end)
-	    (deactivate-mark))
-	(send-string repl-buffer-name line))
+	        (progn
+	          (send-region repl-buffer-name start end)
+	          (deactivate-mark))
+	      (send-string repl-buffer-name line))
       (send-string repl-buffer-name "\n"))))
 
 (defun deh-php-restart-repl ()
@@ -280,10 +280,10 @@
 (define-key php-mode-map (kbd "C-c C-s") 'deh-php-restart-repl)
 (define-key php-mode-map (kbd "H-s") 'deh-php-send-to-repl)
 ;; (define-key php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
-(evil-define-key 'normal 'php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
-(evil-define-key 'insert 'php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
-(evil-define-key 'visual 'php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
-(evil-define-key 'normal 'php-mode-map (kbd "M-a") 'deh-php-artisan-helm-list)
+;; (evil-define-key 'normal 'php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
+;; (evil-define-key 'insert 'php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
+;; (evil-define-key 'visual 'php-mode-map (kbd "M-s") 'deh-php-send-to-repl)
+;; (evil-define-key 'normal 'php-mode-map (kbd "M-a") 'deh-php-artisan-helm-list)
 ;; (define-key evil-normal-state-map (kbd "M-s") 'deh-php-send-to-repl)
 ;; (define-key evil-visual-state-map (kbd "M-s") 'deh-php-send-to-repl)
 ;; (define-key evil-insert-state-map (kbd "M-s") 'deh-php-send-to-repl)

@@ -1,5 +1,5 @@
 ;; Turn off mouse interface early in startup to avoid momentary display
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'menu-bar-mode) (menu-bar-mode 1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
@@ -28,87 +28,87 @@
 ;; packages
 (setq package-list
       '(
-	;; elfeed
-	;; embrace
-	ace-jump-mode
-	alchemist
-	anti-zenburn-theme
-  avy
-	badger-theme
-	cider
-	company
-	company-go
-	company-tern
-	company-web
-	counsel
-	counsel-etags
-	counsel-projectile
-	csharp-mode
-	csv-mode
-	darktooth-theme
-  diminish
-	dockerfile-mode
-  doom-themes
-	dracula-theme
-	eclim
-	edit-indirect
-	emmet-mode
-	evil
-	evil-commentary
-	evil-leader
-	evil-surround
-	exec-path-from-shell
-	expand-region
-	f
-	fsharp-mode
-	feature-mode
-	flycheck
-	ggtags
-	go-mode
-	groovy-mode
-	gruvbox-theme
-	haskell-mode
-	hc-zenburn-theme
-	helm
-	helm-projectile
-	helm-rg
-	hlinum
-	ht
-	inf-groovy
-	js2-mode
-	json-mode
-	kotlin-mode
-	markdown-mode
-	monokai-theme
-	neotree
-	org-bullets
-	ox-gfm
-	ox-twbs
-	omnisharp
-	php-mode
-	prodigy
-	projectile
-	restclient
-	ripgrep
-	robe
-	smartparens
-	spacemacs-theme
-	solarized-theme
-	tern
-	tide
-	treemacs
-	undo-tree
-	web-mode
-	wgrep
-	which-key
-	yasnippet
-	zenburn-theme
+	      ;; elfeed
+	      ;; embrace
+	      ace-jump-mode
+	      alchemist
+	      anti-zenburn-theme
+        avy
+	      badger-theme
+	      cider
+	      company
+	      company-go
+	      company-tern
+	      company-web
+	      counsel
+	      counsel-etags
+	      counsel-projectile
+	      csharp-mode
+	      csv-mode
+	      darktooth-theme
+        diminish
+	      dockerfile-mode
+        doom-themes
+	      dracula-theme
+	      eclim
+	      edit-indirect
+	      emmet-mode
+	      evil
+	      evil-commentary
+	      evil-leader
+	      evil-surround
+	      exec-path-from-shell
+	      expand-region
+	      f
+	      fsharp-mode
+	      feature-mode
+	      flycheck
+	      ggtags
+	      go-mode
+	      groovy-mode
+	      gruvbox-theme
+	      haskell-mode
+	      hc-zenburn-theme
+	      helm
+	      helm-projectile
+	      helm-rg
+	      hlinum
+	      ht
+	      inf-groovy
+	      js2-mode
+	      json-mode
+	      kotlin-mode
+	      markdown-mode
+	      monokai-theme
+	      neotree
+	      org-bullets
+	      ox-gfm
+	      ox-twbs
+	      omnisharp
+	      php-mode
+	      prodigy
+	      projectile
+	      restclient
+	      ripgrep
+	      robe
+	      smartparens
+	      spacemacs-theme
+	      solarized-theme
+	      tern
+	      tide
+	      treemacs
+	      undo-tree
+	      web-mode
+	      wgrep
+	      which-key
+	      yasnippet
+	      zenburn-theme
         color-theme-sanityinc-tomorrow
         magit
         paredit
         plantuml-mode
-	yaml-mode
-	omtose-phellack-theme))
+	      yaml-mode
+	      omtose-phellack-theme))
 
 (package-initialize)
 
@@ -140,18 +140,15 @@
 ;; (scroll-bar-mode 0)
 ;; (menu-bar-mode 0)
 ;; (global-linum-mode 0) ; display line numbers
-(column-number-mode 1) ; display column/row of cursor in mode-line
-(show-paren-mode 1)
-(global-hl-line-mode 0)
+
 ;; (setq-default cursor-type '(bar . 2))
 
-(setq-default tab-width 2)
-
-
 (require 'deh-appearance)
+(require 'deh-minibuffer)
 (require 'deh-treemacs)
 (require 'deh-magit)
 (require 'deh-macos)
+(require 'deh-sh)
 (require 'deh-yaml)
 (require 'deh-xml)
 (require 'deh-ace-jump)
@@ -179,6 +176,7 @@
 (require 'deh-image)
 (require 'deh-web)
 (require 'deh-global-maps)
+(require 'deh-repl)
 
 (setq-default indent-tabs-mode nil)
 
@@ -197,54 +195,14 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; inhibit the startup screen
-(setq inhibit-startup-screen t)
-
-;; fonts
-(require 'markdown-mode)
-(set-default-font "Monaco-14" nil t)
-;; (set-face-font 'markdown-pre-face "Monaco-14")
-;; (set-face-font 'markdown-inline-code-face "Monaco-14")
-;; (set-face-font 'markdown-language-keyword-face "Monaco-14")
-;; (set-face-font 'markdown-code-face "Monaco-14")
-
-;; colors
-;; (color-theme-sanityinc-tomorrow-night)
-;; (load-theme 'sanityinc-tomorrow-night t)
-;; (load-theme 'sanityinc-tomorrow-day t)
-;; (load-theme 'sanityinc-tomorrow-eighties t)
-;; (load-theme 'omtose-softer t)
-;; (load-theme 'omtose-darker t)
-;; (load-theme 'solarized-light t)
-;; (load-theme 'solarized-dark t)
-;; (load-theme 'darktooth t)
-;; (darktooth-modeline)
-;; (load-theme 'gruvbox-dark-hard t)
-;; (load-theme 'gruvbox-dark-soft t)
-(load-theme 'zenburn t)
-;; (load-theme 'doom-vibrant t)
-;; (load-theme 'doom-one t)
-;; (load-theme 'hc-zenburn t)
-;; (load-theme 'anti-zenburn t)
-;; (load-theme 'spacemacs-dark t)
-;; (load-theme 'spacemacs-light t)
-;; (require 'spacemacs-theme)
-;; (load-theme 'badger t)
-;; (load-theme 'dracula t)
-;; (load-theme 'monokai t)
-;; (load-theme 'sexy-monochrome t)
-;; (load-theme 'monochrome t)
-;; (load-theme 'quasi-monochrome t)
-;; (load-theme 'tao-yin t)
-;; (load-theme 'eziam-dark t)
-;; (load-theme 'leuven t)
-;; (load-theme 'adwaita t)
-;; (load-theme 'tango t)
-;; (load-theme 'railscasts t)
 
 ;; backups
 ;; (setq backup-directory-alist `(("." . "~/.saves")))
 (setq make-backup-files nil) ; stop creating backup~ files
 (setq auto-save-default nil) ; stop creating #autosave# files
+(setq create-lockfiles nil) ; don't create .# files
+;; backup in one place. flat, no tree structure
+;; (setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup")))
 
 ;; (ido-mode 1)
 
@@ -287,9 +245,9 @@
 (yas-global-mode 1)
 
 ;; ace-jump
-(define-key global-map (kbd "H-c") 'ace-jump-char-mode)
-(define-key global-map (kbd "H-;") 'ace-jump-char-mode)
-(define-key global-map (kbd "H-w") 'ace-jump-word-mode)
+;; (define-key global-map (kbd "H-c") 'ace-jump-char-mode)
+;; (define-key global-map (kbd "H-;") 'ace-jump-char-mode)
+;; (define-key global-map (kbd "H-w") 'ace-jump-word-mode)
 
 ;; (switch-to-buffer (create-file-buffer "test-buffer"))
 
@@ -347,7 +305,7 @@
 ;; 	    projectile-root-bottom-up
 ;; 	    projectile-root-top-down
 ;; 	    projectile-root-top-down-recurring))
-(setq projectile-switch-project-action 'projectile-run-eshell)
+(setq projectile-switch-project-action 'projectile-run-shell)
 ;; (setq projectile-tags-backend 'etags-select-find-tag)
 (setq projectile-tags-backend 'helm-gtags-select)
 
@@ -509,7 +467,7 @@
  '(eclim-eclipse-dirs (list "~/eclipse/java-oxygen/Eclipse.app/Contents/Eclipse"))
  '(package-selected-packages
    (quote
-    (diminish doom-themes ripgrep ranger editorconfig treemacs-evil treemacs-projectile helm-rg evil-commentary company-web emmet-mode counsel-gtags company-tern counsel-etags json-mode anti-zenburn-theme spacemacs-theme evil-leader omnisharp tide ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
+    (applescript-mode molokai-theme diminish doom-themes ripgrep ranger editorconfig treemacs-evil treemacs-projectile helm-rg evil-commentary company-web emmet-mode counsel-gtags company-tern counsel-etags json-mode anti-zenburn-theme spacemacs-theme evil-leader omnisharp tide ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

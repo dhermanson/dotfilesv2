@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: required
+# key: re
+# --
+[Required]
+  $0

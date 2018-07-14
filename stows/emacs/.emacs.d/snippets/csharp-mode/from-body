@@ -2,4 +2,4 @@
 # name: from-body
 # key: frombody
 # --
-[FromBody]$0
+[FromBody] $0

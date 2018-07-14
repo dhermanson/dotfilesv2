@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: route
+# key: ro
+# --
+[Route($0)]

@@ -9,10 +9,12 @@
 (require 'evil-commentary)
 (require 'company)
 (require 'treemacs)
+(require 'deh-repl)
 ;; (require 'neotree)
 
 (evil-commentary-mode)
 
+(setq evil-visual-region-expanded 1)
 
 (evil-mode 1)
 (global-evil-surround-mode t)
@@ -37,8 +39,6 @@
 (evil-set-initial-state 'shell-mode 'emacs)
 (evil-set-initial-state 'undo-tree-visualizer-mode 'emacs)
 (evil-set-initial-state 'visual-basic-mode 'normal)
-(evil-set-initial-state 'sh-mode 'normal)
-
 
 (defvar deh/evil-leader-map (make-sparse-keymap)
   "Keymap for \"leader key\" shortcuts.")
@@ -51,8 +51,13 @@
 (define-key deh/evil-leader-map "l" 'deh-helm-imenu)
 ;; (define-key deh/evil-leader-map "l" 'counsel-imenu)
 (define-key deh/evil-leader-map "f" 'helm-projectile-find-file)
+(define-key deh/evil-leader-map "rr" 'deh-restart-repl)
+(define-key deh/evil-leader-map "rk" 'deh-kill-repl)
+(define-key deh/evil-leader-map "ro" 'deh-focus-repl-in-other-window)
 
 (evil-define-key nil deh/evil-leader-map "gw" 'magit-stage-file)
+(evil-define-key nil deh/evil-leader-map "gds" (lambda () (interactive) (magit-ediff-show-staged (magit-current-file))))
+(evil-define-key nil deh/evil-leader-map "gdu" (lambda () (interactive) (magit-ediff-show-unstaged (magit-current-file))))
 (evil-define-key nil deh/evil-leader-map "gs" 'magit-status)
 (evil-define-key nil deh/evil-leader-map "gb" 'magit-blame)
 (evil-define-key nil deh/evil-leader-map "gc" 'magit-branch-popup)
@@ -72,6 +77,7 @@
   (kbd "M-c") 'delete-window
   (kbd "M-o") 'delete-other-windows
   (kbd "M-n") 'make-frame-command
+  (kbd "M-s") 'deh-send-current-line-to-repl
   (kbd "M-q") '(lambda ()
                  (interactive)
                  (kill-buffer (current-buffer)))
@@ -82,7 +88,11 @@
   (kbd "-") 'dired-jump)
 
 (evil-define-key nil evil-insert-state-map
-  (kbd "C-SPC") 'company-complete)
+  (kbd "C-SPC") 'company-complete
+  (kbd "M-s") 'deh-send-current-line-to-repl)
+
+(evil-define-key nil evil-visual-state-map
+  (kbd "M-s") 'deh-send-region-to-repl)
 
 (setq evil-leader/leader "SPC")
 
