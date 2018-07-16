@@ -10,7 +10,8 @@
 (defun deh-create-repl (&optional switch)
   "create a repl"
   (interactive)
-  (let* ((repl-buffer (get-buffer-create deh-repl-buffer-name))
+  (let* ((current-window (selected-window))
+         (repl-buffer (get-buffer-create deh-repl-buffer-name))
          (args (-concat(list deh-repl-process-name
                               repl-buffer
                               deh-repl-program
@@ -20,7 +21,7 @@
     (if switch
         (progn
           (switch-to-buffer-other-window repl-buffer)
-          (select-window (get-lru-window))))))
+          (select-window current-window)))))
 
 (defun deh-send-current-line-to-repl ()
   "send the current line to the repl"
@@ -62,13 +63,18 @@
         (progn
           (kill-process process)
           (sleep-for 0.5)))
-    
-    (kill-buffer buffer)))
+
+    (if buffer
+        (progn
+          (delete-window (get-buffer-window buffer))
+          (kill-buffer buffer)))))
 
 (defun deh-focus-repl-in-other-window ()
   (interactive)
-  (switch-to-buffer-other-window (deh-repl-buffer))
-  (select-window (get-lru-window)))
+  (let ((current-window (selected-window)))
+    
+    (switch-to-buffer-other-window (deh-repl-buffer))
+    (select-window current-window)))
 
 (defun deh-repl-buffer ()
   (get-buffer deh-repl-buffer-name))
@@ -105,6 +111,5 @@
 
 ;; ensure repl started before switching focus in other window
 (advice-add 'deh-focus-repl-in-other-window :around 'deh-ensure-repl-started)
-
 
 (provide 'deh-repl)
