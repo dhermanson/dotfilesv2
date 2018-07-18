@@ -9,6 +9,6 @@
 
 (add-hook 'restclient-mode-hook 'deh-restclient-mode-hook)
 
-(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode))
+(add-to-list 'auto-mode-alist '("\\.http$" . restclient-mode))
 
 (provide 'deh-restclient)

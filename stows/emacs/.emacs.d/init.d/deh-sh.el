@@ -11,4 +11,6 @@
 
 (add-hook 'sh-mode-hook 'deh-sh-mode-hook)
 
+(add-to-list 'auto-mode-alist '("^\\.env*" . sh-mode))
+
 (provide 'deh-sh)

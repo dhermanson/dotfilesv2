@@ -31,6 +31,7 @@
 ;; (load-theme 'gruvbox-dark-soft t)
 (load-theme 'zenburn t)
 (set-face-background 'fringe "#3F3F3F")
+(set-face-foreground 'vertical-border (cdr (assoc "zenburn-bg-1" zenburn-default-colors-alist)))
 
 ;; (load-theme 'molokai t)
 ;; (load-theme 'doom-molokai t)

@@ -7,6 +7,7 @@
 (require 'ob-plantuml)
 (require 'ox-latex)
 (require 'ox-twbs)
+(require 'ox-gfm)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -52,7 +53,7 @@
 (defun deh-org-mode-hook ()
   "my org mode hook"
   (org-bullets-mode t)
-  ;; (visual-line-mode t)
+  (visual-line-mode t)
   (setq display-line-numbers 'relative))
 
 (add-hook 'org-mode-hook #'deh-org-mode-hook)
