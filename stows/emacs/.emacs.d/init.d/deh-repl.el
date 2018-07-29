@@ -2,6 +2,7 @@
 (require 'evil)
 
 (defvar-local deh-repl-enabled "is a repl enabled in this buffer")
+(defvar-local deh-repl-insert-style 'a "the style of insert")
 (defvar-local deh-repl-process-name "the name of the repl")
 (defvar-local deh-repl-buffer-name "the name of the repl buffer")
 (defvar-local deh-repl-program "the repl program to run")
@@ -27,14 +28,27 @@
   "send the current line to the repl"
   (interactive)
   (let* ((line (s-trim-right (thing-at-point 'line t))))
-    (send-string (deh-repl-process) line)
-    (send-string (deh-repl-process) "\n")))
+    (if (equal deh-repl-insert-style 'a)
+        (progn
+          (comint-send-string (deh-repl-process) line)
+          (comint-send-string (deh-repl-process) "\n"))
+      (with-current-buffer (deh-repl-buffer)
+        (insert line)
+        (comint-send-input)))))
 
 (defun deh-send-region-to-repl (start end)
   (interactive "r")
   (let ((contents (s-trim (buffer-substring-no-properties start end))))
-    (send-string (deh-repl-process) contents)
-    (send-string (deh-repl-process) "\n"))
+    (if (equal deh-repl-insert-style 'a)
+        (progn
+          (comint-send-string (deh-repl-process) contents)
+          (comint-send-string (deh-repl-process) "\n"))
+      (with-current-buffer (deh-repl-buffer)
+        (insert contents)
+        (comint-send-input))
+      )
+
+    )
   (evil-exit-visual-state))
 
 (defun deh-restart-repl ()
@@ -64,10 +78,11 @@
           (kill-process process)
           (sleep-for 0.5)))
 
-    (if buffer
-        (progn
-          (delete-window (get-buffer-window buffer))
-          (kill-buffer buffer)))))
+    ;; (if buffer
+    ;;     (progn
+    ;;       (delete-window (get-buffer-window buffer))
+    ;;       (kill-buffer buffer)))
+    ))
 
 (defun deh-focus-repl-in-other-window ()
   (interactive)

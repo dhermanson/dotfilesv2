@@ -61,6 +61,9 @@
 (define-key global-map (kbd "H-c") 'delete-window)
 (define-key global-map (kbd "H-o") 'delete-other-windows)
 (define-key global-map (kbd "H-n") 'make-frame-command)
+(define-key global-map (kbd "H-q") '(lambda ()
+                                      (interactive)
+                                      (kill-buffer (current-buffer))))
 
 (define-key global-map (kbd "M-i") 'helm-imenu)
 (define-key global-map (kbd "M-I") 'helm-imenu-in-all-buffers)

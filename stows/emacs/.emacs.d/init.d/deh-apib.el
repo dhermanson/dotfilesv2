@@ -3,6 +3,10 @@
 
 (add-to-list 'auto-mode-alist '("\\.apib$" . apib-mode))
 
+;; (defun deh-apib-mode-hook ()
+;;   "my apib-mode hook"
+;;   (flycheck-mode))
+
 (flycheck-define-checker
  apib-drafter
  "A syntax checker for API Blueprint using drafter."

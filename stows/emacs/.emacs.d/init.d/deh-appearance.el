@@ -17,6 +17,15 @@
 ;; (set-face-font 'markdown-code-face "Monaco-14")
 
 ;; colors
+(defun deh-load-zenburn ()
+  "load zenburn"
+  (load-theme 'zenburn t)
+  (set-face-background 'fringe "#3F3F3F")
+  (set-face-foreground 'vertical-border (cdr (assoc "zenburn-bg-1" zenburn-default-colors-alist))))
+
+(deh-load-zenburn)
+
+
 ;; (color-theme-sanityinc-tomorrow-night)
 ;; (load-theme 'sanityinc-tomorrow-night t)
 ;; (load-theme 'sanityinc-tomorrow-day t)
@@ -29,9 +38,10 @@
 ;; (darktooth-modeline)
 ;; (load-theme 'gruvbox-dark-hard t)
 ;; (load-theme 'gruvbox-dark-soft t)
-(load-theme 'zenburn t)
-(set-face-background 'fringe "#3F3F3F")
-(set-face-foreground 'vertical-border (cdr (assoc "zenburn-bg-1" zenburn-default-colors-alist)))
+
+
+
+
 
 ;; (load-theme 'molokai t)
 ;; (load-theme 'doom-molokai t)

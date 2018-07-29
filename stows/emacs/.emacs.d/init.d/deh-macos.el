@@ -4,7 +4,7 @@
   (setq mac-function-modifier 'hyper)
   (setq mac-option-modifier 'meta)
   (setq mac-command-modifier 'super)
-  (exec-path-from-shell-initialize)
+  ;; (exec-path-from-shell-initialize)
 
   ;; Fnacy titlebar for MacOS
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))

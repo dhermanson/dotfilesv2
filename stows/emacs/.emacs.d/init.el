@@ -58,6 +58,7 @@
 	      evil
 	      evil-commentary
 	      evil-leader
+        evil-numbers
 	      evil-surround
 	      exec-path-from-shell
 	      expand-region
@@ -93,6 +94,7 @@
 	      projectile
 	      restclient
 	      ripgrep
+        rjsx-mode
 	      robe
 	      smartparens
 	      spacemacs-theme
@@ -163,7 +165,9 @@
 (require 'deh-restclient)
 (require 'deh-prog)
 (require 'deh-ruby)
+(require 'deh-css)
 (require 'deh-php)
+(require 'deh-markdown)
 (require 'deh-json)
 (require 'deh-ivy)
 (require 'deh-counsel)
@@ -474,7 +478,7 @@
  '(eclim-eclipse-dirs (list "~/eclipse/java-oxygen/Eclipse.app/Contents/Eclipse"))
  '(package-selected-packages
    (quote
-    (apib-mode adoc-mode htmlize applescript-mode molokai-theme diminish doom-themes ripgrep ranger editorconfig treemacs-evil treemacs-projectile helm-rg evil-commentary company-web emmet-mode counsel-gtags company-tern counsel-etags json-mode anti-zenburn-theme spacemacs-theme evil-leader omnisharp tide ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
+    (rjsx-mode evil-numbers apib-mode adoc-mode htmlize applescript-mode molokai-theme diminish doom-themes ripgrep ranger editorconfig treemacs-evil treemacs-projectile helm-rg evil-commentary company-web emmet-mode counsel-gtags company-tern counsel-etags json-mode anti-zenburn-theme spacemacs-theme evil-leader omnisharp tide ht ## counsel-projectile counsel ivy org-bullets eclim flycheck-kotlin kotlin-mode nlinum-relative omtose-phellack-theme color-theme-railscasts yaml-mode f helm-gtags ggtags gtags restclient fsharp-mode wgrep zenburn-theme yasnippet which-key web-mode tao-theme solarized-theme smartparens sexy-monochrome-theme semi robe railscasts-theme quasi-monochrome-theme prodigy powershell plantuml-mode php-mode paredit ox-twbs ox-gfm neotree monokai-theme monochrome-theme markdown-mode magit js2-mode jenkins inf-groovy hydra hlinum helm-projectile hc-zenburn-theme haskell-mode gruvbox-theme groovy-mode feature-mode eziam-theme exec-path-from-shell evil-surround enh-ruby-mode embrace edit-indirect dracula-theme dockerfile-mode docker darktooth-theme csv-mode csharp-mode company-lsp company-go color-theme-sanityinc-tomorrow cider badger-theme alchemist ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

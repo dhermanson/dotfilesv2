@@ -6,6 +6,7 @@
 (require 'evil-surround)
 (require 'evil)
 (require 'evil-leader)
+(require 'evil-numbers)
 (require 'evil-commentary)
 (require 'company)
 (require 'treemacs)

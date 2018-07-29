@@ -20,9 +20,10 @@
   (flycheck-mode 0)
 
   (setq deh-repl-enabled t)
+  (setq deh-repl-insert-style 'b)
   (setq deh-repl-process-name "deh-ruby")
   (setq deh-repl-buffer-name "*deh-ruby*")
-  (setq deh-repl-program "irb")
+  (setq deh-repl-program "pry")
   (setq deh-repl-program-args nil))
 
 (add-hook 'ruby-mode-hook 'deh/my-ruby-mode-hook)
