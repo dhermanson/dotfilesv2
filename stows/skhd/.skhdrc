@@ -1,0 +1,2 @@
+lcmd + alt + ctrl - r : say "reloading. please wait..." && brew services restart skhd && say "reloaded"
+fn - m : ~/bin/org-capture-todo

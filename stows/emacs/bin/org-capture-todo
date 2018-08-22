@@ -1,0 +1,20 @@
+#! /bin/sh
+
+frame_params=$(cat <<-END
+((name . "emacs-capture")
+ (height . 20)
+ (width . 80)
+ (left . 500)
+ (top . 300))
+END
+)
+
+command=$(cat <<-END
+(progn
+  (raise-frame)
+  (x-focus-frame (selected-frame))
+  (org-capture nil "t"))
+END
+)
+
+/Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait -c -F "$frame_params" -e "$command"
