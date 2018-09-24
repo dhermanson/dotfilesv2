@@ -95,7 +95,12 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='nvim'
+# export EDITOR='nvim'
+alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+# export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait"
+# export EDITOR="$HOME/bin/emacsclient"
+export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+# export EDITOR="my-run-emacs"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -138,6 +143,7 @@ export EDITOR='nvim'
 source "$HOME/.local/share/nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
 
+# alias e="emacsclient --no-wait"
 alias ls="gls --color"
 
 # python pip
@@ -163,12 +169,14 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 #
 #source ~/.repositories/github/dhermanson/dotfiles/zsh/aliases.sh
 ##alias vim="mvim -v"
-alias vim="nvim"
-alias vi="nvim"
-alias v="nvim"
+# alias vim="nvim"
+# alias vi="nvim"
+# alias v="nvim"
 alias n="nvim"
 alias nv="nvim"
 alias nvi="nvim"
+alias sc="screencapture -s"
+alias runemacs="/Applications/Emacs.app/Contents/MacOS/Emacs & disown"
 
 function vscode() {
   open -a Visual\ Studio\ Code "$@"
@@ -200,7 +208,7 @@ function vscode() {
 #fi
 #
 # node version manager settings
-export MY_NVM_VERSION="v8.9.1"
+export MY_NVM_VERSION="v10.7.0"
 export NVM_DIR=~/.nvm
 [ -s ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh # This loads nvm
 
@@ -275,6 +283,52 @@ export PATH=~/bin:$PATH
 # add mono /bin folder to path
 export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
 
+
+# fe [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+e() {
+    if [ $# -eq 0 ]; then
+        file=$(fzf) && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait $file
+    else
+        /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait $@
+    fi
+    # tmux last-pane
+    # nvr --remote-silent -l $@
+    # tmux select-pane -U
+}
+
+t() {
+    tree -I 'node_modules|vendor' $@
+}
+
+td() {
+    tree -I 'node_modules|vendor' -d $@
+}
+
+fe() {
+  local files
+  IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0))
+  [[ -n "$files" ]] && e "${files[@]}"
+}
+
+# fd - cd to selected directory (scope to git repo if in one)
+fd() {
+  local dir
+  toplevel=$(git rev-parse --show-toplevel)
+  retval=$?
+  if [ $retval -eq 0 ]; then
+    relative_to_toplevel=$(find $toplevel -path '*/\.*' -prune \
+                    -o -type d -print 2> /dev/null | xargs -- realpath --relative-to=$toplevel | fzf +m) &&
+    dir=$toplevel/$relative_to_toplevel
+  else
+    dir=$(find ${1:-.} -path '*/\.*' -prune \
+      -o -type d -print 2> /dev/null | fzf +m) &&
+  fi
+
+  cd "$dir"
+}
+
 ##############i stopped x'ing stuff here########################################
 
 
@@ -284,3 +338,12 @@ export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
 # # The next line enables shell command completion for gcloud.
 # if [ -f '/Users/derickhermanson/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/derickhermanson/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 #
+# export ANDROID_HOME=/usr/local/share/android-sdk
+# export ANDROID_NDK=$ANDROID_HOME/ndk-bundle
+# export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/derickhermanson/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/derickhermanson/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/derickhermanson/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/derickhermanson/google-cloud-sdk/completion.zsh.inc'; fi
