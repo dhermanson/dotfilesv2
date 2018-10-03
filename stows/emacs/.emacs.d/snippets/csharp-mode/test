@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: test
-# key: test
-# --
-[Test]
-public ${1:async Task} ${2:Test}()
-{
-	$0
-}

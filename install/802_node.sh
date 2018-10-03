@@ -6,17 +6,18 @@ nvm install $MY_NVM_VERSION
 nvm alias default $MY_NVM_VERSION
 
 npm install -g npm
-npm install -g yarn
+# npm install -g yarn
 
-npm install -g bower
+# npm install -g bower
 npm install -g eslint
-npm install -g gulp-cli
-npm install -g harp
-npm install -g jshint
+# npm install -g gulp-cli
+# npm install -g harp
+# npm install -g jshint
 npm install -g lodash
 npm install -g typescript
-npm install -g vscode-json-languageservice
+# npm install -g vscode-json-languageservice
 npm install -g prettier
+npm install -g tern
 # yarn global add tern
 # yarn global add jsctags
 

@@ -4,13 +4,16 @@ filetype plugin indent on
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'dracula/vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
 Plug 'tomtom/tcomment_vim'
 Plug 'morhetz/gruvbox'
-" Plug 'itchyny/lightline.vim'
-" Plug 'shinchu/lightline-gruvbox.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -24,6 +27,14 @@ Plug 'tpope/vim-unimpaired'
 Plug 'majutsushi/tagbar'
 
 call plug#end()
+
+if has("gui_running")
+    if has("gui_macvim")
+        " :set guifont=DejaVu\ Sans\ Mono:h13
+    endif
+    set guioptions=
+endif
+
 
 " colors
 set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors"
@@ -53,13 +64,13 @@ set nocursorline
 set nocursorcolumn
 set noswapfile
 set nohlsearch
-set cursorline
-set nosplitbelow
 set splitright
 set completeopt=longest,menuone
 set ignorecase
 
 
+" nnoremap ; :
+" nnoremap : ;
 
 " leader keys
 let mapleader=" "
@@ -80,3 +91,6 @@ nnoremap <Leader>l :CtrlPBufTag<CR>
 " nerdtree
 nnoremap <leader>t :NERDTreeFocus<CR>
 nnoremap <leader>T :NERDTreeFind<CR>
+
+" omnisharp
+let g:OmniSharp_server_path = '/Users/derickhermanson/omnisharp/omnisharp/OmniSharp.exe'

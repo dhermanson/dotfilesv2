@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: teardown
-# key: teardown
-# --
-[TearDown]
-public void TearDown()
-{
-	$0
-}

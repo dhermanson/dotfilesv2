@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: http-post
-# key: post
-# --
-[HttpPost]
-public ${3:async Task<IActionResult>} ${1:Post}($2)
-{
-    $0
-}

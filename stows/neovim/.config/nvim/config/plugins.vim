@@ -2,6 +2,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Colors / Interface
+Plug 'dracula/vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
 Plug 'chriskempson/base16-vim'
@@ -26,6 +27,7 @@ Plug 'editorconfig/editorconfig-vim'
 " Plugin outside ~/.local/share/nvim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-easy-align'
 Plug 'justinmk/vim-sneak'
 Plug 'Konfekt/FastFold'
 " Plug 'Lokaltog/vim-easymotion'
@@ -66,6 +68,8 @@ Plug 'godlygeek/tabular'
 
 " Languages
 Plug 'sheerun/vim-polyglot'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Language-specific
 " go
@@ -103,6 +107,9 @@ Plug 'tpope/rbenv-ctags', { 'for': 'ruby' }
 
 Plug 'amiorin/vim-project'
 " Plug 'airblade/vim-rooter'
+Plug 'OmniSharp/omnisharp-vim'
+
+Plug 'embear/vim-localvimrc'
 
 " Initialize plugin system
 call plug#end()
@@ -166,6 +173,7 @@ let g:neomake_php_enabled_makers = ["php"] " php, phpstan, phpcs, phpmd, phplint
 " let g:ale_php_phpstan_configuration = 'phpstan.neon'
 let g:ale_linters = {
       \    'php': ['php'],
+      \    'cs': ['OmniSharp'],
       \  }
 let g:ale_fixers = {
       \    'javascript': ['prettier'],
@@ -242,7 +250,7 @@ let g:dirvish_mode = ':sort ,^.*[\/],'
 let g:echodoc_enable_at_startup = 1
 
 "------------------NERDTree------------------------------------------------------
-let g:NERDTreeQuitOnOpen=1
+let g:NERDTreeQuitOnOpen=0
 
 " vim-go
 let g:go_term_mode = "vsplit"
@@ -274,4 +282,13 @@ let g:gitgutter_enabled=0
 
 "------------------vim-project---------------------------------------------------
 let g:project_use_nerdtree = 1
+
+"omnisharp
+" let g:OmniSharp_server_path= '/Users/derickhermanson/omnisharp/omnisharp/OmniSharp.exe'
+let g:OmniSharp_selector_ui = 'fzf'
+" let g:Omnisharp_start_server=0
+" let g:OmniSharp_server_use_mono = 1
+
+" vim-pandoc
+let g:pandoc#modules#disabled = ["chdir", "folding"] " don't automatically change directory
 

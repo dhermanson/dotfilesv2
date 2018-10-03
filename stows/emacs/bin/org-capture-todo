@@ -17,4 +17,4 @@ command=$(cat <<-END
 END
 )
 
-/Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait -c -F "$frame_params" -e "$command"
+~/bin/emacsclient --no-wait -c -F "$frame_params" -e "$command"

@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: fixture
-# key: fixture
-# --
-[TestFixture]
-public class `(f-no-ext  (f-filename (buffer-file-name)))`
-{
-	$0
-}

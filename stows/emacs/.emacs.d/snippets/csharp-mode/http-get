@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: http-get
-# key: get
-# --
-[HttpGet]
-public IActionResult ${2:Get}(${1:long id})
-{
-    $0
-}

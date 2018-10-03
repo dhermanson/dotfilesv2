@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: controller
-# key: controller
-# --
-[Route("api/[controller]")]
-public class ${1:My}Controller : Controller
-{
-	$0
-}
